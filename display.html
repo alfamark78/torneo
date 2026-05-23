@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>Memorial Massimo Salvi— Display</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500&display=swap');
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --w: 1920px;
+  --h: 1080px;
+  --green:      #00c853;
+  --green-dim:  #007c32;
+  --green-dark: #003d18;
+  --gold:       #ffd600;
+  --gold-dim:   #a68a00;
+  --silver:     #b0bec5;
+  --bronze:     #ff8a65;
+  --bg:         #060d08;
+  --surface:    rgba(255,255,255,0.04);
+  --surface2:   rgba(255,255,255,0.08);
+  --border:     rgba(255,255,255,0.08);
+  --border-g:   rgba(0,200,83,0.25);
+  --text:       #e8f5e9;
+  --text-dim:   rgba(232,245,233,0.45);
+  --red:        #ff5252;
+  --font:       'Barlow Condensed', sans-serif;
+}
+
+html, body {
+  width: var(--w);
+  height: var(--h);
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--text);
+}
+
+/* ── ANIMATED FIELD BACKGROUND ── */
+.field-bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% 110%, rgba(0,80,30,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(0,180,70,0.08) 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 67px,
+      rgba(0,150,50,0.04) 67px,
+      rgba(0,150,50,0.04) 68px
+    );
+  z-index: 0;
+}
+
+/* field lines subtle */
+.field-bg::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle 280px at 50% 85%, rgba(0,200,83,0.06) 0%, transparent 70%),
+    linear-gradient(90deg, transparent 48%, rgba(0,200,83,0.04) 49%, rgba(0,200,83,0.04) 51%, transparent 52%);
+}
+
+.field-bg::after {
+  content:'';
+  position:absolute;
+  bottom:0; left:50%;
+  transform:translateX(-50%);
+  width:400px; height:200px;
+  border:2px solid rgba(0,200,83,0.06);
+  border-bottom:none;
+  border-radius:400px 400px 0 0;
+}
+
+/* ── LAYOUT ── */
+.screen {
+  position: relative;
+  z-index: 1;
+  width: var(--w);
+  height: var(--h);
+  display: grid;
+  grid-template-rows: 90px 1fr 72px;
+  grid-template-columns: 1fr;
+}
+
+/* ── HEADER ── */
+header {
+  display: grid;
+  grid-template-columns: 360px 1fr 360px;
+  align-items: center;
+  padding: 0 48px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+  border-bottom: 1px solid var(--border-g);
+  position: relative;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), var(--gold), var(--green), transparent);
+  opacity: 0.6;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.trophy-icon {
+  font-size: 2.4rem;
+  filter: drop-shadow(0 0 12px rgba(255,214,0,0.5));
+  animation: trophyPulse 3s ease-in-out infinite;
+}
+
+@keyframes trophyPulse {
+  0%,100% { filter: drop-shadow(0 0 8px rgba(255,214,0,0.4)); }
+  50%      { filter: drop-shadow(0 0 20px rgba(255,214,0,0.8)); }
+}
+
+.tournament-name {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+}
+
+.tournament-sub {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--green);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.header-center {
+  text-align: center;
+}
+
+.phase-label {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-dim);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.girone-title {
+  font-size: 3.6rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  color: var(--white);
+  text-shadow: 0 0 30px rgba(0,200,83,0.4);
+}
+
+.girone-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.girone-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: all 0.5s;
+}
+
+.girone-dot.active {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.header-right {
+  text-align: right;
+}
+
+.clock {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.date-display {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ── MAIN CONTENT ── */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  gap: 0;
+  padding: 28px 48px 20px;
+  overflow: hidden;
+}
+
+/* ── STANDINGS TABLE ── */
+.standings-panel {
+  padding-right: 32px;
+}
+
+.panel-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-g), transparent);
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+/* Header row */
+.standings-table .th-row th {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  padding: 0 14px 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.standings-table .th-row th:nth-child(2) { text-align: left; }
+
+/* Data rows */
+.standings-table .team-row td {
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-right: none;
+}
+
+.standings-table .team-row td:first-child {
+  border-left: 1px solid var(--border);
+  border-radius: 8px 0 0 8px;
+}
+
+.standings-table .team-row td:last-child {
+  border-right: 1px solid var(--border);
+  border-radius: 0 8px 8px 0;
+}
+
+.standings-table .team-row.pos-1 td {
+  background: rgba(0,200,83,0.08);
+  border-color: rgba(0,200,83,0.2);
+}
+
+.standings-table .team-row.pos-1 td:first-child {
+  border-left: 3px solid var(--green);
+}
+
+.standings-table .team-row.pos-2 td {
+  background: rgba(176,190,197,0.05);
+}
+
+.standings-table .team-row.pos-3 td {
+  background: rgba(255,214,0,0.04);
+}
+
+.standings-table .team-row.pos-3 td:first-child {
+  border-left: 3px solid rgba(255,214,0,0.4);
+}
+
+.cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 0 14px;
+}
+
+.cell-inner.left { justify-content: flex-start; gap: 16px; }
+
+.rank-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  width: 28px;
+  text-align: center;
+}
+
+.pos-1 .rank-num { color: var(--gold); }
+.pos-2 .rank-num { color: var(--silver); }
+.pos-3 .rank-num { color: var(--bronze); }
+.pos-other .rank-num { color: var(--text-dim); }
+
+.team-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.pos-1 .team-name { color: #fff; }
+
+.stat-cell { font-variant-numeric: tabular-nums; }
+
+.pts-cell {
+  font-size: 2rem !important;
+  font-weight: 900;
+  color: #fff;
+}
+
+.pos-1 .pts-cell { color: var(--green); text-shadow: 0 0 16px rgba(0,200,83,0.5); }
+
+.diff-pos { color: var(--green); }
+.diff-neg { color: var(--red); }
+.diff-zero { color: var(--text-dim); }
+
+/* ── RIGHT PANEL ── */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-left: 1px solid var(--border);
+  padding-left: 32px;
+}
+
+/* RESULTS card */
+.results-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.result-list {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-item {
+  display: grid;
+  grid-template-columns: 1fr 90px 1fr;
+  align-items: center;
+  padding: 0 18px;
+  height: 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 1rem;
+}
+
+.result-item:last-child { border-bottom: none; }
+
+.r-home { text-align: right; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; }
+.r-away { text-align: left;  font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 10px; }
+
+.r-score {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.r-score.pending {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+}
+
+.r-date {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+/* BEST THIRDS card */
+.thirds-card {
+  background: var(--surface);
+  border: 1px solid rgba(255,214,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.thirds-card .card-header {
+  color: var(--gold);
+  background: rgba(255,214,0,0.05);
+  border-bottom-color: rgba(255,214,0,0.15);
+}
+
+.thirds-list { padding: 8px 0; }
+
+.third-item {
+  display: grid;
+  grid-template-columns: 40px 1fr 52px 52px 52px;
+  align-items: center;
+  padding: 10px 18px;
+  gap: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.third-item:last-child { border-bottom: none; }
+
+.t-rank {
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.t-rank.r1 { color: var(--gold); }
+.t-rank.r2 { color: var(--silver); }
+.t-rank.r3 { color: var(--bronze); }
+
+.t-name { font-size: 1.05rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t-girone { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; }
+
+.t-stat {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.t-pts { color: var(--gold); font-size: 1.3rem; }
+
+/* ── FOOTER TICKER ── */
+footer {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--border-g);
+  background: rgba(0,0,0,0.5);
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-label {
+  flex-shrink: 0;
+  padding: 0 24px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--bg);
+  background: var(--green);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.ticker-track {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-inner {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: tickerScroll 40s linear infinite;
+  will-change: transform;
+}
+
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-sep {
+  color: var(--green);
+  margin: 0 20px;
+  font-weight: 700;
+}
+
+.ticker-item {
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 0 4px;
+}
+
+.ticker-score { color: var(--gold); font-weight: 800; }
+
+/* ── TRANSITIONS ── */
+.content-fade {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.content-fade.hiding {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* ── SCAN LINE EFFECT ── */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+}
+
+/* ── NO DATA ── */
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+  color: var(--text-dim);
+}
+
+.no-data .icon { font-size: 4rem; opacity: 0.3; }
+.no-data p { font-size: 1.2rem; letter-spacing: 0.1em; font-weight: 300; }
+
+/* Pulse anim for live dot */
+.live-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  margin-right: 6px;
+  animation: livePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.4; transform:scale(0.7); }
+}
+</style>
+</head>
+<body>
+
+<div class="field-bg"></div>
+<div class="scanlines"></div>
+
+<div class="screen">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <div class="trophy-icon">🏆</div>
+      <div>
+        <div class="tournament-name" id="tournament-name">TORNEO CALCIO</div>
+        <div class="tournament-sub">Fase a Gironi</div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="phase-label">CLASSIFICA</div>
+      <div class="girone-title" id="girone-title">GIRONE A</div>
+      <div class="girone-dots" id="girone-dots"></div>
+    </div>
+
+    <div class="header-right">
+      <div class="clock" id="clock">00:00</div>
+      <div class="date-display" id="date-display">—</div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <div class="content content-fade" id="main-content">
+    <div class="standings-panel">
+      <div class="panel-label">Classifica Girone</div>
+      <table class="standings-table" id="standings-table">
+        <thead>
+          <tr class="th-row">
+            <th style="width:52px">#</th>
+            <th style="text-align:left">Squadra</th>
+            <th>PG</th><th>V</th><th>P</th><th>S</th>
+            <th>GF</th><th>GS</th><th>DR</th><th style="min-width:70px">PTS</th>
+          </tr>
+        </thead>
+        <tbody id="standings-body"></tbody>
+      </table>
+    </div>
+
+    <div class="right-panel">
+      <!-- Results -->
+      <div class="results-card">
+        <div class="card-header"><span class="live-dot"></span>Risultati &amp; Programma</div>
+        <div class="result-list" id="result-list"></div>
+      </div>
+
+      <!-- Best Thirds -->
+      <div class="thirds-card">
+        <div class="card-header">🥉 Migliori Terze</div>
+        <div class="thirds-list" id="thirds-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER TICKER -->
+  <footer>
+    <div class="ticker-label">⚽ Live</div>
+    <div class="ticker-track">
+      <div class="ticker-inner" id="ticker-inner"></div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+//  CONFIG — modifica qui il nome del torneo
+// ════════════════════════════════════════════════
+const CONFIG = {
+  tournamentName: 'TORNEO CALCIO',
+  rotationInterval: 12000,    // ms per girone (12s)
+  dataRefreshInterval: 30000, // ms reload dati (30s)
+  dataUrl: 'https://drive.google.com/uc?export=download&id=1l0v36PO52fOCXLjxXwpFepyFz1k1O5Xf', // se null → usa localStorage; metti URL JSON per Yodeck remoto
+};
+
+const GIRONI = ['A','B','C','D','E'];
+let state = { teams:{}, matches:{} };
+let currentGironeIdx = 0;
+let rotationTimer = null;
+let isTransitioning = false;
+
+// ════════════════════════════════════════════════
+//  DATA LOADING
+// ════════════════════════════════════════════════
+async function loadData() {
+  try {
+    if (CONFIG.dataUrl) {
+      // Yodeck: carica da URL esterno (Google Sheets JSON / Gist / ecc.)
+      const res = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
+      state = await res.json();
+    } else {
+      // localStorage (stesso dispositivo dell'admin)
+      const saved = localStorage.getItem('torneo_calcio_v2');
+      if (saved) state = JSON.parse(saved);
+    }
+    GIRONI.forEach(g => {
+      if (!state.teams[g]) state.teams[g] = [];
+      if (!state.matches[g]) state.matches[g] = [];
+    });
+    if (state.tournamentName) {
+      CONFIG.tournamentName = state.tournamentName;
+      document.getElementById('tournament-name').textContent = state.tournamentName;
+    }
+  } catch(e) {
+    console.warn('Data load error:', e);
+  }
+}
+
+// ════════════════════════════════════════════════
+//  STANDINGS LOGIC
+// ════════════════════════════════════════════════
+function computeStandings(g) {
+  const teams = (state.teams[g] || []).filter(t=>t);
+  const matches = (state.matches[g] || []).filter(m=>m.played);
+  const stats = {};
+  teams.forEach(t => { stats[t] = {team:t,W:0,D:0,L:0,GF:0,GA:0,Pts:0,PL:0}; });
+  matches.forEach(m => {
+    if (!stats[m.home] || !stats[m.away]) return;
+    const h=stats[m.home], a=stats[m.away];
+    h.GF+=m.homeGoals; h.GA+=m.awayGoals; h.PL++;
+    a.GF+=m.awayGoals; a.GA+=m.homeGoals; a.PL++;
+    if (m.homeGoals>m.awayGoals){h.W++;h.Pts+=3;a.L++;}
+    else if (m.homeGoals<m.awayGoals){a.W++;a.Pts+=3;h.L++;}
+    else{h.D++;h.Pts+=1;a.D++;a.Pts+=1;}
+  });
+  let arr = teams.map(t=>stats[t]);
+  arr.sort((a,b) => fullSort(a,b,matches,arr));
+  return arr;
+}
+
+function fullSort(a,b,allMatches,allTeams) {
+  if (b.Pts!==a.Pts) return b.Pts-a.Pts;
+  const tied = allTeams.filter(t=>t.Pts===a.Pts).map(t=>t.team);
+  if (tied.length<2) return 0;
+  const dA=directStats(a.team,tied,allMatches), dB=directStats(b.team,tied,allMatches);
+  if (dB.pts!==dA.pts) return dB.pts-dA.pts;
+  const ddA=dA.gf-dA.ga, ddB=dB.gf-dB.ga;
+  if (ddB!==ddA) return ddB-ddA;
+  const diffA=a.GF-a.GA, diffB=b.GF-b.GA;
+  if (diffB!==diffA) return diffB-diffA;
+  return b.GF-a.GF;
+}
+
+function directStats(team,group,allMatches) {
+  let pts=0,gf=0,ga=0;
+  allMatches.filter(m=>m.played&&group.includes(m.home)&&group.includes(m.away)&&(m.home===team||m.away===team))
+    .forEach(m=>{
+      if(m.home===team){gf+=m.homeGoals;ga+=m.awayGoals;if(m.homeGoals>m.awayGoals)pts+=3;else if(m.homeGoals===m.awayGoals)pts+=1;}
+      else{gf+=m.awayGoals;ga+=m.homeGoals;if(m.awayGoals>m.homeGoals)pts+=3;else if(m.awayGoals===m.homeGoals)pts+=1;}
+    });
+  return {pts,gf,ga};
+}
+
+function computeBestThirds() {
+  return GIRONI.map(g => {
+    const teams=(state.teams[g]||[]).filter(t=>t);
+    if(teams.length<3) return null;
+    const s=computeStandings(g);
+    return s[2]?{...s[2],girone:g}:null;
+  }).filter(Boolean).sort((a,b)=>{
+    if(b.Pts!==a.Pts) return b.Pts-a.Pts;
+    const dA=a.GF-a.GA,dB=b.GF-b.GA;
+    if(dB!==dA) return dB-dA;
+    return b.GF-a.GF;
+  });
+}
+
+// ════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════
+function render(gironeIdx) {
+  const g = GIRONI[gironeIdx];
+  currentGironeIdx = gironeIdx;
+
+  // Girone title
+  document.getElementById('girone-title').textContent = `GIRONE ${g}`;
+
+  // Dots
+  const dotsEl = document.getElementById('girone-dots');
+  dotsEl.innerHTML = GIRONI.map((gg,i)=>
+    `<div class="girone-dot ${i===gironeIdx?'active':''}"></div>`
+  ).join('');
+
+  // Standings
+  const standings = computeStandings(g);
+  const tbody = document.getElementById('standings-body');
+
+  if (!standings.length) {
+    tbody.innerHTML = `<tr><td colspan="10"><div class="no-data"><div class="icon">⚽</div><p>Nessuna squadra configurata</p></div></td></tr>`;
+  } else {
+    const posClass = ['pos-1','pos-2','pos-3','pos-other'];
+    tbody.innerHTML = standings.map((s,i) => {
+      const diff = s.GF - s.GA;
+      const pc = posClass[Math.min(i,3)];
+      const diffClass = diff>0?'diff-pos':diff<0?'diff-neg':'diff-zero';
+      return `
+        <tr class="team-row ${pc}">
+          <td><div class="cell-inner"><span class="rank-num">${i+1}</span></div></td>
+          <td><div class="cell-inner left"><span class="team-name">${s.team}</span></div></td>
+          <td><div class="cell-inner stat-cell">${s.PL}</div></td>
+          <td><div class="cell-inner stat-cell">${s.W}</div></td>
+          <td><div class="cell-inner stat-cell">${s.D}</div></td>
+          <td><div class="cell-inner stat-cell">${s.L}</div></td>
+          <td><div class="cell-inner stat-cell">${s.GF}</div></td>
+          <td><div class="cell-inner stat-cell">${s.GA}</div></td>
+          <td><div class="cell-inner stat-cell ${diffClass}">${diff>=0?'+':''}${diff}</div></td>
+          <td><div class="cell-inner pts-cell">${s.Pts}</div></td>
+        </tr>`;
+    }).join('');
+  }
+
+  // Results panel
+  const matches = (state.matches[g]||[]);
+  const resultList = document.getElementById('result-list');
+  // show played + upcoming, max 7
+  const shown = [...matches].sort((a,b)=>{
+    if(a.played && !b.played) return -1;
+    if(!a.played && b.played) return 1;
+    return 0;
+  }).slice(0,7);
+
+  if (!shown.length) {
+    resultList.innerHTML = `<div class="no-data" style="height:100%"><p>Nessuna partita</p></div>`;
+  } else {
+    resultList.innerHTML = shown.map(m => `
+      <div class="result-item">
+        <div class="r-home">${m.home}</div>
+        <div>
+          ${m.played
+            ? `<div class="r-score">${m.homeGoals}–${m.awayGoals}</div>`
+            : `<div class="r-score pending">vs</div>`
+          }
+          ${(m.date||m.time) ? `<div class="r-date">${m.time?m.time+' · ':''}${m.date?formatDate(m.date):''}</div>` : ''}
+        </div>
+        <div class="r-away">${m.away}</div>
+      </div>
+    `).join('');
+  }
+
+  // Best Thirds
+  const thirds = computeBestThirds();
+  const thirdsEl = document.getElementById('thirds-list');
+  if (!thirds.length) {
+    thirdsEl.innerHTML = `<div style="padding:14px 18px;font-size:0.85rem;color:var(--text-dim)">Dati non ancora disponibili</div>`;
+  } else {
+    const rankClass = ['r1','r2','r3','r3'];
+    thirdsEl.innerHTML = thirds.map((s,i)=>{
+      const diff=s.GF-s.GA;
+      return `
+        <div class="third-item">
+          <div class="t-rank ${rankClass[Math.min(i,3)]}">${i+1}</div>
+          <div><div class="t-name">${s.team}</div><div class="t-girone">Girone ${s.girone}</div></div>
+          <div class="t-stat t-pts">${s.Pts}</div>
+          <div class="t-stat ${diff>=0?'diff-pos':diff<0?'diff-neg':'diff-zero'}">${diff>=0?'+':''}${diff}</div>
+          <div class="t-stat">${s.GF}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // Ticker
+  buildTicker();
+}
+
+function buildTicker() {
+  const items = [];
+  GIRONI.forEach(g => {
+    const matches = (state.matches[g]||[]).filter(m=>m.played);
+    matches.forEach(m => {
+      items.push(`<span class="ticker-item">${m.home} <span class="ticker-score">${m.homeGoals}–${m.awayGoals}</span> ${m.away}</span><span class="ticker-sep">|</span>`);
+    });
+  });
+  if (!items.length) {
+    items.push(`<span class="ticker-item">Nessun risultato disponibile — In attesa dell'inizio del torneo</span><span class="ticker-sep">⚽</span>`);
+  }
+  // duplicate for seamless loop
+  const inner = document.getElementById('ticker-inner');
+  const content = items.join('');
+  inner.innerHTML = content + content;
+}
+
+// ════════════════════════════════════════════════
+//  ROTATION
+// ════════════════════════════════════════════════
+function nextGirone() {
+  if (isTransitioning) return;
+  isTransitioning = true;
+
+  const activeGironi = GIRONI.filter(g => (state.teams[g]||[]).filter(t=>t).length >= 2);
+  if (!activeGironi.length) { isTransitioning = false; return; }
+
+  const content = document.getElementById('main-content');
+  content.classList.add('hiding');
+
+  setTimeout(() => {
+    // find next active girone
+    let next = (currentGironeIdx + 1) % GIRONI.length;
+    let tries = 0;
+    while (!activeGironi.includes(GIRONI[next]) && tries < 5) {
+      next = (next + 1) % GIRONI.length;
+      tries++;
+    }
+    render(next);
+    content.classList.remove('hiding');
+    isTransitioning = false;
+  }, 600);
+}
+
+function startRotation() {
+  if (rotationTimer) clearInterval(rotationTimer);
+  rotationTimer = setInterval(nextGirone, CONFIG.rotationInterval);
+}
+
+// ════════════════════════════════════════════════
+//  CLOCK
+// ════════════════════════════════════════════════
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+
+  const days = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  const months = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  document.getElementById('date-display').textContent =
+    `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const p = d.split('-');
+  return `${p[2]}/${p[1]}`;
+}
+
+// ════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════
+async function init() {
+  await loadData();
+  document.getElementById('tournament-name').textContent = CONFIG.tournamentName;
+
+  // Find first girone with teams
+  let startIdx = 0;
+  for (let i=0;i<GIRONI.length;i++) {
+    if ((state.teams[GIRONI[i]]||[]).filter(t=>t).length>=2) { startIdx=i; break; }
+  }
+
+  render(startIdx);
+  startRotation();
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Auto-refresh data
+  setInterval(async () => {
+    await loadData();
+    render(currentGironeIdx);
+  }, CONFIG.dataRefreshInterval);
+}
+
+init();
+</script>
+</body>
+</html>
