@@ -85,7 +85,7 @@ html, body {
   width: var(--w);
   height: var(--h);
   display: grid;
-  grid-template-rows: 90px 1fr 52px 52px;
+  grid-template-rows: 90px 1fr 72px;
   grid-template-columns: 1fr;
 }
 
@@ -518,12 +518,6 @@ footer {
   100% { transform: translateX(-50%); }
 }
 
-/* Second ticker (giornata) - same style */
-.ticker-today .ticker-label {
-  background: var(--gold);
-  color: #000;
-}
-
 .ticker-sep {
   color: var(--green);
   margin: 0 20px;
@@ -655,15 +649,7 @@ footer {
     </div>
   </div>
 
-  <!-- TICKER GIORNATA (sotto classifiche) -->
-  <footer class="ticker-today">
-    <div class="ticker-label">📅 Oggi</div>
-    <div class="ticker-track">
-      <div class="ticker-inner" id="ticker-today-inner"></div>
-    </div>
-  </footer>
-
-  <!-- FOOTER TICKER (tutti i risultati) -->
+  <!-- FOOTER TICKER -->
   <footer>
     <div class="ticker-label">⚽ Live</div>
     <div class="ticker-track">
@@ -873,47 +859,20 @@ function render(gironeIdx) {
 }
 
 function buildTicker() {
-  // ── Ticker in basso: tutti i risultati giocati ──
-  const allItems = [];
+  const items = [];
   GIRONI.forEach(g => {
-    (state.matches[g]||[]).filter(m=>m.played).forEach(m => {
-      allItems.push(`<span class="ticker-item">Girone ${g} · ${m.home} <span class="ticker-score">${m.homeGoals}–${m.awayGoals}</span> ${m.away}</span><span class="ticker-sep">|</span>`);
+    const matches = (state.matches[g]||[]).filter(m=>m.played);
+    matches.forEach(m => {
+      items.push(`<span class="ticker-item">${m.home} <span class="ticker-score">${m.homeGoals}–${m.awayGoals}</span> ${m.away}</span><span class="ticker-sep">|</span>`);
     });
   });
-  if (!allItems.length) {
-    allItems.push(`<span class="ticker-item">Nessun risultato disponibile — In attesa dell'inizio del torneo</span><span class="ticker-sep">⚽</span>`);
+  if (!items.length) {
+    items.push(`<span class="ticker-item">Nessun risultato disponibile — In attesa dell'inizio del torneo</span><span class="ticker-sep">⚽</span>`);
   }
+  // duplicate for seamless loop
   const inner = document.getElementById('ticker-inner');
-  const content = allItems.join('');
+  const content = items.join('');
   inner.innerHTML = content + content;
-
-  // ── Ticker giornata: solo partite di oggi (giocate e programmate) ──
-  const todayStr = getTodayStr(); // YYYY-MM-DD
-  const todayItems = [];
-  GIRONI.forEach(g => {
-    (state.matches[g]||[]).filter(m => m.date === todayStr).forEach(m => {
-      if (m.played) {
-        todayItems.push(`<span class="ticker-item">Girone ${g} · ${m.home} <span class="ticker-score">${m.homeGoals}–${m.awayGoals}</span> ${m.away}</span><span class="ticker-sep">|</span>`);
-      } else {
-        const ora = m.time ? `${m.time} · ` : '';
-        todayItems.push(`<span class="ticker-item">${ora}Girone ${g} · ${m.home} <span style="color:var(--text-dim);font-weight:400;font-size:0.8rem"> vs </span> ${m.away}</span><span class="ticker-sep">|</span>`);
-      }
-    });
-  });
-  if (!todayItems.length) {
-    todayItems.push(`<span class="ticker-item">Nessuna partita programmata per oggi</span><span class="ticker-sep">📅</span>`);
-  }
-  const innerToday = document.getElementById('ticker-today-inner');
-  const contentToday = todayItems.join('');
-  innerToday.innerHTML = contentToday + contentToday;
-}
-
-function getTodayStr() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth()+1).padStart(2,'0');
-  const d = String(now.getDate()).padStart(2,'0');
-  return `${y}-${m}-${d}`;
 }
 
 // ════════════════════════════════════════════════
