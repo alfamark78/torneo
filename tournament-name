@@ -664,7 +664,7 @@ footer {
 //  CONFIG — modifica qui il nome del torneo
 // ════════════════════════════════════════════════
 const CONFIG = {
-  tournamentName: 'Edizione 2026',
+  tournamentName: 'Torneo Calcio Edizione 2026',
   rotationInterval: 12000,    // ms per girone (12s)
   dataRefreshInterval: 30000, // ms reload dati (30s)
   dataUrl: 'https://raw.githubusercontent.com/alfamark78/torneo/main/torneo-data.json' // se null → usa localStorage; metti URL JSON per Yodeck remoto
