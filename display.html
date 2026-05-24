@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1920, initial-scale=1">
-<title>Torneo 2026</title>
+<title>Memorial Massimo Salvi— Display</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500&display=swap');
 
@@ -126,7 +126,7 @@ header::after {
   50%      { filter: drop-shadow(0 0 20px rgba(255,214,0,0.8)); }
 }
 
-.tournament-name-edizione-2026 {
+.tournament-name {
   font-size: 2rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -600,7 +600,7 @@ footer {
     <div class="header-left">
       <div class="trophy-icon">🏆</div>
       <div>
-        <div class="tournament-name-edizione-2026" id="tournament-name-edizione-2026"> </div>
+        <div class="tournament-name" id="tournament-name">TORNEO CALCIO</div>
         <div class="tournament-sub">Fase a Gironi</div>
       </div>
     </div>
@@ -664,7 +664,7 @@ footer {
 //  CONFIG — modifica qui il nome del torneo
 // ════════════════════════════════════════════════
 const CONFIG = {
-  tournamentName: 'Edizione 2026',
+  tournamentName: 'Memorial Massimo Salvi 2026',
   rotationInterval: 12000,    // ms per girone (12s)
   dataRefreshInterval: 30000, // ms reload dati (30s)
   dataUrl: 'https://raw.githubusercontent.com/alfamark78/torneo/main/torneo-data.json' // se null → usa localStorage; metti URL JSON per Yodeck remoto
@@ -696,7 +696,7 @@ async function loadData() {
     });
     if (state.tournamentName) {
       CONFIG.tournamentName = state.tournamentName;
-      document.getElementById('tournament-name-edizione-2026').textContent = state.tournamentName;
+      document.getElementById('tournament-name').textContent = state.tournamentName;
     }
   } catch(e) {
     console.warn('Data load error:', e);
@@ -934,7 +934,7 @@ function formatDate(d) {
 // ════════════════════════════════════════════════
 async function init() {
   await loadData();
-  document.getElementById('tournament-name-edizione-2026').textContent = CONFIG.tournamentName;
+  document.getElementById('tournament-name').textContent = CONFIG.tournamentName;
 
   // Find first girone with teams
   let startIdx = 0;
