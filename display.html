@@ -85,7 +85,7 @@ html, body {
   width: var(--w);
   height: var(--h);
   display: grid;
-  grid-template-rows: 90px 1fr 72px;
+  grid-template-rows: 90px 1fr 72px 150px;
   grid-template-columns: 1fr;
 }
 
@@ -210,14 +210,35 @@ header::after {
 .content {
   display: grid;
   grid-template-columns: 1fr 520px;
+  grid-template-rows: 1fr 72px;
   gap: 0;
-  padding: 28px 48px 20px;
+  padding: 28px 48px 0;
   overflow: hidden;
 }
 
-/* ── STANDINGS TABLE ── */
+/* standings + right panel span only row 1 */
 .standings-panel {
+  grid-column: 1;
+  grid-row: 1;
   padding-right: 32px;
+  overflow: hidden;
+}
+
+.right-panel {
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+/* ticker inside content, below standings, full width of left column */
+.content-ticker {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--border-g);
+  background: rgba(0,0,0,0.5);
+  overflow: hidden;
+  margin-right: 0;
 }
 
 .panel-label {
@@ -357,6 +378,7 @@ header::after {
   gap: 16px;
   border-left: 1px solid var(--border);
   padding-left: 32px;
+  padding-bottom: 20px;
 }
 
 /* RESULTS card */
@@ -473,14 +495,24 @@ header::after {
 
 .t-pts { color: var(--gold); font-size: 1.3rem; }
 
-/* ── FOOTER TICKER ── */
-footer {
+
+/* ── FOOTER TICKER (barra live sotto classifiche, dentro .content) ── */
+footer.ticker-bar {
   display: flex;
   align-items: center;
   border-top: 1px solid var(--border-g);
   background: rgba(0,0,0,0.5);
   overflow: hidden;
   position: relative;
+}
+
+/* ── WHITE FOOTER ── */
+footer.white-footer {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 3px solid var(--green);
 }
 
 .ticker-label {
@@ -647,14 +679,19 @@ footer {
         <div class="thirds-list" id="thirds-list"></div>
       </div>
     </div>
+
+    <!-- TICKER sotto classifiche -->
+    <footer class="ticker-bar content-ticker">
+      <div class="ticker-label">⚽ Live</div>
+      <div class="ticker-track">
+        <div class="ticker-inner" id="ticker-inner"></div>
+      </div>
+    </footer>
+
   </div>
 
-  <!-- FOOTER TICKER -->
-  <footer>
-    <div class="ticker-label">⚽ Live</div>
-    <div class="ticker-track">
-      <div class="ticker-inner" id="ticker-inner"></div>
-    </div>
+  <!-- WHITE FOOTER -->
+  <footer class="white-footer">
   </footer>
 
 </div>
