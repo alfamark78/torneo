@@ -126,7 +126,7 @@ header::after {
   50%      { filter: drop-shadow(0 0 20px rgba(255,214,0,0.8)); }
 }
 
-.tournament-name {
+.tournament-name-edizione-2026 {
   font-size: 2rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -600,7 +600,7 @@ footer {
     <div class="header-left">
       <div class="trophy-icon">🏆</div>
       <div>
-        <div class="tournament-name" id="tournament-name">EDIZIONE 2026 </div>
+        <div class="tournament-name-edizione-2026" id="tournament-name-edizione-2026"> </div>
         <div class="tournament-sub">Fase a Gironi</div>
       </div>
     </div>
@@ -696,7 +696,7 @@ async function loadData() {
     });
     if (state.tournamentName) {
       CONFIG.tournamentName = state.tournamentName;
-      document.getElementById('tournament-name').textContent = state.tournamentName;
+      document.getElementById('tournament-name-edizione-2026').textContent = state.tournamentName;
     }
   } catch(e) {
     console.warn('Data load error:', e);
@@ -934,7 +934,7 @@ function formatDate(d) {
 // ════════════════════════════════════════════════
 async function init() {
   await loadData();
-  document.getElementById('tournament-name').textContent = CONFIG.tournamentName;
+  document.getElementById('tournament-name-edizione-2026').textContent = CONFIG.tournamentName;
 
   // Find first girone with teams
   let startIdx = 0;
