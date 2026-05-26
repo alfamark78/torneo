@@ -306,10 +306,10 @@
       {
         "home": "NOLI PONTEGGI",
         "away": "EQUIPE NORTH AFRICA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 3,
+        "awayGoals": 2,
         "date": "2026-05-26",
-        "played": false,
+        "played": true,
         "time": "21:00"
       }
     ]
