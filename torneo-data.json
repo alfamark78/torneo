@@ -46,10 +46,10 @@
       {
         "home": "PL SPURGHI",
         "away": "AC COSTRUZIONI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 2,
+        "awayGoals": 3,
         "date": "2026-05-26",
-        "played": false,
+        "played": true,
         "time": "21:45"
       },
       {
