@@ -85,7 +85,7 @@ html, body {
   width: var(--w);
   height: var(--h);
   display: grid;
-  grid-template-rows: 108px 1fr 220px;
+  grid-template-rows: 108px 1fr 260px;
   grid-template-columns: 1fr;
 }
 
@@ -393,7 +393,7 @@ header::after {
 }
 
 .card-header {
-  padding: 16px 22px;
+  padding: 10px 22px;
   background: rgba(0,0,0,0.4);
   border-bottom: 1px solid var(--border);
   font-size: 0.95rem;
@@ -415,9 +415,9 @@ header::after {
   grid-template-columns: 1fr 120px 1fr;
   align-items: center;
   padding: 0 18px;
-  height: 68px;
+  height: 54px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .result-item:last-child { border-bottom: none; }
@@ -558,7 +558,7 @@ footer::before {
   align-items: center;
   gap: 48px;
   white-space: nowrap;
-  animation: sponsorScroll 30s linear infinite;
+  animation: sponsorScroll 120s linear infinite;
   will-change: transform;
 }
 
@@ -571,10 +571,10 @@ footer::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 110px;
-  min-width: 220px;
-  padding: 0 28px;
-  border-radius: 12px;
+  height: 150px;
+  min-width: 280px;
+  padding: 0 32px;
+  border-radius: 14px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   transition: all 0.3s;
@@ -582,8 +582,8 @@ footer::before {
 }
 
 .sponsor-logo img {
-  max-height: 90px;
-  max-width: 220px;
+  max-height: 128px;
+  max-width: 260px;
   object-fit: contain;
   filter: brightness(1.1) contrast(1.05);
 }
