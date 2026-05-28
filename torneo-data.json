@@ -73,11 +73,11 @@
       {
         "home": "BLAMON CAFE'",
         "away": "ZANI COSTRUZIONI / GIOSTEMA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 3,
+        "awayGoals": 3,
         "date": "2026-05-28",
-        "played": false,
-        "time": "22:30"
+        "played": true,
+        "time": "20:15"
       },
       {
         "home": "AC COSTRUZIONI",
