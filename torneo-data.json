@@ -158,11 +158,11 @@
       {
         "home": "GM CASTELCOVATI",
         "away": "PENSIONE PER CANI SAN CARLO",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 2,
+        "awayGoals": 1,
         "date": "2026-05-28",
-        "played": false,
-        "time": "21:45"
+        "played": true,
+        "time": "22:30"
       },
       {
         "home": "GM CASTELCOVATI",
