@@ -1,591 +1,317 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — Gestione Torneo</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-:root {
-  --green:#1a7a3a;--green-l:#22a84e;--green-d:#0f4d25;
-  --gold:#f5c518;--bg:#0e1a14;--surface:#162010;--surface2:#1e2d18;
-  --border:#2a3d22;--text:#e8f0e2;--dim:#7a9070;--red:#e84040;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;background-image:radial-gradient(ellipse at 50% 0%,rgba(26,122,58,.12) 0%,transparent 60%);}
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;background:rgba(14,26,20,.95);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--green-l);letter-spacing:.08em;}
-.logo span{color:var(--gold);}
-.nav-tabs{display:flex;gap:4px;}
-.nav-tab{padding:6px 16px;border-radius:6px;border:none;background:transparent;color:var(--dim);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;}
-.nav-tab:hover{background:var(--surface2);color:var(--text);}
-.nav-tab.active{background:var(--green-d);color:var(--green-l);}
-main{max-width:1000px;margin:0 auto;padding:28px 16px;}
-.page{display:none;}.page.active{display:block;}
-h2{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.06em;color:#fff;}
-h3{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;color:var(--green-l);margin-bottom:10px;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:18px;}
-.card-title{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.card-title::after{content:'';flex:1;height:1px;background:var(--border);}
-input[type=text],input[type=date],input[type=time]{padding:7px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.85rem;font-family:'DM Sans',sans-serif;transition:border-color .2s;}
-input[type=text]:focus,input[type=date]:focus,input[type=time]:focus{outline:none;border-color:var(--green-l);}
-input[type=time]{width:90px;}
-input[type=date]{width:130px;}
-/* calendar view */
-.cal-day-block{margin-bottom:24px;}
-.cal-day-header{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.1em;color:var(--gold);padding:8px 14px;background:rgba(245,197,24,.07);border:1px solid rgba(245,197,24,.15);border-radius:8px 8px 0 0;display:flex;align-items:center;gap:10px;}
-.cal-day-header .day-count{font-size:.72rem;font-weight:600;background:rgba(245,197,24,.15);padding:2px 8px;border-radius:10px;letter-spacing:.06em;}
-.cal-match-row{display:grid;grid-template-columns:70px 1fr 42px 14px 42px 1fr 180px auto;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04);background:var(--surface);border-left:1px solid rgba(245,197,24,.1);border-right:1px solid rgba(245,197,24,.1);}
-.cal-match-row:last-child{border-bottom:1px solid rgba(245,197,24,.1);border-radius:0 0 8px 8px;}
-.cal-time{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--green-l);letter-spacing:.08em;text-align:center;}
-.cal-time.no-time{font-size:.7rem;color:var(--dim);letter-spacing:.04em;font-family:'DM Sans',sans-serif;}
-.cal-girone-badge{font-family:'Bebas Neue',sans-serif;font-size:.75rem;padding:2px 7px;border-radius:4px;background:var(--green-d);color:var(--green-l);border:1px solid var(--green);letter-spacing:.08em;white-space:nowrap;}
-.no-date-section{margin-bottom:20px;}
-.sort-bar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
-.sort-btn{padding:7px 16px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text-dim,var(--dim));font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
-.sort-btn:hover{border-color:var(--green-l);color:var(--green-l);}
-.sort-btn.active-sort{background:var(--green-d);border-color:var(--green-l);color:var(--green-l);}
-.view-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:7px;overflow:hidden;}
-.view-btn{padding:6px 14px;border:none;background:transparent;color:var(--dim);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;}
-.view-btn.active{background:var(--green-d);color:var(--green-l);}
-.datetime-group{display:flex;gap:6px;align-items:center;}
-.score-input{width:48px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:#fff;font-size:1rem;font-weight:700;text-align:center;font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;transition:border-color .2s;}
-.score-input:focus{outline:none;border-color:var(--green-l);}
-.match-row{display:grid;grid-template-columns:1fr 42px 14px 42px 1fr auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.match-row:last-child{border-bottom:none;}
-.team-label{font-size:.9rem;font-weight:500;}
-.team-label.home{text-align:right;}
-.vs-label{font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:var(--dim);text-align:center;}
-.row-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
-.save-btn{padding:5px 12px;background:var(--green-d);border:1px solid var(--green);border-radius:6px;color:var(--green-l);font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.save-btn:hover{background:var(--green);color:#fff;}
-.save-btn.saved{background:#1a3d20;border-color:#2a6a30;color:#4a9a50;}
-.btn-primary{padding:9px 20px;background:var(--green);border:none;border-radius:8px;color:#fff;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s;}
-.btn-primary:hover{background:var(--green-l);}
-.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-.team-input-row{display:flex;align-items:center;gap:8px;}
-.team-num{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--dim);width:20px;flex-shrink:0;}
-.standings-table{width:100%;border-collapse:collapse;font-size:.82rem;}
-.standings-table th{padding:7px 10px;text-align:center;font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--border);}
-.standings-table th:first-child{text-align:left;padding-left:10px;}
-.standings-table td{padding:9px 10px;text-align:center;border-bottom:1px solid rgba(255,255,255,.03);}
-.standings-table td:first-child{text-align:left;padding-left:10px;font-weight:500;}
-.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;font-size:.7rem;font-weight:700;margin-right:5px;}
-.r1{background:rgba(245,197,24,.15);color:var(--gold);}
-.r2{background:rgba(192,192,192,.12);color:#c0c0c0;}
-.r3{background:rgba(205,127,50,.12);color:#cd7f32;}
-.r-{background:rgba(255,255,255,.05);color:var(--dim);}
-.pts-bold{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;}
-.diff-p{color:#39e87a;}.diff-n{color:var(--red);}.diff-z{color:var(--dim);}
-.qual-row td:first-child{border-left:3px solid var(--green-l);}
-.third-row td:first-child{border-left:3px solid var(--gold);}
-.export-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:var(--green-d);border:1px solid var(--green);border-radius:8px;color:var(--green-l);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;margin-right:8px;margin-bottom:8px;}
-.export-btn:hover{background:var(--green);color:#fff;}
-.export-btn.gold{border-color:var(--gold);color:var(--gold);background:rgba(245,197,24,.07);}
-.export-btn.gold:hover{background:var(--gold);color:#000;}
-.infobox{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:8px;padding:14px 18px;font-size:.8rem;line-height:1.7;color:var(--dim);margin-top:14px;}
-.infobox h4{color:var(--gold);margin-bottom:6px;font-size:.88rem;}
-.infobox ol,ul{padding-left:18px;}.infobox li{margin-bottom:3px;}
-.result-row{display:grid;grid-template-columns:1fr 80px 1fr;align-items:center;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.85rem;}
-.result-row:last-child{border-bottom:none;}
-.r-home{text-align:right;font-weight:500;}.r-away{text-align:left;font-weight:500;}
-.r-score{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:#fff;}
-.r-score.pending{color:var(--dim);font-size:.75rem;font-family:'DM Sans',sans-serif;font-weight:400;}
-.r-date{font-size:.68rem;color:var(--dim);text-align:center;}
-.adh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
-.girone-block{margin-bottom:28px;}
-.girone-lbl{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--green-l);letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
-.girone-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
-/* tournament name input */
-.name-input{width:100%;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:1.1rem;font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;transition:border-color .2s;}
-.name-input:focus{outline:none;border-color:var(--green-l);}
-</style>
-</head>
-<body>
-
-<nav>
-  <div class="logo">⚙️ <span>ADMIN</span> TORNEO</div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('setup',this)">🏟️ Setup</button>
-    <button class="nav-tab" onclick="showPage('matches',this)">⚽ Risultati</button>
-    <button class="nav-tab" onclick="showPage('calendar',this)">📅 Calendario</button>
-    <button class="nav-tab" onclick="showPage('standings',this)">📊 Classifiche</button>
-    <button class="nav-tab" onclick="showPage('export',this)">📤 Esporta</button>
-  </div>
-</nav>
-
-<main>
-
-<!-- SETUP -->
-<div class="page active" id="page-setup">
-  <div class="adh"><h2>🏟️ Configurazione Torneo</h2></div>
-
-  <div class="card">
-    <div class="card-title">🏆 Nome Torneo</div>
-    <input class="name-input" id="tournament-name" type="text" value="Edizione 2026" placeholder="Nome del torneo...">
-  </div>
-
-  <div class="card">
-    <div class="card-title">👕 Squadre per Girone</div>
-    <p style="font-size:.82rem;color:var(--dim);margin-bottom:16px">Inserisci i nomi delle 4 squadre per ciascuno dei 5 gironi.</p>
-    <div id="teams-form"></div>
-    <button class="btn-primary" style="margin-top:16px" onclick="saveTeams()">💾 Salva squadre e genera calendario</button>
-  </div>
-</div>
-
-<!-- MATCHES -->
-<div class="page" id="page-matches">
-  <div class="adh"><h2>⚽ Inserimento Risultati</h2></div>
-  <div id="matches-admin"></div>
-</div>
-
-<!-- CALENDAR -->
-<div class="page" id="page-calendar">
-  <div class="adh">
-    <h2>📅 Calendario Partite</h2>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <button class="sort-btn active-sort" id="btn-sort-date" onclick="setSort('date')">📅 Ordina per data</button>
-      <button class="sort-btn" id="btn-sort-girone" onclick="setSort('girone')">🔤 Ordina per girone</button>
-      <div style="width:1px;height:24px;background:var(--border)"></div>
-      <button class="sort-btn" onclick="sortAndSaveAll()" style="border-color:var(--gold);color:var(--gold)">💾 Applica ordine ai gironi</button>
-    </div>
-  </div>
-  <div id="calendar-content"></div>
-</div>
-
-<!-- STANDINGS -->
-<div class="page" id="page-standings">
-  <div class="adh"><h2>📊 Classifiche</h2></div>
-  <div id="standings-content"></div>
-  <div style="margin-top:32px"><div class="adh"><h2>🥉 Migliori Terze</h2></div>
-  <div class="card" id="thirds-content"></div></div>
-</div>
-
-<!-- EXPORT -->
-<div class="page" id="page-export">
-  <div class="adh"><h2>📤 Esporta & Pubblica</h2></div>
-
-  <div class="card">
-    <div class="card-title">🖥️ Display Yodeck</div>
-    <p style="font-size:.82rem;color:var(--dim);margin-bottom:14px">Scarica i due file e caricali su Yodeck come <strong>Web Page widget</strong>.</p>
-    <button class="export-btn gold" onclick="downloadJSON()">⬇️ Esporta dati (torneo-data.json)</button>
-    <button class="export-btn" onclick="downloadDisplay()">⬇️ Scarica display TV (display.html)</button>
-  </div>
-
-  <div class="infobox">
-    <h4>📺 Come pubblicare su Yodeck — Guida completa</h4>
-    <ol>
-      <li><strong>Scarica i dati JSON</strong> ogni volta che aggiorni i risultati → <code>torneo-data.json</code></li>
-      <li>Carica il JSON su <strong>Google Drive</strong> (o qualunque hosting pubblico) e ottieni il link diretto al file raw.</li>
-      <li>Nel file <code>display.html</code>, alla riga <code>dataUrl: null</code>, sostituisci <code>null</code> con l'URL del tuo JSON tra virgolette: <code>dataUrl: 'https://...'</code></li>
-      <li>Carica <code>display.html</code> su Yodeck: <strong>Media → Aggiungi → Web Page</strong> e incolla l'URL del file, oppure carica direttamente il file HTML.</li>
-      <li>Imposta la durata del widget a <strong>∞ (infinita)</strong> — il display ruota da solo ogni 12 secondi tra i gironi.</li>
-      <li>Per aggiornare i risultati: inserisci i punteggi qui → clicca <strong>Esporta dati JSON</strong> → ricarica il file su Drive. Il display si aggiorna automaticamente ogni 30 secondi.</li>
-    </ol>
-    <p style="margin-top:10px;color:rgba(245,197,24,.7);font-size:.75rem">💡 <strong>Consiglio rapido:</strong> Usa <strong>Google Drive → condivisione pubblica</strong> + strumenti come <code>gdrive-direct-link</code> per ottenere un URL raw diretto. Oppure usa <strong>GitHub Gist</strong> con il link Raw.</p>
-  </div>
-
-  <div class="card" style="margin-top:16px">
-    <div class="card-title">💾 Backup / Import</div>
-    <button class="export-btn" onclick="exportFull()">⬇️ Backup completo (JSON)</button>
-    <button class="export-btn" onclick="document.getElementById('imp').click()">📁 Importa dati</button>
-    <input type="file" id="imp" accept=".json" style="display:none" onchange="importData(event)">
-  </div>
-</div>
-
-</main>
-
-<script>
-const GIRONI = ['A','B','C','D','E'];
-let state = { tournamentName:'TORNEO CALCIO', teams:{}, matches:{} };
-
-// ── LOAD / SAVE ──
-function loadState(){
-  const s = localStorage.getItem('torneo_calcio_v2');
-  if(s) try{ state=JSON.parse(s); }catch(e){}
-  GIRONI.forEach(g=>{ if(!state.teams[g])state.teams[g]=['','','','']; if(!state.matches[g])state.matches[g]=[]; });
-  if(!state.tournamentName) state.tournamentName='TORNEO CALCIO';
-}
-function saveState(){ localStorage.setItem('torneo_calcio_v2',JSON.stringify(state)); }
-
-// ── NAV ──
-function showPage(id, btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  if(btn) btn.classList.add('active');
-  if(id==='matches') renderMatches();
-  if(id==='calendar') renderCalendar();
-  if(id==='standings') renderStandings();
-}
-
-// ── SETUP ──
-function renderSetup(){
-  const form = document.getElementById('teams-form');
-  form.innerHTML = GIRONI.map(g=>`
-    <div style="margin-bottom:18px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:var(--green-l);letter-spacing:.08em;margin-bottom:8px">GIRONE ${g}</div>
-      <div class="team-grid">
-        ${[0,1,2,3].map(i=>`<div class="team-input-row"><span class="team-num">${i+1}</span><input type="text" id="t-${g}-${i}" value="${state.teams[g][i]||''}" placeholder="Squadra ${i+1}"></div>`).join('')}
-      </div>
-    </div>`).join('');
-  document.getElementById('tournament-name').value = state.tournamentName||'TORNEO CALCIO';
-}
-
-function saveTeams(){
-  state.tournamentName = document.getElementById('tournament-name').value.trim()||'TORNEO CALCIO';
-  GIRONI.forEach(g=>{
-    const old = state.teams[g]||[];
-    state.teams[g] = [0,1,2,3].map(i=>{ const el=document.getElementById(`t-${g}-${i}`); return el?el.value.trim():''; });
-    state.matches[g] = buildMatches(g, state.matches[g]||[]);
-  });
-  saveState();
-  renderMatches();
-  alert('✅ Squadre salvate! Vai su "Risultati" per inserire i punteggi.');
-}
-
-function buildMatches(g, existing=[]){
-  const teams = state.teams[g].filter(t=>t);
-  const pairs=[];
-  for(let i=0;i<teams.length;i++) for(let j=i+1;j<teams.length;j++){
-    const ex = existing.find(m=>m.home===teams[i]&&m.away===teams[j]);
-    pairs.push(ex||{home:teams[i],away:teams[j],homeGoals:null,awayGoals:null,date:'',played:false});
-  }
-  return pairs;
-}
-
-// ── MATCHES ──
-function renderMatches(){
-  const c=document.getElementById('matches-admin');
-  const anyTeams=GIRONI.some(g=>state.teams[g].some(t=>t));
-  if(!anyTeams){c.innerHTML='<div class="card" style="text-align:center;padding:40px;color:var(--dim)">Prima configura le squadre nel tab Setup.</div>';return;}
-  c.innerHTML=GIRONI.map(g=>{
-    const matches=state.matches[g]||[];
-    if(!matches.length) return '';
-    return `<div class="card girone-block">
-      <div class="girone-lbl">Girone ${g}</div>
-      ${matches.map((m,mi)=>`
-        <div class="match-row">
-          <div class="team-label home">${m.home}</div>
-          <input type="number" class="score-input" id="sh-${g}-${mi}" value="${m.homeGoals!==null?m.homeGoals:''}" min="0" max="99" placeholder="–" oninput="dirty('${g}',${mi})">
-          <div class="vs-label">–</div>
-          <input type="number" class="score-input" id="sa-${g}-${mi}" value="${m.awayGoals!==null?m.awayGoals:''}" min="0" max="99" placeholder="–" oninput="dirty('${g}',${mi})">
-          <div class="team-label">${m.away}</div>
-          <div class="row-right">
-            <div class="datetime-group">
-              <input type="date" id="dt-${g}-${mi}" value="${m.date||''}" onchange="saveDateTime('${g}',${mi})">
-              <input type="time" id="tm-${g}-${mi}" value="${m.time||''}" placeholder="00:00" onchange="saveDateTime('${g}',${mi})">
-            </div>
-            <button class="save-btn ${m.played?'saved':''}" id="btn-${g}-${mi}" onclick="saveMatch('${g}',${mi})">${m.played?'✓ Salvato':'Salva'}</button>
-          </div>
-        </div>`).join('')}
-    </div>`;
-  }).join('');
-}
-
-function dirty(g,mi){ const b=document.getElementById(`btn-${g}-${mi}`); if(b){b.textContent='Salva';b.classList.remove('saved');} }
-function saveDateTime(g,mi){
-  const d=document.getElementById(`dt-${g}-${mi}`);
-  const t=document.getElementById(`tm-${g}-${mi}`);
-  state.matches[g][mi].date=d?d.value:'';
-  state.matches[g][mi].time=t?t.value:'';
-  saveState();
-}
-
-function saveMatch(g,mi){
-  const h=parseInt(document.getElementById(`sh-${g}-${mi}`).value);
-  const a=parseInt(document.getElementById(`sa-${g}-${mi}`).value);
-  if(isNaN(h)||isNaN(a)){alert('Inserisci entrambi i punteggi');return;}
-  const d=document.getElementById(`dt-${g}-${mi}`);
-  const t=document.getElementById(`tm-${g}-${mi}`);
-  state.matches[g][mi]={...state.matches[g][mi],homeGoals:h,awayGoals:a,played:true,
-    date:d?d.value:(state.matches[g][mi].date||''),
-    time:t?t.value:(state.matches[g][mi].time||'')};
-  saveState();
-  const btn=document.getElementById(`btn-${g}-${mi}`);
-  if(btn){btn.textContent='✓ Salvato';btn.classList.add('saved');}
-}
-
-// ── STANDINGS LOGIC ──
-function computeStandings(g){
-  const teams=(state.teams[g]||[]).filter(t=>t);
-  const matches=(state.matches[g]||[]).filter(m=>m.played);
-  const stats={};
-  teams.forEach(t=>{stats[t]={team:t,W:0,D:0,L:0,GF:0,GA:0,Pts:0,PL:0};});
-  matches.forEach(m=>{
-    if(!stats[m.home]||!stats[m.away])return;
-    const h=stats[m.home],a=stats[m.away];
-    h.GF+=m.homeGoals;h.GA+=m.awayGoals;h.PL++;
-    a.GF+=m.awayGoals;a.GA+=m.homeGoals;a.PL++;
-    if(m.homeGoals>m.awayGoals){h.W++;h.Pts+=3;a.L++;}
-    else if(m.homeGoals<m.awayGoals){a.W++;a.Pts+=3;h.L++;}
-    else{h.D++;h.Pts++;a.D++;a.Pts++;}
-  });
-  let arr=teams.map(t=>stats[t]);
-  arr.sort((a,b)=>fullSort(a,b,matches,arr));
-  return arr;
-}
-
-function fullSort(a,b,allM,allT){
-  if(b.Pts!==a.Pts)return b.Pts-a.Pts;
-  const tied=allT.filter(t=>t.Pts===a.Pts).map(t=>t.team);
-  if(tied.length<2)return 0;
-  const dA=directStats(a.team,tied,allM),dB=directStats(b.team,tied,allM);
-  if(dB.pts!==dA.pts)return dB.pts-dA.pts;
-  if((dB.gf-dB.ga)!==(dA.gf-dA.ga))return(dB.gf-dB.ga)-(dA.gf-dA.ga);
-  if((b.GF-b.GA)!==(a.GF-a.GA))return(b.GF-b.GA)-(a.GF-a.GA);
-  return b.GF-a.GF;
-}
-
-function directStats(team,group,allM){
-  let pts=0,gf=0,ga=0;
-  allM.filter(m=>m.played&&group.includes(m.home)&&group.includes(m.away)&&(m.home===team||m.away===team))
-    .forEach(m=>{
-      if(m.home===team){gf+=m.homeGoals;ga+=m.awayGoals;if(m.homeGoals>m.awayGoals)pts+=3;else if(m.homeGoals===m.awayGoals)pts++;}
-      else{gf+=m.awayGoals;ga+=m.homeGoals;if(m.awayGoals>m.homeGoals)pts+=3;else if(m.awayGoals===m.homeGoals)pts++;}
-    });
-  return{pts,gf,ga};
-}
-
-function computeThirds(){
-  return GIRONI.map(g=>{
-    const t=(state.teams[g]||[]).filter(t=>t);
-    if(t.length<3)return null;
-    const s=computeStandings(g);
-    return s[2]?{...s[2],girone:g}:null;
-  }).filter(Boolean).sort((a,b)=>{
-    if(b.Pts!==a.Pts)return b.Pts-a.Pts;
-    const dA=a.GF-a.GA,dB=b.GF-b.GA;
-    if(dB!==dA)return dB-dA;
-    return b.GF-a.GF;
-  });
-}
-
-// ── RENDER STANDINGS ──
-function renderStandings(){
-  const c=document.getElementById('standings-content');
-  c.innerHTML=GIRONI.map(g=>{
-    const teams=(state.teams[g]||[]).filter(t=>t);
-    if(!teams.length)return '';
-    const s=computeStandings(g);
-    const rc=['r1','r2','r3','r-'];
-    return `<div class="girone-block">
-      <div class="girone-lbl">Girone ${g}</div>
-      <div class="card" style="padding:0;overflow:hidden">
-        <table class="standings-table">
-          <thead><tr><th>#</th><th>Squadra</th><th>PG</th><th>V</th><th>P</th><th>S</th><th>GF</th><th>GS</th><th>DR</th><th>Pts</th></tr></thead>
-          <tbody>
-          ${s.map((row,i)=>{
-            const diff=row.GF-row.GA;
-            const dc=diff>0?'diff-p':diff<0?'diff-n':'diff-z';
-            const qc=i===0?'qual-row':i===2?'third-row':'';
-            return `<tr class="${qc}">
-              <td><span class="rank-badge ${rc[Math.min(i,3)]}">${i+1}</span></td>
-              <td>${row.team}</td>
-              <td>${row.PL}</td><td>${row.W}</td><td>${row.D}</td><td>${row.L}</td>
-              <td>${row.GF}</td><td>${row.GA}</td>
-              <td class="${dc}">${diff>=0?'+':''}${diff}</td>
-              <td class="pts-bold">${row.Pts}</td>
-            </tr>`;
-          }).join('')}
-          </tbody>
-        </table>
-        <div style="padding:7px 12px;font-size:.68rem;color:var(--dim);border-top:1px solid var(--border)">
-          <span style="border-left:3px solid var(--green-l);padding-left:5px;margin-right:12px">1° Qualificato</span>
-          <span style="border-left:3px solid var(--gold);padding-left:5px">Potenziale migliore terza</span>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  // Thirds
-  const thirds=computeThirds();
-  const tc=document.getElementById('thirds-content');
-  if(!thirds.length){tc.innerHTML='<p style="color:var(--dim);font-size:.85rem">Dati non disponibili.</p>';return;}
-  tc.innerHTML=`<table class="standings-table">
-    <thead><tr><th>#</th><th>Squadra</th><th>Girone</th><th>Pts</th><th>GF</th><th>GS</th><th>DR</th></tr></thead>
-    <tbody>${thirds.map((s,i)=>{
-      const diff=s.GF-s.GA;
-      return `<tr><td><span class="rank-badge ${['r1','r2','r3','r-'][Math.min(i,3)]}">${i+1}</span></td>
-        <td>${s.team}</td><td style="color:var(--green-l);font-family:'Bebas Neue',sans-serif;letter-spacing:.08em">${s.girone}</td>
-        <td class="pts-bold">${s.Pts}</td><td>${s.GF}</td><td>${s.GA}</td>
-        <td class="${diff>=0?'diff-p':diff<0?'diff-n':'diff-z'}">${diff>=0?'+':''}${diff}</td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table>`;
-}
-
-// ── EXPORT ──
-function downloadJSON(){
-  // export only the data needed by display.html
-  const data = JSON.stringify(state, null, 2);
-  dl(data,'torneo-data.json','application/json');
-}
-
-function downloadDisplay(){
-  // Inline the display.html — user should already have it, but offer reminder
-  alert('Il file display.html è già stato scaricato insieme a questo admin. Se non lo trovi, riaprilo dal pacchetto originale e segui la guida nel tab Esporta.');
-}
-
-function exportFull(){
-  dl(JSON.stringify(state,null,2),'torneo-backup.json','application/json');
-}
-
-function dl(content,filename,type){
-  const b=new Blob([content],{type});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(b);
-  a.download=filename;
-  a.click();
-}
-
-function importData(e){
-  const f=e.target.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{try{state=JSON.parse(ev.target.result);GIRONI.forEach(g=>{if(!state.teams[g])state.teams[g]=[];if(!state.matches[g])state.matches[g]=[];});saveState();renderSetup();alert('✅ Dati importati!');}catch(err){alert('❌ File non valido');}};
-  r.readAsText(f);
-}
-
-// ── CALENDAR VIEW ──
-let calSortMode = 'date'; // 'date' | 'girone'
-
-function setSort(mode){
-  calSortMode = mode;
-  document.getElementById('btn-sort-date').classList.toggle('active-sort', mode==='date');
-  document.getElementById('btn-sort-girone').classList.toggle('active-sort', mode==='girone');
-  renderCalendar();
-}
-
-function getAllMatches(){
-  const all=[];
-  GIRONI.forEach(g=>{
-    (state.matches[g]||[]).forEach((m,mi)=>{
-      all.push({...m, girone:g, mi});
-    });
-  });
-  return all;
-}
-
-function matchSortKey(m){
-  // YYYY-MM-DD HH:MM for reliable string sort; no date → pushed to end
-  if(!m.date) return '9999-99-99 99:99';
-  return m.date + ' ' + (m.time||'00:00');
-}
-
-function renderCalendar(){
-  const c = document.getElementById('calendar-content');
-  const all = getAllMatches();
-  const anyTeams = GIRONI.some(g=>(state.teams[g]||[]).some(t=>t));
-  if(!anyTeams||!all.length){
-    c.innerHTML='<div class="card" style="text-align:center;padding:40px;color:var(--dim)">Nessuna partita. Configura le squadre nel tab Setup.</div>';
-    return;
-  }
-
-  if(calSortMode==='girone'){
-    // group by girone, within girone sort by date+time
-    c.innerHTML = GIRONI.map(g=>{
-      const matches=(state.matches[g]||[]).map((m,mi)=>({...m,girone:g,mi}));
-      if(!matches.length) return '';
-      const sorted=[...matches].sort((a,b)=>matchSortKey(a).localeCompare(matchSortKey(b)));
-      return `<div class="cal-day-block">
-        <div class="cal-day-header">
-          <span>GIRONE ${g}</span>
-          <span class="day-count">${matches.length} partite</span>
-        </div>
-        ${sorted.map(m=>calMatchRow(m)).join('')}
-      </div>`;
-    }).join('');
-  } else {
-    // sort by date+time, group by date
-    const sorted=[...all].sort((a,b)=>matchSortKey(a).localeCompare(matchSortKey(b)));
-    const withDate=sorted.filter(m=>m.date);
-    const noDate=sorted.filter(m=>!m.date);
-
-    // group by date
-    const byDate={};
-    withDate.forEach(m=>{ (byDate[m.date]=byDate[m.date]||[]).push(m); });
-
-    const datesHtml = Object.keys(byDate).sort().map(date=>{
-      const ms=byDate[date].sort((a,b)=>(a.time||'').localeCompare(b.time||''));
-      return `<div class="cal-day-block">
-        <div class="cal-day-header">
-          <span>${formatDateLong(date)}</span>
-          <span class="day-count">${ms.length} ${ms.length===1?'partita':'partite'}</span>
-        </div>
-        ${ms.map(m=>calMatchRow(m)).join('')}
-      </div>`;
-    }).join('');
-
-    const noDatesHtml = noDate.length ? `
-      <div class="cal-day-block" style="opacity:.6">
-        <div class="cal-day-header" style="border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)">
-          <span>📭 DATA NON ASSEGNATA</span>
-          <span class="day-count" style="background:rgba(255,255,255,.1);color:var(--dim)">${noDate.length} partite</span>
-        </div>
-        ${noDate.map(m=>calMatchRow(m)).join('')}
-      </div>` : '';
-
-    c.innerHTML = datesHtml + noDatesHtml ||
-      '<div class="card" style="text-align:center;padding:40px;color:var(--dim)">Nessuna partita con data assegnata.</div>';
+{
+  "tournamentName": "EDIZIONE 2026",
+  "teams": {
+    "A": [
+      "PL SPURGHI",
+      "BLAMON CAFE'",
+      "AC COSTRUZIONI",
+      "ZANI COSTRUZIONI / GIOSTEMA"
+    ],
+    "B": [
+      "NEW SINTESI",
+      "G.M.COSTRUZIONI",
+      "QUELLI DELLA LAVANDERIA",
+      "ELETTROTECNICA CRISTINI"
+    ],
+    "C": [
+      "GM CASTELCOVATI",
+      "HOTEL COSTEZ",
+      "PENSIONE PER CANI SAN CARLO",
+      "LUXURIA PARRUCCHIERI-FANTA TINTEGGIATURE"
+    ],
+    "D": [
+      "FERRAMENTA STAZIONE",
+      "EQUIPE GANGO",
+      "SEDAL PNEUMATICI",
+      "ALBI COPERTURE"
+    ],
+    "E": [
+      "BAR FOLLIA",
+      "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+      "NOLI PONTEGGI",
+      "EQUIPE NORTH AFRICA"
+    ]
+  },
+  "matches": {
+    "A": [
+      {
+        "home": "PL SPURGHI",
+        "away": "BLAMON CAFE'",
+        "homeGoals": 5,
+        "awayGoals": 3,
+        "date": "2026-05-21",
+        "played": true,
+        "time": "20:15"
+      },
+      {
+        "home": "PL SPURGHI",
+        "away": "AC COSTRUZIONI",
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "date": "2026-05-26",
+        "played": true,
+        "time": "21:45"
+      },
+      {
+        "home": "PL SPURGHI",
+        "away": "ZANI COSTRUZIONI / GIOSTEMA",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-02",
+        "played": false,
+        "time": "21:30"
+      },
+      {
+        "home": "BLAMON CAFE'",
+        "away": "AC COSTRUZIONI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-02",
+        "played": false,
+        "time": "21:45"
+      },
+      {
+        "home": "BLAMON CAFE'",
+        "away": "ZANI COSTRUZIONI / GIOSTEMA",
+        "homeGoals": 3,
+        "awayGoals": 3,
+        "date": "2026-05-28",
+        "played": true,
+        "time": "20:15"
+      },
+      {
+        "home": "AC COSTRUZIONI",
+        "away": "ZANI COSTRUZIONI / GIOSTEMA",
+        "homeGoals": 2,
+        "awayGoals": 6,
+        "date": "2026-05-21",
+        "played": true,
+        "time": "21:00"
+      }
+    ],
+    "B": [
+      {
+        "home": "NEW SINTESI",
+        "away": "G.M.COSTRUZIONI",
+        "homeGoals": 5,
+        "awayGoals": 1,
+        "date": "2026-05-21",
+        "played": true,
+        "time": "21:45"
+      },
+      {
+        "home": "NEW SINTESI",
+        "away": "QUELLI DELLA LAVANDERIA",
+        "homeGoals": 2,
+        "awayGoals": 6,
+        "date": "2026-05-28",
+        "played": true,
+        "time": "21:00"
+      },
+      {
+        "home": "NEW SINTESI",
+        "away": "ELETTROTECNICA CRISTINI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-04",
+        "played": false,
+        "time": "20:15"
+      },
+      {
+        "home": "G.M.COSTRUZIONI",
+        "away": "QUELLI DELLA LAVANDERIA",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-04",
+        "played": false,
+        "time": "21:00"
+      },
+      {
+        "home": "G.M.COSTRUZIONI",
+        "away": "ELETTROTECNICA CRISTINI",
+        "homeGoals": 0,
+        "awayGoals": 4,
+        "date": "2026-05-28",
+        "played": true,
+        "time": "21:45"
+      },
+      {
+        "home": "QUELLI DELLA LAVANDERIA",
+        "away": "ELETTROTECNICA CRISTINI",
+        "homeGoals": 1,
+        "awayGoals": 5,
+        "date": "2026-05-21",
+        "played": true,
+        "time": "22:30"
+      }
+    ],
+    "C": [
+      {
+        "home": "GM CASTELCOVATI",
+        "away": "HOTEL COSTEZ",
+        "homeGoals": 4,
+        "awayGoals": 2,
+        "date": "2026-05-22",
+        "played": true,
+        "time": "20:15"
+      },
+      {
+        "home": "GM CASTELCOVATI",
+        "away": "PENSIONE PER CANI SAN CARLO",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-05-28",
+        "played": false,
+        "time": "21:45"
+      },
+      {
+        "home": "GM CASTELCOVATI",
+        "away": "LUXURIA PARRUCCHIERI-FANTA TINTEGGIATURE",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-04",
+        "played": false,
+        "time": "21:45"
+      },
+      {
+        "home": "HOTEL COSTEZ",
+        "away": "PENSIONE PER CANI SAN CARLO",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-04",
+        "played": false,
+        "time": "22:30"
+      },
+      {
+        "home": "HOTEL COSTEZ",
+        "away": "LUXURIA PARRUCCHIERI-FANTA TINTEGGIATURE",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-05-29",
+        "played": false,
+        "time": "20:15"
+      },
+      {
+        "home": "PENSIONE PER CANI SAN CARLO",
+        "away": "LUXURIA PARRUCCHIERI-FANTA TINTEGGIATURE",
+        "homeGoals": 2,
+        "awayGoals": 2,
+        "date": "2026-05-22",
+        "played": true,
+        "time": "21:00"
+      }
+    ],
+    "D": [
+      {
+        "home": "FERRAMENTA STAZIONE",
+        "away": "EQUIPE GANGO",
+        "homeGoals": 4,
+        "awayGoals": 2,
+        "date": "2026-05-22",
+        "played": true,
+        "time": "21:45"
+      },
+      {
+        "home": "FERRAMENTA STAZIONE",
+        "away": "SEDAL PNEUMATICI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-05-29",
+        "played": false,
+        "time": "21:00"
+      },
+      {
+        "home": "FERRAMENTA STAZIONE",
+        "away": "ALBI COPERTURE",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-05-05",
+        "played": false,
+        "time": "20:15"
+      },
+      {
+        "home": "EQUIPE GANGO",
+        "away": "SEDAL PNEUMATICI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-05",
+        "played": false,
+        "time": "21:00"
+      },
+      {
+        "home": "EQUIPE GANGO",
+        "away": "ALBI COPERTURE",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-05-29",
+        "played": false,
+        "time": "21:45"
+      },
+      {
+        "home": "SEDAL PNEUMATICI",
+        "away": "ALBI COPERTURE",
+        "homeGoals": 1,
+        "awayGoals": 0,
+        "date": "2026-05-22",
+        "played": true,
+        "time": "22:30"
+      }
+    ],
+    "E": [
+      {
+        "home": "BAR FOLLIA",
+        "away": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+        "homeGoals": 2,
+        "awayGoals": 3,
+        "date": "2026-05-26",
+        "played": true,
+        "time": "20:15"
+      },
+      {
+        "home": "BAR FOLLIA",
+        "away": "NOLI PONTEGGI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-05-29",
+        "played": false,
+        "time": "22:30"
+      },
+      {
+        "home": "BAR FOLLIA",
+        "away": "EQUIPE NORTH AFRICA",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-05",
+        "played": false,
+        "time": "21:45"
+      },
+      {
+        "home": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+        "away": "NOLI PONTEGGI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-05",
+        "played": false,
+        "time": "22:30"
+      },
+      {
+        "home": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+        "away": "EQUIPE NORTH AFRICA",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-02",
+        "played": false,
+        "time": "21:15"
+      },
+      {
+        "home": "NOLI PONTEGGI",
+        "away": "EQUIPE NORTH AFRICA",
+        "homeGoals": 3,
+        "awayGoals": 2,
+        "date": "2026-05-26",
+        "played": true,
+        "time": "21:00"
+      }
+    ]
   }
 }
-
-function calMatchRow(m){
-  const timeHtml = m.time
-    ? `<div class="cal-time">${m.time}</div>`
-    : `<div class="cal-time no-time">—</div>`;
-  const scoreHtml = m.played
-    ? `<span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.08em;color:#fff">${m.homeGoals}</span>
-       <span style="color:var(--dim);font-size:.9rem">–</span>
-       <span style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.08em;color:#fff">${m.awayGoals}</span>`
-    : `<span style="color:var(--dim);font-size:.8rem;letter-spacing:.1em">vs</span>`;
-  const playedDot = m.played
-    ? `<span style="width:7px;height:7px;border-radius:50%;background:var(--green-l);display:inline-block;margin-right:4px" title="Giocata"></span>`
-    : '';
-  return `<div class="cal-match-row">
-    ${timeHtml}
-    <div style="text-align:right;font-weight:500;font-size:.9rem">${m.home}</div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:4px">${scoreHtml}</div>
-    <div></div>
-    <div style="font-weight:500;font-size:.9rem">${m.away}</div>
-    <div style="display:flex;align-items:center;gap:8px">
-      ${playedDot}
-      <span class="cal-girone-badge">Girone ${m.girone}</span>
-    </div>
-    <div></div>
-  </div>`;
-}
-
-// Applica l'ordinamento per data direttamente nei gironi (permanente)
-function sortAndSaveAll(){
-  GIRONI.forEach(g=>{
-    state.matches[g]=[...( state.matches[g]||[])].sort((a,b)=>matchSortKey(a).localeCompare(matchSortKey(b)));
-  });
-  saveState();
-  renderCalendar();
-  // also refresh matches tab if visible
-  const mpage=document.getElementById('page-matches');
-  if(mpage&&mpage.classList.contains('active')) renderMatches();
-  // small toast
-  const toast=document.createElement('div');
-  toast.textContent='✅ Ordine applicato e salvato nei gironi';
-  toast.style.cssText='position:fixed;bottom:24px;right:24px;background:var(--green-d);border:1px solid var(--green-l);color:var(--green-l);padding:10px 18px;border-radius:8px;font-size:.85rem;font-weight:600;z-index:9999;animation:fadeIn .3s';
-  document.body.appendChild(toast);
-  setTimeout(()=>toast.remove(),2500);
-}
-
-function formatDate(d){if(!d)return '';const p=d.split('-');return`${p[2]}/${p[1]}`;}
-function formatDateLong(d){
-  if(!d)return'—';
-  const dt=new Date(d+'T12:00:00');
-  const days=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
-  const months=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
-  return`${days[dt.getDay()]} ${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`;
-}
-
-loadState();
-renderSetup();
-</script>
-</body>
-</html>
