@@ -270,10 +270,10 @@
       {
         "home": "BAR FOLLIA",
         "away": "NOLI PONTEGGI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 3,
+        "awayGoals": 3,
         "date": "2026-05-29",
-        "played": false,
+        "played": true,
         "time": "22:30"
       },
       {
