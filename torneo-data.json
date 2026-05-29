@@ -214,10 +214,10 @@
       {
         "home": "FERRAMENTA STAZIONE",
         "away": "SEDAL PNEUMATICI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 2,
+        "awayGoals": 2,
         "date": "2026-05-29",
-        "played": false,
+        "played": true,
         "time": "21:00"
       },
       {
