@@ -185,10 +185,10 @@
       {
         "home": "HOTEL COSTEZ",
         "away": "LUXURIA PARRUCCHIERI-FANTA TINTEGGIATURE",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 0,
+        "awayGoals": 3,
         "date": "2026-05-29",
-        "played": false,
+        "played": true,
         "time": "20:15"
       },
       {
