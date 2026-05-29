@@ -241,10 +241,10 @@
       {
         "home": "EQUIPE GANGO",
         "away": "ALBI COPERTURE",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 4,
+        "awayGoals": 3,
         "date": "2026-05-29",
-        "played": false,
+        "played": true,
         "time": "21:45"
       },
       {
