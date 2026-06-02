@@ -297,11 +297,11 @@
       {
         "home": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
         "away": "EQUIPE NORTH AFRICA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 4,
+        "awayGoals": 0,
         "date": "2026-06-02",
-        "played": false,
-        "time": "21:15"
+        "played": true,
+        "time": "20:15"
       },
       {
         "home": "NOLI PONTEGGI",
