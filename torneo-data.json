@@ -55,10 +55,10 @@
       {
         "home": "PL SPURGHI",
         "away": "ZANI COSTRUZIONI / GIOSTEMA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 1,
+        "awayGoals": 2,
         "date": "2026-06-02",
-        "played": false,
+        "played": true,
         "time": "21:30"
       },
       {
