@@ -167,10 +167,10 @@
       {
         "home": "GM CASTELCOVATI",
         "away": "LUXURIA PARRUCCHIERI-FANTA TINTEGGIATURE",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 3,
+        "awayGoals": 0,
         "date": "2026-06-04",
-        "played": false,
+        "played": true,
         "time": "21:45"
       },
       {
