@@ -59,16 +59,16 @@
         "awayGoals": 2,
         "date": "2026-06-02",
         "played": true,
-        "time": "21:30"
+        "time": "21:00"
       },
       {
         "home": "BLAMON CAFE'",
         "away": "AC COSTRUZIONI",
-        "homeGoals": null,
-        "awayGoals": null,
-        "date": "2026-06-02",
-        "played": false,
-        "time": "21:45"
+        "homeGoals": 0,
+        "awayGoals": 3,
+        "date": "2026-06-04",
+        "played": true,
+        "time": "19:45"
       },
       {
         "home": "BLAMON CAFE'",
