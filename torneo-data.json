@@ -111,10 +111,10 @@
       {
         "home": "NEW SINTESI",
         "away": "ELETTROTECNICA CRISTINI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 1,
+        "awayGoals": 2,
         "date": "2026-06-04",
-        "played": false,
+        "played": true,
         "time": "20:15"
       },
       {
