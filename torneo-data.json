@@ -176,10 +176,10 @@
       {
         "home": "HOTEL COSTEZ",
         "away": "PENSIONE PER CANI SAN CARLO",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 1,
+        "awayGoals": 7,
         "date": "2026-06-04",
-        "played": false,
+        "played": true,
         "time": "22:30"
       },
       {
