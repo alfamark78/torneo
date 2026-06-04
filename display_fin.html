@@ -37,158 +37,90 @@ html,body{width:var(--w);height:var(--h);overflow:hidden;background:var(--bg);fo
 /* ── HEADER ── */
 header{
   position:relative;z-index:1;
-  display:grid;grid-template-columns:480px 1fr 480px;align-items:center;
-  padding:0 56px;height:120px;
+  display:grid;grid-template-columns:420px 1fr 420px;align-items:center;
+  padding:0 48px;height:108px;
   background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.3) 100%);
   border-bottom:1px solid var(--border-g);}
 header::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--green),var(--gold),var(--green),transparent);opacity:.6;}
 
-.hdr-left{display:flex;align-items:center;gap:16px;}
-.trophy-icon{font-size:3rem;animation:trophyPulse 3s ease-in-out infinite;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.trophy-icon{font-size:2.4rem;animation:trophyPulse 3s ease-in-out infinite;}
 @keyframes trophyPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(255,214,0,.4));}50%{filter:drop-shadow(0 0 20px rgba(255,214,0,.8));}}
-.t-name{font-size:3.2rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;line-height:1;}
-.t-sub{font-size:1.3rem;font-weight:400;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;}
+.t-name{font-size:2.6rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;line-height:1;}
+.t-sub{font-size:1.1rem;font-weight:400;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;}
 .hdr-center{text-align:center;}
-.phase-big{font-size:4.4rem;font-weight:900;letter-spacing:.15em;line-height:1;color:#fff;text-shadow:0 0 40px rgba(255,214,0,.5);}
-.phase-sub{font-size:1.2rem;color:var(--text-dim);letter-spacing:.3em;text-transform:uppercase;margin-top:4px;}
+.phase-big{font-size:3.8rem;font-weight:900;letter-spacing:.15em;line-height:1;color:#fff;text-shadow:0 0 40px rgba(255,214,0,.5);}
+.phase-sub{font-size:1rem;color:var(--text-dim);letter-spacing:.3em;text-transform:uppercase;margin-top:4px;}
 .hdr-right{text-align:right;}
-.clock{font-size:4.2rem;font-weight:800;letter-spacing:.05em;color:#fff;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 20px rgba(0,230,118,.3);}
-.date-display{font-size:1.2rem;color:var(--text-dim);letter-spacing:.15em;text-transform:uppercase;}
+.clock{font-size:3.6rem;font-weight:800;letter-spacing:.05em;color:#fff;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 20px rgba(0,230,118,.3);}
+.date-display{font-size:1.05rem;color:var(--text-dim);letter-spacing:.15em;text-transform:uppercase;}
 
-/* ── SCHERMATA WRAPPER ── */
-.screen{
-  position:absolute;
-  top:120px;
-  left:0;width:var(--w);
-  height:calc(var(--h) - 120px - 200px);
-  display:grid;
-  padding:28px 56px 24px;
-  gap:24px;
-  opacity:1;
-  transition:opacity .7s ease, transform .7s ease;
-  z-index:1;
-}
-.screen.hidden{opacity:0;transform:translateX(60px);pointer-events:none;}
+/* ── BODY ── */
+.body{
+  position:relative;z-index:1;
+  width:var(--w);height:calc(var(--h) - 108px - 200px);
+  display:grid;grid-template-columns:1fr 420px;gap:0;
+  padding:24px 48px 20px;}
 
-/* Schermata 1: 2 colonne playoff + quarti */
-#screen1{grid-template-columns:1fr 1fr;}
-
-/* Schermata 2: 2 colonne grandi + pannello scorer */
-#screen2{grid-template-columns:1fr 1fr 380px;}
-
-/* ── INDICATORE SCHERMATA ── */
-.screen-indicator{
-  position:fixed;bottom:210px;left:50%;transform:translateX(-50%);
-  z-index:10;display:flex;gap:14px;align-items:center;
-}
-.screen-dot{
-  width:14px;height:14px;border-radius:50%;
-  background:rgba(255,255,255,.2);
-  border:2px solid rgba(255,255,255,.3);
-  transition:all .4s ease;
-}
-.screen-dot.active{background:var(--green);border-color:var(--green);box-shadow:0 0 12px rgba(0,230,118,.8);}
-
-/* ── COLONNE BRACKET ── */
-.bracket-col{display:flex;flex-direction:column;gap:10px;min-width:0;}
-.col-header{font-size:1.5rem;font-weight:700;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
-  padding:10px 18px;background:rgba(255,214,0,.07);border:1px solid rgba(255,214,0,.2);border-radius:8px;
-  text-align:center;margin-bottom:8px;flex-shrink:0;}
+/* ── BRACKET ── */
+.bracket-area{display:flex;flex-direction:column;gap:12px;padding-right:28px;overflow:hidden;}
+.bracket-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;flex:1;}
+.bracket-col{display:flex;flex-direction:column;gap:10px;}
+.col-header{font-size:1rem;font-weight:700;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
+  padding:6px 14px;background:rgba(255,214,0,.07);border:1px solid rgba(255,214,0,.2);border-radius:6px;
+  text-align:center;margin-bottom:6px;}
 .col-header.green{color:var(--green);background:rgba(0,230,118,.06);border-color:rgba(0,230,118,.25);}
-.col-header.white{color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);}
 
-/* ── MATCH BOX ── */
-.ko-box{
-  background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  overflow:hidden;flex:1;min-height:0;
-  display:flex;flex-direction:column;
-}
+/* Match box in bracket */
+.ko-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;flex:1;min-height:0;}
 .ko-box.played{border-color:rgba(0,230,118,.3);}
 .ko-box.final{border-color:rgba(255,214,0,.4);background:rgba(255,214,0,.04);}
-
-.ko-box-label{
-  font-size:.9rem;font-weight:700;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;
-  padding:8px 18px;background:rgba(0,0,0,.45);border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.ko-team-row{
-  display:grid;grid-template-columns:1fr 80px;align-items:center;
-  padding:14px 18px;gap:12px;flex:1;min-height:0;
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-.ko-team-row:last-of-type{border-bottom:none;}
+.ko-box-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;
+  padding:5px 12px;background:rgba(0,0,0,.4);border-bottom:1px solid var(--border);}
+.ko-team-row{display:grid;grid-template-columns:1fr 56px;align-items:center;padding:8px 12px;gap:8px;min-height:52px;border-bottom:1px solid rgba(255,255,255,.04);}
+.ko-team-row:last-child{border-bottom:none;}
 .ko-team-row.winner .ko-team-name{color:var(--green);font-weight:900;}
-.ko-team-row.winner .ko-score{color:var(--green);text-shadow:0 0 16px rgba(0,230,118,.8);}
+.ko-team-row.winner .ko-score{color:var(--green);text-shadow:0 0 12px rgba(0,230,118,.7);}
+.ko-team-name{font-size:1.4rem;font-weight:700;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ko-score{font-size:2rem;font-weight:900;text-align:right;letter-spacing:.05em;color:rgba(255,255,255,.9);}
+.ko-score.pending{font-size:1rem;color:var(--text-dim);font-weight:400;}
+.ko-scorers{padding:4px 12px 6px;display:flex;flex-wrap:wrap;gap:4px;}
+.ko-scorer-chip{font-size:.72rem;color:rgba(0,230,118,.75);background:rgba(0,230,118,.07);border-radius:10px;padding:2px 8px;white-space:nowrap;}
 
-/* NOMI SQUADRA — testo molto grande */
-.ko-team-name{
-  font-size:2.4rem;font-weight:800;text-transform:uppercase;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  line-height:1.1;
-}
-/* PUNTEGGIO — testo enorme */
-.ko-score{
-  font-size:3.4rem;font-weight:900;text-align:right;
-  letter-spacing:.05em;color:rgba(255,255,255,.95);
-  line-height:1;
-}
-.ko-score.pending{font-size:1.6rem;color:var(--text-dim);font-weight:400;}
-
-.ko-scorers{padding:6px 18px 10px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;}
-.ko-scorer-chip{
-  font-size:.95rem;color:rgba(0,230,118,.8);
-  background:rgba(0,230,118,.08);border-radius:12px;
-  padding:3px 12px;white-space:nowrap;
-}
-
-/* ── PANNELLO CAPOCANNONIERI ── */
-.scorers-panel{
-  border-left:1px solid var(--border);padding-left:28px;
-  display:flex;flex-direction:column;gap:14px;
-}
-.panel-title{
-  font-size:1.4rem;font-weight:700;letter-spacing:.35em;color:var(--green);
-  text-transform:uppercase;margin-bottom:8px;
-  display:flex;align-items:center;gap:12px;
-}
+/* ── RIGHT PANEL — TOP SCORERS ── */
+.scorers-panel{border-left:1px solid var(--border);padding-left:28px;display:flex;flex-direction:column;gap:12px;}
+.panel-title{font-size:1rem;font-weight:700;letter-spacing:.35em;color:var(--green);text-transform:uppercase;
+  margin-bottom:8px;display:flex;align-items:center;gap:10px;}
 .panel-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-g),transparent);}
 
-.scorer-row{
-  display:grid;grid-template-columns:56px 1fr 68px;align-items:center;gap:14px;
-  background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:16px 18px;flex-shrink:0;
-}
+.scorer-podium{display:flex;flex-direction:column;gap:8px;}
+.scorer-row{display:grid;grid-template-columns:48px 1fr 56px;align-items:center;gap:12px;
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;}
 .scorer-row.pos-1{border-color:rgba(255,214,0,.4);background:rgba(255,214,0,.05);}
 .scorer-row.pos-2{border-color:rgba(207,216,220,.3);}
 .scorer-row.pos-3{border-color:rgba(255,138,101,.3);}
-.scorer-medal{font-size:2.4rem;text-align:center;line-height:1;}
-.scorer-name{font-size:2rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;line-height:1.1;}
-.scorer-team{font-size:1.1rem;color:var(--text-dim);letter-spacing:.08em;margin-top:3px;text-transform:uppercase;}
-.scorer-goals{font-size:3.2rem;font-weight:900;text-align:right;letter-spacing:.04em;line-height:1;}
+.scorer-medal{font-size:2rem;text-align:center;line-height:1;}
+.scorer-info{}
+.scorer-name{font-size:1.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;line-height:1.1;}
+.scorer-team{font-size:.95rem;color:var(--text-dim);letter-spacing:.08em;margin-top:2px;text-transform:uppercase;}
+.scorer-goals{font-size:2.8rem;font-weight:900;text-align:right;letter-spacing:.04em;}
 .pos-1 .scorer-goals{color:var(--gold);text-shadow:0 0 24px rgba(255,214,0,.7);}
 .pos-2 .scorer-goals{color:var(--silver);}
 .pos-3 .scorer-goals{color:var(--bronze);}
-.scorer-goals-label{font-size:.85rem;color:var(--text-dim);text-align:right;letter-spacing:.1em;}
+.scorer-goals-label{font-size:.75rem;color:var(--text-dim);text-align:right;letter-spacing:.1em;}
 
-.no-scorers{display:flex;align-items:center;justify-content:center;flex:1;flex-direction:column;gap:14px;color:var(--text-dim);}
-.no-scorers .icon{font-size:3.5rem;opacity:.3;}
-
-/* etichetta schermata in alto */
-.screen-badge{
-  position:fixed;top:130px;right:56px;z-index:5;
-  font-size:1rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--text-dim);display:flex;align-items:center;gap:10px;
-  transition:opacity .5s;
-}
+.no-scorers{display:flex;align-items:center;justify-content:center;flex:1;flex-direction:column;gap:12px;color:var(--text-dim);}
+.no-scorers .icon{font-size:3rem;opacity:.3;}
 
 /* ── FOOTER ── */
-footer{position:fixed;bottom:0;left:0;right:0;z-index:1;height:200px;
+footer{position:relative;z-index:1;height:200px;
   border-top:2px solid var(--border-g);
-  background:linear-gradient(180deg,rgba(0,0,0,.75) 0%,rgba(0,20,8,.95) 100%);}
+  background:linear-gradient(180deg,rgba(0,0,0,.75) 0%,rgba(0,20,8,.95) 100%);overflow:hidden;}
 footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--green),var(--gold),var(--green),transparent);opacity:.7;}
-.sponsor-header{display:flex;align-items:center;justify-content:center;padding:10px 48px 4px;}
-.sponsor-header-label{font-size:.85rem;font-weight:700;letter-spacing:.4em;color:var(--gold-dim);text-transform:uppercase;display:flex;align-items:center;gap:12px;}
+.sponsor-header{display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 48px 6px;flex-shrink:0;}
+.sponsor-header-label{font-size:.75rem;font-weight:700;letter-spacing:.4em;color:var(--gold-dim);text-transform:uppercase;display:flex;align-items:center;gap:10px;}
 .sponsor-header-label::before,.sponsor-header-label::after{content:'';display:block;width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim));}
 .sponsor-header-label::after{background:linear-gradient(90deg,var(--gold-dim),transparent);}
 .sponsor-track{flex:1;overflow:hidden;display:flex;align-items:center;padding:0 48px;height:150px;}
@@ -197,6 +129,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 .sponsor-logo{display:flex;align-items:center;justify-content:center;height:130px;min-width:260px;padding:0 28px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);flex-shrink:0;}
 .sponsor-logo img{max-height:110px;max-width:230px;object-fit:contain;filter:brightness(1.1) contrast(1.05);}
 .sponsor-divider{color:var(--gold);font-size:1.4rem;opacity:.4;flex-shrink:0;}
+
+/* content-fade */
+.content-fade{transition:opacity .6s ease,transform .6s ease;}
+.content-fade.hiding{opacity:0;transform:translateY(10px);}
 </style>
 </head>
 <body>
@@ -222,36 +158,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   </div>
 </header>
 
-<!-- SCHERMATA 1: Play-off + Quarti di Finale -->
-<div class="screen" id="screen1">
-  <div class="bracket-col" id="col-playoff">
-    <div class="col-header">⚡ Play-off</div>
-  </div>
-  <div class="bracket-col" id="col-quarti">
-    <div class="col-header">🎯 Quarti di Finale</div>
-  </div>
-</div>
+<!-- MAIN BODY -->
+<div class="body content-fade" id="main-body">
 
-<!-- SCHERMATA 2: Semifinali + Finali + Capocannonieri -->
-<div class="screen hidden" id="screen2">
-  <div class="bracket-col" id="col-semi">
-    <div class="col-header green">🔥 Semifinali</div>
-  </div>
-  <div class="bracket-col" id="col-finali">
-    <div class="col-header white">🏆 Finali</div>
-  </div>
-  <div class="scorers-panel">
-    <div class="panel-title">⚽ Capocannonieri</div>
-    <div id="scorer-podium">
-      <div class="no-scorers"><div class="icon">⚽</div><p style="font-size:1.3rem;letter-spacing:.1em">Nessun marcatore ancora</p></div>
+  <!-- BRACKET -->
+  <div class="bracket-area">
+    <div class="bracket-grid">
+      <!-- PLAY-OFF -->
+      <div class="bracket-col" id="col-playoff">
+        <div class="col-header">⚡ Play-off</div>
+      </div>
+      <!-- QUARTI -->
+      <div class="bracket-col" id="col-quarti">
+        <div class="col-header">🎯 Quarti di Finale</div>
+      </div>
+      <!-- SEMI -->
+      <div class="bracket-col" id="col-semi">
+        <div class="col-header green">🔥 Semifinali</div>
+      </div>
+      <!-- FINALI -->
+      <div class="bracket-col" id="col-finali">
+        <div class="col-header" style="color:#fff;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)">🏆 Finali</div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Indicatori -->
-<div class="screen-indicator">
-  <div class="screen-dot active" id="dot1"></div>
-  <div class="screen-dot" id="dot2"></div>
+  <!-- TOP SCORERS -->
+  <div class="scorers-panel">
+    <div class="panel-title">⚽ Capocannonieri</div>
+    <div class="scorer-podium" id="scorer-podium">
+      <div class="no-scorers"><div class="icon">⚽</div><p>Nessun marcatore</p></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- FOOTER SPONSOR -->
@@ -260,7 +199,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
     <div class="sponsor-header-label">✦ Sponsors &amp; Partner ✦</div>
   </div>
   <div class="sponsor-track">
-    <div class="sponsor-inner" id="sponsor-inner"></div>
+    <div class="sponsor-inner" id="sponsor-inner">
+      <!-- sponsors populated by JS or add manually like display.html -->
+    </div>
   </div>
 </footer>
 
@@ -271,35 +212,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
 const CONFIG = {
   tournamentName: 'Memorial Massimo Salvi 2026',
   dataRefreshInterval: 30000,
-  screenSwitchInterval: 15000,   // ms fra uno switch e l'altro
+  // Set this to the same URL as display.html (the JSON that admin exports)
   dataUrl: 'https://raw.githubusercontent.com/alfamark78/torneo/main/finale-data.json'
 };
 
 let state = { teams:{}, matches:{}, finale:{} };
-let currentScreen = 1;
-
-// ════════════════════════════════════════════
-//  SCREEN SWITCH
-// ════════════════════════════════════════════
-function switchScreen(){
-  const s1 = document.getElementById('screen1');
-  const s2 = document.getElementById('screen2');
-  const d1 = document.getElementById('dot1');
-  const d2 = document.getElementById('dot2');
-  if(currentScreen === 1){
-    s1.classList.add('hidden');
-    s2.classList.remove('hidden');
-    d1.classList.remove('active');
-    d2.classList.add('active');
-    currentScreen = 2;
-  } else {
-    s2.classList.add('hidden');
-    s1.classList.remove('hidden');
-    d2.classList.remove('active');
-    d1.classList.add('active');
-    currentScreen = 1;
-  }
-}
 
 // ════════════════════════════════════════════
 //  LOAD DATA
@@ -334,13 +251,14 @@ const KO_ROUNDS = [
 function renderBracket(){
   KO_ROUNDS.forEach(r=>{
     const col = document.getElementById(r.colId);
+    // keep header
     const header = col.querySelector('.col-header');
     col.innerHTML='';
     col.appendChild(header);
     const matches = (state.finale[r.key]||[]);
     if(!matches.length){
       const empty=document.createElement('div');
-      empty.style.cssText='flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:1.8rem;letter-spacing:.1em;';
+      empty.style.cssText='flex:1;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.2);font-size:1.2rem;letter-spacing:.1em;';
       empty.textContent='Da definire';
       col.appendChild(empty);
       return;
@@ -352,13 +270,16 @@ function renderBracket(){
 function buildKOBox(m){
   const isPlayed = m.played && m.homeGoals!==null && m.awayGoals!==null;
   const isFinal = m.label&&(m.label.includes('FINALE')||m.label.includes('Finale'));
+
   let homeWin=false, awayWin=false;
   if(isPlayed){
     homeWin = m.homeGoals > m.awayGoals;
     awayWin = m.awayGoals > m.homeGoals;
   }
+
   const el = document.createElement('div');
   el.className = 'ko-box'+(isPlayed?' played':'')+(isFinal?' final':'');
+  el.style.cssText='display:flex;flex-direction:column;';
 
   // label bar
   const lbl = document.createElement('div');
@@ -367,9 +288,12 @@ function buildKOBox(m){
   el.appendChild(lbl);
 
   // home team
-  el.appendChild(buildTeamRow(m.home||'—', isPlayed?m.homeGoals:null, homeWin));
+  const homeRow = buildTeamRow(m.home||'—', isPlayed?m.homeGoals:null, homeWin);
+  el.appendChild(homeRow);
+
   // away team
-  el.appendChild(buildTeamRow(m.away||'—', isPlayed?m.awayGoals:null, awayWin));
+  const awayRow = buildTeamRow(m.away||'—', isPlayed?m.awayGoals:null, awayWin);
+  el.appendChild(awayRow);
 
   // scorers
   if(isPlayed && m.scorers && m.scorers.length){
@@ -383,15 +307,18 @@ function buildKOBox(m){
     });
     el.appendChild(sc);
   }
+
   return el;
 }
 
 function buildTeamRow(name, score, isWinner){
   const row=document.createElement('div');
   row.className='ko-team-row'+(isWinner?' winner':'');
+
   const nameEl=document.createElement('div');
   nameEl.className='ko-team-name';
   nameEl.textContent=name;
+
   const scoreEl=document.createElement('div');
   if(score!==null){
     scoreEl.className='ko-score';
@@ -400,6 +327,7 @@ function buildTeamRow(name, score, isWinner){
     scoreEl.className='ko-score pending';
     scoreEl.textContent='—';
   }
+
   row.appendChild(nameEl);
   row.appendChild(scoreEl);
   return row;
@@ -410,7 +338,8 @@ function buildTeamRow(name, score, isWinner){
 // ════════════════════════════════════════════
 function computeTopScorers(){
   const map={};
-  ['playoff','quarti','semi','finali'].forEach(k=>(state.finale[k]||[]).forEach(m=>(m.scorers||[]).forEach(s=>{
+  const rounds=['playoff','quarti','semi','finali'];
+  rounds.forEach(k=>(state.finale[k]||[]).forEach(m=>(m.scorers||[]).forEach(s=>{
     const key=s.name+'||'+s.team;
     if(!map[key]) map[key]={name:s.name,team:s.team,goals:0};
     map[key].goals++;
@@ -422,7 +351,7 @@ function renderTopScorers(){
   const scorers = computeTopScorers().slice(0,3);
   const el = document.getElementById('scorer-podium');
   if(!scorers.length){
-    el.innerHTML='<div class="no-scorers"><div class="icon">⚽</div><p style="font-size:1.3rem;letter-spacing:.1em">Nessun marcatore ancora</p></div>';
+    el.innerHTML='<div class="no-scorers"><div class="icon">⚽</div><p style="font-size:1.1rem;letter-spacing:.1em">Nessun marcatore ancora</p></div>';
     return;
   }
   const medals=['🥇','🥈','🥉'];
@@ -442,7 +371,7 @@ function renderTopScorers(){
 }
 
 // ════════════════════════════════════════════
-//  SPONSORS
+//  SPONSORS — copy same set as display.html
 // ════════════════════════════════════════════
 function buildSponsors(){
   const inner = document.getElementById('sponsor-inner');
@@ -453,6 +382,7 @@ function buildSponsors(){
     html+=`<div class="sponsor-logo"><img src="${base}${i}.jpg" alt="Sponsor ${i}" onerror="this.parentElement.style.display='none'"></div>`;
     if(i<count) html+=`<div class="sponsor-divider">◆</div>`;
   }
+  // duplicate for seamless scroll
   inner.innerHTML=html+html;
 }
 
@@ -478,8 +408,7 @@ async function init(){
   renderBracket();
   renderTopScorers();
   updateClock();
-  setInterval(updateClock, 1000);
-  setInterval(switchScreen, CONFIG.screenSwitchInterval);
+  setInterval(updateClock,1000);
   setInterval(async()=>{
     await loadData();
     renderBracket();
