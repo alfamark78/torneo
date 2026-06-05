@@ -223,10 +223,10 @@
       {
         "home": "FERRAMENTA STAZIONE",
         "away": "ALBI COPERTURE",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 2,
+        "awayGoals": 4,
         "date": "2026-05-05",
-        "played": false,
+        "played": true,
         "time": "20:15"
       },
       {
