@@ -232,10 +232,10 @@
       {
         "home": "EQUIPE GANGO",
         "away": "SEDAL PNEUMATICI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 2,
+        "awayGoals": 7,
         "date": "2026-06-05",
-        "played": false,
+        "played": true,
         "time": "21:00"
       },
       {
