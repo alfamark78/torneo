@@ -288,10 +288,10 @@
       {
         "home": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
         "away": "NOLI PONTEGGI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 3,
+        "awayGoals": 3,
         "date": "2026-06-05",
-        "played": false,
+        "played": true,
         "time": "22:30"
       },
       {
