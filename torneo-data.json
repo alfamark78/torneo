@@ -279,10 +279,10 @@
       {
         "home": "BAR FOLLIA",
         "away": "EQUIPE NORTH AFRICA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 8,
+        "awayGoals": 1,
         "date": "2026-06-05",
-        "played": false,
+        "played": true,
         "time": "21:45"
       },
       {
