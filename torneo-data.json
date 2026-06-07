@@ -313,5 +313,83 @@
         "time": "21:00"
       }
     ]
+  },
+  "knockout": {
+    "playoff": [
+      {
+        "home": "AC COSTRUZIONI",
+        "away": "FERRAMENTA STAZIONE",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-07",
+        "time": "20:00",
+        "played": false,
+        "scorers": []
+      },
+      {
+        "home": "QUELLI DELLA LAVANDERIA",
+        "away": "NOLI PONTEGGI",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-07",
+        "time": "21:00",
+        "played": false,
+        "scorers": []
+      },
+      {
+        "home": "PENSIONE PER CANI SAN CARLO",
+        "away": "BAR FOLLIA",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-07",
+        "time": "22:00",
+        "played": false,
+        "scorers": []
+      }
+    ],
+    "quarti": [
+      {
+        "home": "ZANI COSTRUZIONI / GIOSTEMA",
+        "away": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-09",
+        "time": "20:30",
+        "played": false,
+        "scorers": []
+      },
+      {
+        "home": "ELETTROTECNICA CRISTINI",
+        "away": "VINCENTE PLAY OFF A (partita 1)",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-09",
+        "time": "21:30",
+        "played": false,
+        "scorers": []
+      },
+      {
+        "home": "GM CASTELCOVATI",
+        "away": "VINCENTE PLAY OFF B (partita 2)",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-10",
+        "time": "20:30",
+        "played": false,
+        "scorers": []
+      },
+      {
+        "home": "SEDAL PNEUMATICI",
+        "away": "VINCENTE PLAY OFF C (partita 3)",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-10",
+        "time": "21:30",
+        "played": false,
+        "scorers": []
+      }
+    ],
+    "semifinali": [],
+    "finali": []
   }
 }
