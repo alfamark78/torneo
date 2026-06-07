@@ -71,26 +71,47 @@ header::after {
 /* MAIN CONTENT — two columns */
 .content {
   display:grid;grid-template-columns:1fr 1fr;gap:0;
-  padding:24px 48px 16px;overflow:hidden;
+  padding:20px 48px 12px;overflow:hidden;
+  height:100%;
 }
 
-.panel { padding:0 24px; border-right:1px solid var(--border); }
+.panel {
+  padding:0 24px;
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  height:100%;
+}
 .panel:last-child { border-right:none; }
 
 .panel-label {
-  font-size:1rem;font-weight:700;letter-spacing:0.35em;color:var(--green);text-transform:uppercase;
-  margin-bottom:18px;display:flex;align-items:center;gap:10px;
+  font-size:1.15rem;font-weight:900;letter-spacing:0.28em;color:var(--green);text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-shrink:0;
+  padding:10px 18px;border-radius:8px;
+  background:linear-gradient(90deg,rgba(0,230,118,0.13),transparent);
+  border-left:3px solid var(--green);
+  text-shadow:0 0 18px rgba(0,230,118,0.55);
 }
-.panel-label.gold-label { color:var(--gold); }
+.panel-label.gold-label {
+  color:var(--gold);
+  background:linear-gradient(90deg,rgba(255,214,0,0.13),transparent);
+  border-left:3px solid var(--gold);
+  text-shadow:0 0 18px rgba(255,214,0,0.55);
+}
 .panel-label::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-g),transparent); }
 .panel-label.gold-label::after { background:linear-gradient(90deg,rgba(255,214,0,0.35),transparent); }
 
+/* Lista match con distribuzione uniforme */
+#playoff-list, #quarti-list {
+  display:flex;flex-direction:column;flex:1;
+  justify-content:space-evenly;
+}
+
 /* Match card */
 .match-card {
-  display:grid;grid-template-columns:1fr 160px 1fr;align-items:center;
-  padding:12px 16px;margin-bottom:8px;
+  display:grid;grid-template-columns:1fr 140px 1fr;align-items:center;
+  padding:18px 20px;margin-bottom:0;
   background:var(--surface);border:1px solid var(--border);border-radius:10px;
-  min-height:74px;
+  flex:1;margin:5px 0;
 }
 .match-card.played { border-color:rgba(0,230,118,0.2); }
 .match-card.played.winner-home { border-left:3px solid var(--green); }
@@ -101,17 +122,20 @@ header::after {
 }
 .mc-team.home { text-align:right;align-items:flex-end; }
 .mc-team.away { text-align:left;align-items:flex-start; }
-.mc-name { font-size:1.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.03em;line-height:1.1; white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px; }
+.mc-name {
+  font-size:2.5rem;font-weight:900;text-transform:uppercase;letter-spacing:0.04em;line-height:1.1;
+  white-space:normal;word-break:break-word;overflow:visible;
+}
 .mc-name.winner { color:var(--green); }
-.mc-badge { font-size:0.75rem;font-weight:700;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase; }
+.mc-badge { font-size:1.05rem;font-weight:800;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-top:4px; }
 
 .mc-center { text-align:center; }
 .mc-score {
-  font-size:3.2rem;font-weight:900;letter-spacing:0.06em;color:#fff;
+  font-size:4rem;font-weight:900;letter-spacing:0.06em;color:#fff;
   font-variant-numeric:tabular-nums;line-height:1;
 }
-.mc-score.pending { font-size:1.4rem;font-weight:500;color:var(--text-dim);letter-spacing:0.3em; }
-.mc-datetime { font-size:0.85rem;color:var(--text-dim);margin-top:2px;letter-spacing:0.08em; }
+.mc-score.pending { font-size:2rem;font-weight:700;color:var(--text-dim);letter-spacing:0.3em; }
+.mc-datetime { font-size:1rem;color:var(--text-dim);margin-top:4px;letter-spacing:0.1em;font-weight:600; }
 
 .no-matches { color:var(--text-dim);font-size:1.2rem;letter-spacing:0.1em;padding:20px 0;font-weight:300; }
 
@@ -310,7 +334,8 @@ function render(){
   if(!poMatches.length){
     poEl.innerHTML = '<div class="no-matches">Nessuna partita inserita</div>';
   } else {
-    poEl.innerHTML = poMatches.map((m,i)=>renderMatchCard(m,i,`Partita ${i+1}`)).join('');
+    const playoffLabels = ['Playoff A','Playoff B','Playoff C'];
+    poEl.innerHTML = poMatches.map((m,i)=>renderMatchCard(m,i,playoffLabels[i]||`Playoff ${i+1}`)).join('');
   }
 
   // Quarti
@@ -319,7 +344,7 @@ function render(){
   if(!qMatches.length){
     qEl.innerHTML = '<div class="no-matches">Nessuna partita inserita</div>';
   } else {
-    qEl.innerHTML = qMatches.map((m,i)=>renderMatchCard(m,i,`QF ${i+1}`)).join('');
+    qEl.innerHTML = qMatches.map((m,i)=>renderMatchCard(m,i,`Quarto ${i+1}`)).join('');
   }
 }
 
