@@ -319,11 +319,11 @@
       {
         "home": "AC COSTRUZIONI",
         "away": "FERRAMENTA STAZIONE",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 7,
+        "awayGoals": 6,
         "date": "2026-06-07",
         "time": "20:00",
-        "played": false,
+        "played": true,
         "scorers": []
       },
       {
@@ -360,7 +360,7 @@
       },
       {
         "home": "ELETTROTECNICA CRISTINI",
-        "away": "VINCENTE PLAY OFF A",
+        "away": "AC COSTRUZIONI",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-09",
