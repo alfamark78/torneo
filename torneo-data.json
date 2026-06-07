@@ -329,11 +329,11 @@
       {
         "home": "QUELLI DELLA LAVANDERIA",
         "away": "NOLI PONTEGGI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 4,
+        "awayGoals": 0,
         "date": "2026-06-07",
         "time": "21:00",
-        "played": false,
+        "played": true,
         "scorers": []
       },
       {
@@ -370,7 +370,7 @@
       },
       {
         "home": "GM CASTELCOVATI",
-        "away": "VINCENTE PLAY OFF B",
+        "away": "QUELLI DELLA LAVANDERIA",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-10",
