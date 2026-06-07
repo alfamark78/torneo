@@ -339,11 +339,11 @@
       {
         "home": "PENSIONE PER CANI SAN CARLO",
         "away": "BAR FOLLIA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 9,
+        "awayGoals": 11,
         "date": "2026-06-07",
         "time": "22:00",
-        "played": false,
+        "played": true,
         "scorers": []
       }
     ],
@@ -380,7 +380,7 @@
       },
       {
         "home": "SEDAL PNEUMATICI",
-        "away": "VINCENTE PLAY OFF C",
+        "away": "BAR FOLLIA",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-10",
