@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Tabellone Quarti di Finale</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --w: 1350px; --h: 900px;
+  --green: #00e676; --green-dim: #00a152;
+  --gold: #ffd600; --border-g: rgba(0,230,118,0.35);
+  --bg: #040c06; --surface: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.12);
+  --text: #ffffff; --text-dim: rgba(255,255,255,0.55);
+  --font: 'Barlow Condensed', sans-serif;
+}
+
+html, body { 
+  width: var(--w); height: var(--h); 
+  overflow: hidden; background: var(--bg); 
+  font-family: var(--font); color: var(--text); 
+}
+
+/* SFONDO STILE CAMPO DA GIOCO */
+.field-bg {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% 100%, rgba(0,80,30,0.5) 0%, transparent 70%),
+    radial-gradient(circle 400px at 50% -20%, rgba(0,180,70,0.06) 0%, transparent 50%);
+  z-index: 0;
+}
+.scanlines { 
+  position:fixed; inset:0; z-index:999; pointer-events:none; 
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px); 
+}
+
+/* PANNELLO PRINCIPALE CONTENITORE */
+.main-panel {
+  position: relative; z-index: 1;
+  width: var(--w); height: var(--h);
+  display: flex; flex-direction: column;
+  padding: 40px; overflow: hidden;
+}
+
+/* ETICHETTA TITOLO */
+.panel-label {
+  font-size: 1.8rem; font-weight: 900; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 30px; display: flex; align-items: center; gap: 16px; flex-shrink: 0;
+  padding: 10px 20px; border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,214,0,0.12), transparent);
+  border-left: 5px solid var(--gold);
+  text-shadow: 0 0 20px rgba(255,214,0,0.4);
+}
+.panel-label::after { content:''; flex:1; height:2px; background:linear-gradient(90deg, rgba(255,214,0,0.35), transparent); }
+
+/* GRIGLIA 2X2 PER I QUARTS */
+.quarti-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* SCHEDA DELLA PARTITA */
+.match-card {
+  display: grid; grid-template-columns: 1fr 160px 1fr; align-items: center;
+  background: var(--surface); border: 2px solid var(--border); border-radius: 16px;
+  padding: 24px 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(255,255,255,0.02);
+  transition: border-color 0.3s ease;
+}
+.match-card.played { border-color: rgba(0,230,118,0.25); background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.2) 100%); }
+.match-card.played.winner-home { border-left: 6px solid var(--green); }
+.match-card.played.winner-away { border-right: 6px solid var(--green); }
+
+.mc-team { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.mc-team.home { text-align: right; align-items: flex-end; padding-right: 15px; }
+.mc-team.away { text-align: left; align-items: flex-start; padding-left: 15px; }
+
+/* AGGIORNATO: Nome intero visibile (va a capo se lungo) */
+.mc-name {
+  font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.1;
+  color: #fff; text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  word-wrap: break-word; overflow-wrap: break-word; width: 100%;
+}
+.mc-name.winner { color: var(--green); text-shadow: 0 0 15px rgba(0,230,118,0.25); }
+
+.mc-badge { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
+
+.mc-center { text-align: center; flex-shrink: 0; }
+
+.mc-score { font-size: 3.8rem; font-weight: 900; letter-spacing: 0.02em; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+.mc-score.pending { font-size: 2.2rem; font-weight: 800; color: var(--text-dim); letter-spacing: 0.2em; padding-left: 0.2em; }
+
+.mc-datetime { font-size: 1.05rem; color: var(--text-dim); margin-top: 8px; letter-spacing: 0.08em; font-weight: 600; text-transform: uppercase; }
+
+.no-matches { color: var(--text-dim); font-size: 1.8rem; letter-spacing: 0.1em; padding: 40px; font-weight: 300; text-align: center; grid-column: span 2; align-self: center; }
+</style>
+</head>
+<body>
+
+<div class="field-bg"></div>
+<div class="scanlines"></div>
+
+<div class="main-panel">
+  <div class="panel-label">🏆 Quarti di Finale</div>
+  
+  <div class="quarti-grid" id="quarti-list">
+    <div class="no-matches">Caricamento partite in corso...</div>
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  dataUrl: 'https://raw.githubusercontent.com/alfamark78/torneo/main/torneo-data.json',
+  dataRefreshInterval: 30000 
+};
+
+let state = { knockout: { quarti:[] } };
+
+async function loadData(){
+  try {
+    const res = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
+    state = await res.json();
+    if(!state.knockout) state.knockout = { quarti:[] };
+    if(!state.knockout.quarti) state.knockout.quarti = [];
+  } catch(e){ console.warn('Errore caricamento file JSON:', e); }
+}
+
+function formatDate(d){
+  if(!d) return '';
+  const p = d.split('-');
+  return p[2]+'/'+p[1];
+}
+
+function matchWinner(m){
+  if(!m.played || m.homeGoals===null) return null;
+  if(m.homeGoals > m.awayGoals) return 'home';
+  if(m.awayGoals > m.homeGoals) return 'away';
+  return 'draw';
+}
+
+function renderMatchCard(m, label){
+  const w = matchWinner(m);
+  const homeWin = w==='home', awayWin = w==='away';
+  const dt = (m.time ? m.time+'  ·  ' : '') + (m.date ? formatDate(m.date) : '');
+  
+  return '<div class="match-card'+(m.played?' played':'')+(homeWin?' winner-home':'')+(awayWin?' winner-away':'')+'">'+
+    '<div class="mc-team home">'+
+      '<div class="mc-name'+(homeWin?' winner':'')+'">'+(m.home || '&mdash;')+'</div>'+
+      '<div class="mc-badge">'+label+'</div>'+
+    '</div>'+
+    '<div class="mc-center">'+
+      (m.played ? '<div class="mc-score">'+m.homeGoals+' &ndash; '+m.awayGoals+'</div>' : '<div class="mc-score pending">VS</div>')+
+      (dt ? '<div class="mc-datetime">'+dt+'</div>' : '')+
+    '</div>'+
+    '<div class="mc-team away">'+
+      '<div class="mc-name'+(awayWin?' winner':'')+'">'+(m.away || '&mdash;')+'</div>'+
+    '</div>'+
+  '</div>';
+}
+
+function render(){
+  const qEl = document.getElementById('quarti-list');
+  const qM  = state.knockout.quarti || [];
+  
+  if(!qM.length){ 
+    qEl.innerHTML = '<div class="no-matches">Nessuna partita inserita nel tabellone dei quarti</div>'; 
+  } else { 
+    qEl.innerHTML = qM.slice(0,4).map((m, i) => renderMatchCard(m, 'QUARTO ' + (i + 1))).join(''); 
+  }
+}
+
+async function init(){
+  await loadData();
+  render();
+  setInterval(async()=>{ await loadData(); render(); }, CONFIG.dataRefreshInterval);
+}
+
+init();
+</script>
+</body>
+</html>
