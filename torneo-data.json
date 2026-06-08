@@ -389,7 +389,28 @@
         "scorers": []
       }
     ],
-    "semifinali": [],
+    "semifinali": [
+      {
+        "home": "VINCENTE QUARTO Q 1",
+        "away": "VINCENTE QUARTO Q 2",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-12",
+        "time": "20:30",
+        "played": false,
+        "scorers": []
+      },
+      {
+        "home": "VINCENTE QUARTO Q3",
+        "away": "VINCENTE QUARTO Q4",
+        "homeGoals": null,
+        "awayGoals": null,
+        "date": "2026-06-12",
+        "time": "21:30",
+        "played": false,
+        "scorers": []
+      }
+    ],
     "finali": []
   }
 }
