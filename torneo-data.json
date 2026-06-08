@@ -356,7 +356,23 @@
         "date": "2026-06-09",
         "time": "20:30",
         "played": false,
-        "scorers": []
+        "scorers": [
+          {
+            "name": "Pippo",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 2
+          },
+          {
+            "name": "pluto",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 1
+          },
+          {
+            "name": "peppino",
+            "team": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "ELETTROTECNICA CRISTINI",
