@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -71,7 +70,7 @@ header::after {
 /* MAIN CONTENT LAYOUT */
 .content {
   display: grid;
-  grid-template-columns: 1fr 440px; /* Colonna marcatore destra solida ed elegante */
+  grid-template-columns: 1fr 440px;
   gap: 32px;
   padding: 24px 48px;
   overflow: hidden;
@@ -113,7 +112,7 @@ header::after {
 #page-quarti .mc-name { font-size: 2.1rem; }
 #page-quarti .mc-score { font-size: 3.4rem; }
 
-/* SCHERMATA 2: SEMIFINALI (Sfruttano tutta la larghezza sinistra) */
+/* SCHERMATA 2: SEMIFINALI */
 #page-semifinali {
   grid-template-rows: auto 1fr;
 }
@@ -129,7 +128,7 @@ header::after {
 #page-semifinali .mc-name { font-size: 2.4rem; }
 #page-semifinali .mc-score { font-size: 3.8rem; }
 
-/* COLONNA FISSA DESTRA: CLASSIFICA MARCATORI */
+/* COLONNA FISSA DESTRA: CLASSIFICA MARCATORI CON SCROLL */
 .scorer-panel {
   display: flex;
   flex-direction: column;
@@ -140,13 +139,41 @@ header::after {
   overflow: hidden;
   box-shadow: inset 0 0 24px rgba(0,0,0,0.4);
 }
-#scorer-list {
+
+/* Contenitore del Primo Posto Fisso */
+#scorer-top-fixed {
+  flex-shrink: 0;
+  margin-top: 5px;
+  margin-bottom: 12px;
+}
+
+/* Area di scorrimento per le altre posizioni */
+.scorer-scroll-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden; /* Taglia via gli elementi fuori dal riquadro */
+  border-top: 1px dashed rgba(255,255,255,0.15);
+  padding-top: 12px;
+}
+
+.scorer-marquee-track {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
-  min-height: 0;
-  margin-top: 5px;
+  gap: 10px;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  animation: verticalScroll 25s linear infinite; /* Animazione continua per scorrere i restanti */
+}
+
+/* Pausa dello scorrimento se si va sopra col mouse (opzionale, utile per test) */
+.scorer-scroll-container:hover .scorer-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes verticalScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); } /* Si sposta esattamente della metà (per via del clone) */
 }
 
 /* PANEL LABEL */
@@ -194,17 +221,17 @@ header::after {
 .mc-datetime { font-size:0.95rem;color:var(--text-dim);margin-top:4px;letter-spacing:0.05em;font-weight:600; }
 .no-matches { color:var(--text-dim);font-size:1.3rem;letter-spacing:0.1em;padding:20px;font-weight:300; text-align:center; width:100%; }
 
-/* RIGHE MARCATORI (OTTIMIZZATE PER COLONNA STRETTA DESTRA) */
+/* RIGHE MARCATORI */
 .scorer-row {
   display:grid;grid-template-columns:38px 1fr 58px;align-items:center;
   padding:12px 14px;
   background:var(--surface);border:1px solid var(--border);border-radius:10px;
 }
-.scorer-row.top1 { background:linear-gradient(90deg,rgba(255,214,0,0.12),rgba(255,214,0,0.02));border-color:rgba(255,214,0,0.3); }
+.scorer-row.top1 { background:linear-gradient(90deg,rgba(255,214,0,0.15),rgba(255,214,0,0.03));border-color:rgba(255,214,0,0.4); box-shadow: 0 0 15px rgba(255,214,0,0.1); }
 .scorer-row.top2 { background:linear-gradient(90deg,rgba(207,216,220,0.08),rgba(207,216,220,0.01));border-color:rgba(207,216,220,0.2); }
 .scorer-row.top3 { background:linear-gradient(90deg,rgba(255,138,101,0.08),rgba(255,138,101,0.01));border-color:rgba(255,138,101,0.2); }
 .scorer-rank { font-size:1.7rem;font-weight:900;text-align:center;line-height:1; }
-.scorer-rank.r1 { color:var(--gold);text-shadow:0 0 12px rgba(255,214,0,0.5); }
+.scorer-rank.r1 { color:var(--gold);text-shadow:0 0 12px rgba(255,214,0,0.6); font-size:1.9rem; }
 .scorer-rank.r2 { color:var(--silver); }
 .scorer-rank.r3 { color:var(--bronze); }
 .scorer-rank.rn { color:var(--text-dim); }
@@ -213,6 +240,7 @@ header::after {
 .scorer-team { font-size:0.85rem;font-weight:400;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
 .scorer-goals { text-align:center; }
 .scorer-goals-num { font-size:2.5rem;font-weight:900;line-height:1;color:#fff;font-variant-numeric:tabular-nums; }
+.scorer-row.top1 .scorer-goals-num { color:var(--gold); text-shadow:0 0 10px rgba(255,214,0,0.4); }
 .scorer-goals-lbl { font-size:0.7rem;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase; }
 
 /* FOOTER SPONSOR */
@@ -265,10 +293,10 @@ footer::before {
 
   <div class="content">
 
-    <!-- AREA DINAMICA SINISTRA (RUOTA OGNI 15s / 10s) -->
+    <!-- AREA DINAMICA SINISTRA -->
     <div class="dynamic-area">
       
-      <!-- SCHERMATA 1: QUARTI DI FINALE (Griglia 2x2) -->
+      <!-- SCHERMATA 1: QUARTI DI FINALE -->
       <div class="page-view active" id="page-quarti">
         <div class="panel-label gold-label">&#x1F3AF; Quarti di Finale</div>
         <div id="quarti-list"><div class="no-matches">Nessuna partita inserita</div></div>
@@ -282,10 +310,17 @@ footer::before {
 
     </div>
 
-    <!-- COLONNA DESTRA FISSA: SEMPRE VISIBILE IN ENTRAMBI I BLOCCHI -->
+    <!-- COLONNA DESTRA: MIGLIOR MARCATORE (FISSO + ALTRI IN SCROLL) -->
     <div class="scorer-panel">
-      <div class="panel-label gold-label">&#x26BD; Miglior Marcatore</div>
-      <div id="scorer-list"><div class="no-matches">Nessun marcatore registrato</div></div>
+      <div class="panel-label gold-label">&#x1F45F; Classifica Marcatori</div>
+      
+      <!-- Spazio Fisso per il Capocannoniere (1° Posto) -->
+      <div id="scorer-top-fixed"></div>
+      
+      <!-- Spazio Scorrevole per le posizioni successive (dal 2° in poi) -->
+      <div class="scorer-scroll-container" id="scorer-scroll-container">
+        <div class="scorer-marquee-track" id="scorer-marquee-track"></div>
+      </div>
     </div>
 
   </div>
@@ -296,6 +331,7 @@ footer::before {
     </div>
     <div class="sponsor-track">
       <div class="sponsor-inner">
+        <!-- Loop automatico sponsor -->
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/1.jpg" alt="Sponsor 1"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/2.jpg" alt="Sponsor 2"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/3.jpg" alt="Sponsor 3"></div><div class="sponsor-divider">&#9670;</div>
@@ -320,7 +356,7 @@ footer::before {
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/22.jpg" alt="Sponsor 22"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/23.jpg" alt="Sponsor 23"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/24.jpg" alt="Sponsor 24"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/25.jpg" alt="Sponsor 25"></div><div class="sponsor-divider">&#9670;</div>
+        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/25.jpg" alt="Sponsor 25"></div>
       </div>
     </div>
   </footer>
@@ -346,7 +382,7 @@ async function loadData(){
       CONFIG.tournamentName = state.tournamentName;
       document.getElementById('tournament-name').textContent = state.tournamentName;
     }
-  } catch(e){ console.warn('Data load error:', e); }
+  } catch(e){ console.warn('Errore caricamento dati:', e); }
 }
 
 function formatDate(d){
@@ -405,23 +441,57 @@ function buildScorers(){
 const RANK_CLS = ['r1','r2','r3'];
 const ROW_CLS  = ['top1','top2','top3'];
 
+function generateScorerRowHtml(s, i) {
+  return '<div class="scorer-row '+(ROW_CLS[i]||'')+'">'+
+    '<div class="scorer-rank '+(RANK_CLS[i]||'rn')+'">'+(i===0 ? '👑' : (i+1))+'</div>'+
+    '<div class="scorer-info">'+
+      '<div class="scorer-name">'+s.name+'</div>'+
+      '<div class="scorer-team">'+s.team+'</div>'+
+    '</div>'+
+    '<div class="scorer-goals">'+
+      '<div class="scorer-goals-num">'+s.goals+'</div>'+
+      '<div class="scorer-goals-lbl">GOL</div>'+
+    '</div>'+
+  '</div>';
+}
+
 function renderScorers(){
-  const el = document.getElementById('scorer-list');
+  const topFixedEl = document.getElementById('scorer-top-fixed');
+  const trackEl = document.getElementById('scorer-marquee-track');
+  const scrollContainer = document.getElementById('scorer-scroll-container');
+  
   const sc = buildScorers();
-  if(!sc.length){ el.innerHTML='<div class="no-matches">Nessun marcatore registrato</div>'; return; }
-  el.innerHTML = sc.slice(0,5).map((s,i)=>
-    '<div class="scorer-row '+(ROW_CLS[i]||'')+'">'+
-      '<div class="scorer-rank '+(RANK_CLS[i]||'rn')+'">'+(i+1)+'</div>'+
-      '<div class="scorer-info">'+
-        '<div class="scorer-name">'+s.name+'</div>'+
-        '<div class="scorer-team">'+s.team+'</div>'+
-      '</div>'+
-      '<div class="scorer-goals">'+
-        '<div class="scorer-goals-num">'+s.goals+'</div>'+
-        '<div class="scorer-goals-lbl">GOL</div>'+
-      '</div>'+
-    '</div>'
-  ).join('');
+  
+  if(!sc.length){ 
+    topFixedEl.innerHTML='<div class="no-matches">Nessun marcatore registrato</div>'; 
+    trackEl.innerHTML='';
+    scrollContainer.style.display = 'none';
+    return; 
+  }
+  
+  // 1. Capocannoniere Fisso in alto (Posizione 0)
+  topFixedEl.innerHTML = generateScorerRowHtml(sc[0], 0);
+  
+  // 2. Gestione degli altri marcatori (Posizione 1 in poi)
+  const restScorers = sc.slice(1);
+  
+  if (restScorers.length === 0) {
+    scrollContainer.style.display = 'none';
+    trackEl.innerHTML = '';
+  } else {
+    scrollContainer.style.display = 'block';
+    
+    // Generiamo l'HTML dei restanti marcatori
+    const itemsHtml = restScorers.map((s, i) => generateScorerRowHtml(s, i + 1)).join('');
+    
+    // Per creare l'effetto infinito (Marquee), cloniamo la lista dentro il binario
+    trackEl.innerHTML = itemsHtml + itemsHtml;
+    
+    // Regoliamo la velocità dinamica dell'animazione in base a quanti elementi ci sono
+    // (Più elementi ci sono, più l'animazione va veloce per mantenere la fluidità)
+    const duration = Math.max(12, restScorers.length * 3.5); 
+    trackEl.style.animationDuration = duration + 's';
+  }
 }
 
 function render(){
@@ -439,11 +509,11 @@ function render(){
   if(!sM.length){ sEl.innerHTML='<div class="no-matches">Nessuna partita inserita</div>'; }
   else { sEl.innerHTML = sM.map((m,i)=>renderMatchCard(m,'SF'+(i+1))).join(''); }
 
-  // 3. Render Marcatori (Fissi a destra)
+  // 3. Render Marcatori (Fisso + Marquee dinamico)
   renderScorers();
 }
 
-// ROTAZIONE ASIMMETRICA (15s Quarti / 10s Semifinali)
+// ROTAZIONE SCHERMATE SINISTRE
 function startScreenRotation() {
   const switchView = () => {
     const pageQuarti = document.getElementById('page-quarti');
@@ -461,7 +531,7 @@ function startScreenRotation() {
         mainTitle.textContent = "SEMIFINALI";
         
         setTimeout(() => pageSemi.style.opacity = '1', 50);
-        setTimeout(switchView, 10000); // Rimane visibile per 10 secondi
+        setTimeout(switchView, 10000); 
       } else {
         currentView = 'quarti';
         pageSemi.classList.remove('active');
@@ -469,7 +539,7 @@ function startScreenRotation() {
         mainTitle.textContent = "QUARTI DI FINALE";
 
         setTimeout(() => pageQuarti.style.opacity = '1', 50);
-        setTimeout(switchView, 15000); // Rimane visibile per 15 secondi
+        setTimeout(switchView, 15000); 
       }
     }, 500);
   };
