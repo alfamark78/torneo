@@ -408,7 +408,28 @@
         "date": "2026-06-10",
         "time": "20:30",
         "played": false,
-        "scorers": []
+        "scorers": [
+          {
+            "name": "gigetto",
+            "team": "GM CASTELCOVATI",
+            "goals": 1
+          },
+          {
+            "name": "mardok",
+            "team": "GM CASTELCOVATI",
+            "goals": 1
+          },
+          {
+            "name": "lupin",
+            "team": "GM CASTELCOVATI",
+            "goals": 1
+          },
+          {
+            "name": "mandragola",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "SEDAL PNEUMATICI",
