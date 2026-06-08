@@ -356,23 +356,7 @@
         "date": "2026-06-09",
         "time": "20:30",
         "played": false,
-        "scorers": [
-          {
-            "name": "Pippo",
-            "team": "ZANI COSTRUZIONI / GIOSTEMA",
-            "goals": 2
-          },
-          {
-            "name": "pluto",
-            "team": "ZANI COSTRUZIONI / GIOSTEMA",
-            "goals": 1
-          },
-          {
-            "name": "peppino",
-            "team": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
-            "goals": 1
-          }
-        ]
+        "scorers": []
       },
       {
         "home": "ELETTROTECNICA CRISTINI",
@@ -382,23 +366,7 @@
         "date": "2026-06-09",
         "time": "21:30",
         "played": false,
-        "scorers": [
-          {
-            "name": "Quasimodo",
-            "team": "ELETTROTECNICA CRISTINI",
-            "goals": 3
-          },
-          {
-            "name": "dracula",
-            "team": "ELETTROTECNICA CRISTINI",
-            "goals": 1
-          },
-          {
-            "name": "geronimo",
-            "team": "AC COSTRUZIONI",
-            "goals": 1
-          }
-        ]
+        "scorers": []
       },
       {
         "home": "GM CASTELCOVATI",
@@ -408,28 +376,7 @@
         "date": "2026-06-10",
         "time": "20:30",
         "played": false,
-        "scorers": [
-          {
-            "name": "gigetto",
-            "team": "GM CASTELCOVATI",
-            "goals": 1
-          },
-          {
-            "name": "mardok",
-            "team": "GM CASTELCOVATI",
-            "goals": 1
-          },
-          {
-            "name": "lupin",
-            "team": "GM CASTELCOVATI",
-            "goals": 1
-          },
-          {
-            "name": "mandragola",
-            "team": "QUELLI DELLA LAVANDERIA",
-            "goals": 1
-          }
-        ]
+        "scorers": []
       },
       {
         "home": "SEDAL PNEUMATICI",
@@ -439,13 +386,7 @@
         "date": "2026-06-10",
         "time": "21:30",
         "played": false,
-        "scorers": [
-          {
-            "name": "pippero",
-            "team": "SEDAL PNEUMATICI",
-            "goals": 4
-          }
-        ]
+        "scorers": []
       }
     ],
     "semifinali": [
@@ -457,13 +398,7 @@
         "date": "2026-06-12",
         "time": "20:30",
         "played": false,
-        "scorers": [
-          {
-            "name": "Quasimodo",
-            "team": "ELETTROTECNICA CRISTINI",
-            "goals": 3
-          }
-        ]
+        "scorers": []
       },
       {
         "home": "VINCENTE QUARTO Q3",
