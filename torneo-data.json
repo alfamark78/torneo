@@ -382,7 +382,23 @@
         "date": "2026-06-09",
         "time": "21:30",
         "played": false,
-        "scorers": []
+        "scorers": [
+          {
+            "name": "Quasimodo",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 3
+          },
+          {
+            "name": "dracula",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 1
+          },
+          {
+            "name": "geronimo",
+            "team": "AC COSTRUZIONI",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "GM CASTELCOVATI",
