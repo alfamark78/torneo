@@ -387,12 +387,43 @@
       {
         "home": "ELETTROTECNICA CRISTINI",
         "away": "AC COSTRUZIONI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 8,
+        "awayGoals": 6,
         "date": "2026-06-09",
         "time": "21:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "BYKY EMILIAN",
+            "team": "AC COSTRUZIONI",
+            "goals": 2
+          },
+          {
+            "name": "HADJA FRANCESCO",
+            "team": "AC COSTRUZIONI",
+            "goals": 1
+          },
+          {
+            "name": "MAINA ELIA",
+            "team": "AC COSTRUZIONI",
+            "goals": 1
+          },
+          {
+            "name": "GIANOTTI ANDREA",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 2
+          },
+          {
+            "name": "MAZZUCCHELLI PAOLO",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 1
+          },
+          {
+            "name": "BERTAZZOLI ANDREA",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "GM CASTELCOVATI",
@@ -418,7 +449,7 @@
     "semifinali": [
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
-        "away": "VINCENTE QUARTO Q 2",
+        "away": "ELETTROTECNICA CRISTINI",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-12",
