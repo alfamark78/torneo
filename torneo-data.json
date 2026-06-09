@@ -351,12 +351,38 @@
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
         "away": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 4,
+        "awayGoals": 2,
         "date": "2026-06-09",
         "time": "20:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "BONTEMPI FEDERICO",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 2
+          },
+          {
+            "name": "LAZZARONI ALESSANDRO",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 1
+          },
+          {
+            "name": "BIANCHI LUCA",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 1
+          },
+          {
+            "name": "MORANDI MICHELE",
+            "team": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+            "goals": 1
+          },
+          {
+            "name": "VISENTIN DAVIDE",
+            "team": "BAR ZUCCA / FERRAMENTA ALTERNATIVA",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "ELETTROTECNICA CRISTINI",
