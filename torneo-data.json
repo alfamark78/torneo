@@ -428,12 +428,43 @@
       {
         "home": "GM CASTELCOVATI",
         "away": "QUELLI DELLA LAVANDERIA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 7,
+        "awayGoals": 8,
         "date": "2026-06-10",
         "time": "20:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "PIZZAMIGLIO PIETRO",
+            "team": "GM CASTELCOVATI",
+            "goals": 1
+          },
+          {
+            "name": "MUJKIC ELVIR",
+            "team": "GM CASTELCOVATI",
+            "goals": 1
+          },
+          {
+            "name": "GOLFETTO ALESSANDRO",
+            "team": "GM CASTELCOVATI",
+            "goals": 1
+          },
+          {
+            "name": "INFANTINO SIMONE",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          },
+          {
+            "name": "TERENZI NICOLO'",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          },
+          {
+            "name": "MERZI ALESSANDRO",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "SEDAL PNEUMATICI",
@@ -458,7 +489,7 @@
         "scorers": []
       },
       {
-        "home": "VINCENTE QUARTO Q3",
+        "home": "QUELLI DELLA LAVANDERIA",
         "away": "VINCENTE QUARTO Q4",
         "homeGoals": null,
         "awayGoals": null,
