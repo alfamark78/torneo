@@ -469,11 +469,15 @@ function renderScorers(){
     return; 
   }
   
-  // 1. Capocannoniere Fisso in alto (Posizione 0)
-  topFixedEl.innerHTML = generateScorerRowHtml(sc[0], 0);
+  // 1. Trova tutti i capocannonieri a pari merito (stesso numero di gol del primo)
+  const topGoals = sc[0].goals;
+  const topScorers = sc.filter(s => s.goals === topGoals);
   
-  // 2. Gestione degli altri marcatori (Posizione 1 in poi)
-  const restScorers = sc.slice(1);
+  // Tutti i capocannonieri a pari merito vengono mostrati statici in cima
+  topFixedEl.innerHTML = topScorers.map(s => generateScorerRowHtml(s, 0)).join('');
+  
+  // 2. Gestione degli altri marcatori (dopo i capocannonieri)
+  const restScorers = sc.slice(topScorers.length);
   
   if (restScorers.length === 0) {
     scrollContainer.style.display = 'none';
@@ -481,14 +485,13 @@ function renderScorers(){
   } else {
     scrollContainer.style.display = 'block';
     
-    // Generiamo l'HTML dei restanti marcatori
-    const itemsHtml = restScorers.map((s, i) => generateScorerRowHtml(s, i + 1)).join('');
+    // Generiamo l'HTML dei restanti marcatori con indice corretto per il badge (oro/argento/bronzo)
+    const itemsHtml = restScorers.map((s, i) => generateScorerRowHtml(s, i + topScorers.length)).join('');
     
     // Per creare l'effetto infinito (Marquee), cloniamo la lista dentro il binario
     trackEl.innerHTML = itemsHtml + itemsHtml;
     
     // Regoliamo la velocità dinamica dell'animazione in base a quanti elementi ci sono
-    // (Più elementi ci sono, più l'animazione va veloce per mantenere la fluidità)
     const duration = Math.max(12, restScorers.length * 3.5); 
     trackEl.style.animationDuration = duration + 's';
   }
