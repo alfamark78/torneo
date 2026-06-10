@@ -469,12 +469,43 @@
       {
         "home": "SEDAL PNEUMATICI",
         "away": "BAR FOLLIA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 7,
+        "awayGoals": 3,
         "date": "2026-06-10",
         "time": "21:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "MAZZA MARCO",
+            "team": "SEDAL PNEUMATICI",
+            "goals": 2
+          },
+          {
+            "name": "BELOTTI FRANCESCO",
+            "team": "SEDAL PNEUMATICI",
+            "goals": 1
+          },
+          {
+            "name": "CAPELETTI JACOPO",
+            "team": "BAR FOLLIA",
+            "goals": 1
+          },
+          {
+            "name": "POZZONI LEONARDO",
+            "team": "BAR FOLLIA",
+            "goals": 3
+          },
+          {
+            "name": "BELLINI MICHELE",
+            "team": "BAR FOLLIA",
+            "goals": 2
+          },
+          {
+            "name": "RODENGHI ANDREA",
+            "team": "BAR FOLLIA",
+            "goals": 1
+          }
+        ]
       }
     ],
     "semifinali": [
@@ -490,7 +521,7 @@
       },
       {
         "home": "QUELLI DELLA LAVANDERIA",
-        "away": "VINCENTE QUARTO Q4",
+        "away": "BAR FOLLIA",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-12",
