@@ -204,17 +204,19 @@ function renderScorers(){
     return; 
   }
   
-  // 1. Capocannoniere Bloccato in Alto
-  topFixedEl.innerHTML = generateRowHtml(sc[0], 0);
+  // 1. Tutti i capocannonieri a pari merito bloccati in alto
+  const topGoals = sc[0].goals;
+  const topScorers = sc.filter(s => s.goals === topGoals);
+  topFixedEl.innerHTML = topScorers.map(s => generateRowHtml(s, 0)).join('');
   
-  // 2. Altri Marcatori nel Marquee Continuo
-  const restScorers = sc.slice(1);
+  // 2. Altri Marcatori nel Marquee Continuo (dopo i capocannonieri)
+  const restScorers = sc.slice(topScorers.length);
   if (restScorers.length === 0) {
     scrollContainer.style.display = 'none';
     trackEl.innerHTML = '';
   } else {
     scrollContainer.style.display = 'block';
-    const itemsHtml = restScorers.map((s, i) => generateRowHtml(s, i + 1)).join('');
+    const itemsHtml = restScorers.map((s, i) => generateRowHtml(s, i + topScorers.length)).join('');
     
     // Duplica la lista per l'effetto di scorrimento infinito fluido
     trackEl.innerHTML = itemsHtml + itemsHtml;
