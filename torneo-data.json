@@ -532,13 +532,13 @@
     ],
     "finali": [
       {
-        "home": "VINCENTE SF 2",
-        "away": "VINCENTE SF 2",
-        "homeGoals": null,
-        "awayGoals": null,
+        "home": "ZANI COSTRUZIONI / GIOSTEMA",
+        "away": "QUELLI DELLA LAVANDERIA",
+        "homeGoals": 3,
+        "awayGoals": 3,
         "date": "2026-06-14",
         "time": "21:30",
-        "played": false,
+        "played": true,
         "scorers": []
       },
       {
