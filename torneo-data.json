@@ -512,11 +512,11 @@
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
         "away": "ELETTROTECNICA CRISTINI",
-        "homeGoals": 1,
-        "awayGoals": 1,
+        "homeGoals": null,
+        "awayGoals": null,
         "date": "2026-06-12",
         "time": "20:30",
-        "played": true,
+        "played": false,
         "scorers": []
       },
       {
@@ -532,13 +532,13 @@
     ],
     "finali": [
       {
-        "home": "ZANI COSTRUZIONI / GIOSTEMA",
-        "away": "QUELLI DELLA LAVANDERIA",
-        "homeGoals": 3,
-        "awayGoals": 3,
+        "home": "VINCENTE SF 1",
+        "away": "VINCENTE SF 2",
+        "homeGoals": null,
+        "awayGoals": null,
         "date": "2026-06-14",
         "time": "21:30",
-        "played": true,
+        "played": false,
         "scorers": []
       },
       {
