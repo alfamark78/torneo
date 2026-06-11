@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=1920, initial-scale=1">
 <title>Memorial Massimo Salvi — Semifinali &amp; Finali</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght=0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@300;400;500&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -100,7 +100,7 @@ header::after {
   position: relative;
 }
 
-/* LEFT WORKSPACE FOR ROTATING PAGES */
+/* AREA CONTENUTI DINAMICI */
 .dynamic-area {
   position: relative;
   overflow: hidden;
@@ -131,14 +131,50 @@ header::after {
   margin-top: 10px;
   min-height: 0;
 }
-#page-semifinali .match-card { padding: 36px 44px; }
-#page-semifinali .mc-name { font-size: 2.7rem; }
-#page-semifinali .mc-score { font-size: 4.4rem; }
+
+/* MATCH CARD SEMIFINALI */
+.match-card {
+  display: grid;
+  grid-template-columns: 1fr 220px 1fr;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 44px;
+}
+.match-card.played { border-color: rgba(0,230,118,0.2); }
+.match-card.played.winner-home { border-left: 6px solid var(--green); }
+.match-card.played.winner-away { border-right: 6px solid var(--green); }
+
+.mc-team { display: flex; flex-direction: column; gap: 2px; overflow: hidden; width: 100%; }
+.mc-team.home { text-align: right; align-items: flex-end; padding-right: 25px; }
+.mc-team.away { text-align: left; align-items: flex-start; padding-left: 25px; }
+
+/* CONTENITORE NOME SEMIFINALI: Testo completo, no a capo, ridimensionato via JS */
+.mc-name-semi {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  white-space: nowrap; /* Impedisce di andare a capo */
+  overflow: visible;   /* Permette il calcolo corretto della larghezza totale */
+  color: #fff;
+  width: auto;
+  display: inline-block;
+}
+.mc-name-semi.winner { color: var(--green); text-shadow: 0 0 20px rgba(0,230,118,0.4); }
+.mc-badge { font-size: 0.95rem; font-weight: 800; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
+
+.mc-center { text-align: center; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.mc-score { font-size: 3.6rem; font-weight: 900; letter-spacing: 0.04em; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; }
+.mc-score.pending { font-size: 2.2rem; font-weight: 800; color: var(--text-dim); letter-spacing: 0.2em; }
+.mc-datetime { font-size: 1.05rem; color: var(--text-dim); margin-top: 6px; letter-spacing: 0.05em; font-weight: 600; }
 
 /* ===== SCHERMATA 2: FINALI ===== */
 #page-finali {
-  grid-template-rows: 68% auto 26%;
+  grid-template-rows: 64% auto 28%;
   gap: 0;
+  height: 100%;
 }
 
 .finale-section {
@@ -147,8 +183,6 @@ header::after {
   min-height: 0;
   position: relative;
 }
-
-/* ALONE DORATO CENTRO-ALTO PER LA FINALE 1°/2° POSTO */
 .finale-section::before {
   content: ''; position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
   width: 600px; height: 180px;
@@ -156,16 +190,9 @@ header::after {
   z-index: 1; pointer-events: none;
 }
 
-.finale-minor-section {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
+.finale-minor-section { display: flex; flex-direction: column; min-height: 0; }
 
-/* CORONA PULSANTE */
-.crown-container {
-  display: flex; justify-content: center; margin-bottom: -4px; z-index: 2;
-}
+.crown-container { display: flex; justify-content: center; margin-bottom: -4px; z-index: 2; }
 .crown-icon {
   font-size: 2.5rem; line-height: 1;
   filter: drop-shadow(0 2px 10px rgba(255,214,0,0.6));
@@ -176,22 +203,22 @@ header::after {
   100% { transform: scale(1.1) translateY(-3px); filter: drop-shadow(0 4px 18px rgba(255,214,0,0.85)); }
 }
 
-/* CARD FINALE MAJOR (1°/2° POSTO) CON SHIMMER ANIMATO */
+#finale-major-card { flex: 1; display: flex; min-height: 0; }
+
+/* CARD FINALE MAJOR (1°/2° POSTO) */
 #page-finali .match-card-major {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 260px 1fr;
+  grid-template-columns: 1fr 300px 1fr;
   align-items: center;
-  padding: 0 60px;
-  background: linear-gradient(135deg, rgba(255,214,0,0.14) 0%, rgba(0,0,0,0.4) 50%, rgba(255,214,0,0.11) 100%);
+  padding: 0 45px;
+  background: linear-gradient(135deg, rgba(255,214,0,0.14) 0%, rgba(4,12,6,0.9) 50%, rgba(255,214,0,0.11) 100%);
   border: 2px solid rgba(255,214,0,0.6);
   border-radius: 20px;
   box-shadow: 0 0 50px rgba(255,214,0,0.18), inset 0 0 40px rgba(255,214,0,0.05);
   position: relative;
   overflow: hidden;
 }
-
-/* EFFETTO SHIMMER VIVO (LINEA CHE SCORRE IN CIMA E IN FONDO) */
 #page-finali .match-card-major::before,
 #page-finali .match-card-major::after {
   content: ''; position: absolute; left: -150%; width: 100%; height: 3px;
@@ -199,7 +226,7 @@ header::after {
   animation: liveShimmer 6s infinite linear;
 }
 #page-finali .match-card-major::before { top: 0; }
-#page-finali .match-card-major::after { bottom: bottom; }
+#page-finali .match-card-major::after { bottom: 0; }
 
 @keyframes liveShimmer {
   0% { left: -100%; }
@@ -210,11 +237,32 @@ header::after {
 #page-finali .match-card-major.played.winner-home { border-left: 8px solid var(--gold); }
 #page-finali .match-card-major.played.winner-away { border-right: 8px solid var(--gold); }
 
+.mc-team-major { display: flex; flex-direction: column; gap: 2px; overflow: hidden; width: 100%; }
+.mc-team-major.home { text-align: right; align-items: flex-end; padding-right: 25px; }
+.mc-team-major.away { text-align: left; align-items: flex-start; padding-left: 25px; }
+
+.mc-name-major {
+  font-weight: 900; 
+  text-transform: uppercase; 
+  letter-spacing: 0.01em; 
+  line-height: 1.05;
+  white-space: normal;
+  word-break: break-word;
+  color: #fff;
+  width: 100%;
+}
+.mc-name-major.winner { color: var(--gold); text-shadow: 0 0 25px rgba(255,214,0,0.6); }
+
+.mc-center-major { text-align: center; flex-shrink: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.mc-score-major { font-size: 4.6rem; font-weight: 900; letter-spacing: 0.02em; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; text-shadow: 0 0 30px rgba(255,214,0,0.5); }
+.mc-score-major.pending { font-size: 2.6rem; font-weight: 800; color: var(--text-dim); letter-spacing: 0.2em; }
+.mc-datetime-major { font-size: 1.15rem; color: var(--gold); margin-top: 6px; letter-spacing: 0.05em; font-weight: 700; }
+
 /* CARD FINALE MINOR (3°/4° POSTO) */
 #page-finali .match-card-minor {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 180px 1fr;
+  grid-template-columns: 1fr 200px 1fr;
   align-items: center;
   padding: 10px 40px;
   background: linear-gradient(135deg, rgba(255,138,101,0.08) 0%, rgba(255,255,255,0.02) 100%);
@@ -225,53 +273,23 @@ header::after {
 #page-finali .match-card-minor.played.winner-home { border-left: 5px solid var(--bronze); }
 #page-finali .match-card-minor.played.winner-away { border-right: 5px solid var(--bronze); }
 
-.mc-name-major {
-  font-size: 3.8rem;
-  font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1;
-  white-space: normal; word-break: break-word;
-}
-.mc-name-major.winner { color: var(--gold); text-shadow: 0 0 25px rgba(255,214,0,0.7); }
+.mc-team-minor { display: flex; flex-direction: column; gap: 2px; overflow: hidden; width: 100%; }
+.mc-team-minor.home { text-align: right; align-items: flex-end; padding-right: 20px; }
+.mc-team-minor.away { text-align: left; align-items: flex-start; padding-left: 20px; }
 
 .mc-name-minor {
-  font-size: 2.2rem;
-  font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1;
-  white-space: normal; word-break: break-word;
+  font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.05;
+  white-space: normal; word-break: break-word; color: #fff; width: 100%;
 }
 .mc-name-minor.winner { color: var(--bronze); text-shadow: 0 0 12px rgba(255,138,101,0.4); }
 
-.mc-score-major {
-  font-size: 6.8rem;
-  font-weight: 900; letter-spacing: 0.02em; color: #fff; font-variant-numeric: tabular-nums; line-height: 1;
-  text-align: center;
-  text-shadow: 0 0 30px rgba(255,214,0,0.5);
-}
-.mc-score-major.pending { font-size: 3.2rem; font-weight: 800; color: var(--text-dim); letter-spacing: 0.2em; }
-
-.mc-score-minor {
-  font-size: 3.2rem;
-  font-weight: 900; letter-spacing: 0.04em; color: #fff; font-variant-numeric: tabular-nums; line-height: 1;
-  text-align: center;
-}
-.mc-score-minor.pending { font-size: 1.8rem; font-weight: 700; color: var(--text-dim); letter-spacing: 0.2em; }
-
-.mc-datetime-major { font-size: 1.2rem; color: var(--gold); margin-top: 8px; letter-spacing: 0.05em; font-weight: 700; text-align: center; }
+.mc-score-minor { font-size: 2.8rem; font-weight: 900; letter-spacing: 0.04em; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; text-align: center; }
+.mc-score-minor.pending { font-size: 1.6rem; font-weight: 700; color: var(--text-dim); letter-spacing: 0.2em; }
 .mc-datetime-minor { font-size: 0.95rem; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.05em; font-weight: 600; text-align: center; }
 
-.mc-team-major { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
-.mc-team-major.home { text-align: right; align-items: flex-end; }
-.mc-team-major.away { text-align: left; align-items: flex-start; }
-.mc-team-minor { display: flex; flex-direction: column; gap: 1px; overflow: hidden; }
-.mc-team-minor.home { text-align: right; align-items: flex-end; }
-.mc-team-minor.away { text-align: left; align-items: flex-start; }
+.finale-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); margin: 12px 0; flex-shrink: 0; }
 
-.finale-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  margin: 12px 0;
-  flex-shrink: 0;
-}
-
-/* PANEL LABEL */
+/* ETICHETTE PANNELLI */
 .panel-label {
   font-size:1.25rem;font-weight:900;letter-spacing:0.2em;color:var(--green);text-transform:uppercase;
   margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-shrink:0;
@@ -280,93 +298,30 @@ header::after {
   border-left:3px solid var(--green);
   text-shadow:0 0 18px rgba(0,230,118,0.55);
 }
-.panel-label.gold-label {
-  color:var(--gold);background:linear-gradient(90deg,rgba(255,214,0,0.13),transparent);
-  border-left:3px solid var(--gold);text-shadow:0 0 18px rgba(255,214,0,0.55);
-}
-.panel-label.silver-label {
-  color:var(--silver);background:linear-gradient(90deg,rgba(207,216,220,0.13),transparent);
-  border-left:3px solid var(--silver);text-shadow:0 0 18px rgba(207,216,220,0.4);
-}
-.panel-label.bronze-label {
-  color:var(--bronze);background:linear-gradient(90deg,rgba(255,138,101,0.13),transparent);
-  border-left:3px solid var(--bronze);text-shadow:0 0 18px rgba(255,138,101,0.4);
-  font-size:1.05rem;
-}
+.panel-label.gold-label { color:var(--gold);background:linear-gradient(90deg,rgba(255,214,0,0.13),transparent); border-left:3px solid var(--gold);text-shadow:0 0 18px rgba(255,214,0,0.55); }
+.panel-label.silver-label { color:var(--silver);background:linear-gradient(90deg,rgba(207,216,220,0.13),transparent); border-left:3px solid var(--silver);text-shadow:0 0 18px rgba(207,216,220,0.4); }
+.panel-label.bronze-label { color:var(--bronze);background:linear-gradient(90deg,rgba(255,138,101,0.13),transparent); border-left:3px solid var(--bronze);text-shadow:0 0 18px rgba(255,138,101,0.4); font-size:1.05rem; }
 .panel-label::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border-g),transparent); }
 .panel-label.gold-label::after { background:linear-gradient(90deg,rgba(255,214,0,0.35),transparent); }
 .panel-label.silver-label::after { background:linear-gradient(90deg,rgba(207,216,220,0.25),transparent); }
 .panel-label.bronze-label::after { background:linear-gradient(90deg,rgba(255,138,101,0.25),transparent); }
 
-/* MATCH CARD */
-.match-card {
-  display:grid;grid-template-columns:1fr 150px 1fr;align-items:center;
-  background:var(--surface);border:1px solid var(--border);border-radius:12px;
-}
-.match-card.played { border-color:rgba(0,230,118,0.2); }
-.match-card.played.winner-home { border-left:4px solid var(--green); }
-.match-card.played.winner-away { border-right:4px solid var(--green); }
-
-.mc-team { display:flex;flex-direction:column;gap:1px; overflow:hidden; }
-.mc-team.home { text-align:right;align-items:flex-end; }
-.mc-team.away { text-align:left;align-items:flex-start; }
-.mc-name {
-  font-weight:900;text-transform:uppercase;letter-spacing:0.02em;line-height:1.1;
-  white-space:normal;word-break:break-word;
-}
-.mc-name.winner { color:var(--green); }
-.mc-badge { font-size:0.95rem;font-weight:800;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;margin-top:2px; }
-.mc-center { text-align:center; flex-shrink:0; }
-.mc-score { font-weight:900;letter-spacing:0.04em;color:#fff;font-variant-numeric:tabular-nums;line-height:1; }
-.mc-score.pending { font-size:1.8rem;font-weight:700;color:var(--text-dim);letter-spacing:0.2em; }
-.mc-datetime { font-size:0.95rem;color:var(--text-dim);margin-top:4px;letter-spacing:0.05em;font-weight:600; }
 .no-matches { color:var(--text-dim);font-size:1.3rem;letter-spacing:0.1em;padding:20px;font-weight:300; text-align:center; width:100%; }
 
-/* MARCATORE */
+/* CLASSIFICA MARCATORI */
 .scorer-panel {
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   background: linear-gradient(180deg, rgba(0,230,118,0.02) 0%, rgba(0,0,0,0.25) 100%);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  padding: 18px;
-  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 18px; overflow: hidden;
   box-shadow: inset 0 0 24px rgba(0,0,0,0.4);
 }
-#scorer-top-fixed {
-  flex-shrink: 0;
-  margin-top: 5px;
-  margin-bottom: 12px;
-}
-.scorer-scroll-container {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  border-top: 1px dashed rgba(255,255,255,0.15);
-  padding-top: 12px;
-}
-.scorer-marquee-track {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  animation: verticalScroll 25s linear infinite;
-}
-.scorer-scroll-container:hover .scorer-marquee-track {
-  animation-play-state: paused;
-}
-@keyframes verticalScroll {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
+#scorer-top-fixed { flex-shrink: 0; margin-top: 5px; margin-bottom: 12px; }
+.scorer-scroll-container { flex: 1; position: relative; overflow: hidden; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 12px; }
+.scorer-marquee-track { display: flex; flex-direction: column; gap: 10px; position: absolute; width: 100%; top: 0; animation: verticalScroll 25s linear infinite; }
+.scorer-scroll-container:hover .scorer-marquee-track { animation-play-state: paused; }
+@keyframes verticalScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 
-.scorer-row {
-  display:grid;grid-template-columns:38px 1fr 58px;align-items:center;
-  padding:12px 14px;
-  background:var(--surface);border:1px solid var(--border);border-radius:10px;
-}
+.scorer-row { display:grid;grid-template-columns:38px 1fr 58px;align-items:center; padding:12px 14px; background:var(--surface);border:1px solid var(--border);border-radius:10px; }
 .scorer-row.top1 { background:linear-gradient(90deg,rgba(255,214,0,0.15),rgba(255,214,0,0.03));border-color:rgba(255,214,0,0.4); box-shadow: 0 0 15px rgba(255,214,0,0.1); }
 .scorer-row.top2 { background:linear-gradient(90deg,rgba(207,216,220,0.08),rgba(207,216,220,0.01));border-color:rgba(207,216,220,0.2); }
 .scorer-row.top3 { background:linear-gradient(90deg,rgba(255,138,101,0.08),rgba(255,138,101,0.01));border-color:rgba(255,138,101,0.2); }
@@ -383,21 +338,11 @@ header::after {
 .scorer-row.top1 .scorer-goals-num { color:var(--gold); text-shadow:0 0 10px rgba(255,214,0,0.4); }
 .scorer-goals-lbl { font-size:0.7rem;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase; }
 
-/* SPONSOR */
-footer {
-  display:flex;flex-direction:column;border-top:2px solid var(--border-g);
-  background:linear-gradient(180deg,rgba(0,0,0,0.75) 0%,rgba(0,20,8,0.95) 100%);
-  overflow:hidden;position:relative;
-}
-footer::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--green),var(--gold),var(--green),transparent);opacity:0.7;
-}
+/* FOOTER SPONSOR */
+footer { display:flex;flex-direction:column;border-top:2px solid var(--border-g); background:linear-gradient(180deg,rgba(0,0,0,0.75) 0%,rgba(0,20,8,0.95) 100%); overflow:hidden;position:relative; }
+footer::before { content:'';position:absolute;top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,transparent,var(--green),var(--gold),var(--green),transparent);opacity:0.7; }
 .sponsor-header { display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 48px 6px;flex-shrink:0; }
-.sponsor-header-label {
-  font-size:0.75rem;font-weight:700;letter-spacing:0.4em;color:var(--gold-dim);text-transform:uppercase;
-  display:flex;align-items:center;gap:10px;
-}
+.sponsor-header-label { font-size:0.75rem;font-weight:700;letter-spacing:0.4em;color:var(--gold-dim);text-transform:uppercase; display:flex;align-items:center;gap:10px; }
 .sponsor-header-label::before,.sponsor-header-label::after { content:'';display:block;width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim)); }
 .sponsor-header-label::after { background:linear-gradient(90deg,var(--gold-dim),transparent); }
 .sponsor-track { flex:1;overflow:hidden;display:flex;align-items:center;padding:0 48px; }
@@ -433,16 +378,17 @@ footer::before {
   </header>
 
   <div class="content">
-
     <div class="dynamic-area">
 
+      <!-- PAGINA SEMIFINALI -->
       <div class="page-view active" id="page-semifinali">
         <div class="panel-label silver-label">&#x2694;&#xFE0F; Semifinali</div>
         <div id="semi-list"><div class="no-matches">Nessuna partita inserita</div></div>
       </div>
 
+      <!-- PAGINA FINALI -->
       <div class="page-view" id="page-finali">
-
+        <!-- FINALE 1°/2° POSTO -->
         <div class="finale-section">
           <div class="crown-container">
             <div class="crown-icon">👑</div>
@@ -453,15 +399,16 @@ footer::before {
 
         <div class="finale-divider"></div>
 
+        <!-- FINALE 3°/4° POSTO -->
         <div class="finale-minor-section">
           <div class="panel-label bronze-label">&#x1F949; Finale &mdash; 3&ordm; e 4&ordm; Posto</div>
           <div id="finale-minor-card"><div class="no-matches">Nessuna partita inserita</div></div>
         </div>
-
       </div>
 
     </div>
 
+    <!-- CLASSIFICA MARCATORI -->
     <div class="scorer-panel">
       <div class="panel-label gold-label">&#x1F45F; Classifica Marcatori</div>
       <div id="scorer-top-fixed"></div>
@@ -469,7 +416,6 @@ footer::before {
         <div class="scorer-marquee-track" id="scorer-marquee-track"></div>
       </div>
     </div>
-
   </div>
 
   <footer>
@@ -478,6 +424,7 @@ footer::before {
     </div>
     <div class="sponsor-track">
       <div class="sponsor-inner">
+        <!-- loghi sponsor duplicati per scorrimento infinito -->
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/1.jpg" alt="Sponsor 1"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/2.jpg" alt="Sponsor 2"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/3.jpg" alt="Sponsor 3"></div><div class="sponsor-divider">&#9670;</div>
@@ -496,14 +443,7 @@ footer::before {
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/16.jpg" alt="Sponsor 16"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/17.jpg" alt="Sponsor 17"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/18.jpg" alt="Sponsor 18"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/19.jpg" alt="Sponsor 19"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/20.jpg" alt="Sponsor 20"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/21.jpg" alt="Sponsor 21"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/22.jpg" alt="Sponsor 22"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/23.jpg" alt="Sponsor 23"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/24.jpg" alt="Sponsor 24"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/25.jpg" alt="Sponsor 25"></div>
-        <div class="sponsor-divider">&#9670;</div>
+        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/19.jpg" alt="Sponsor 19"></div><div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/20.jpg" alt="Sponsor 20"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/1.jpg" alt="Sponsor 1"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/2.jpg" alt="Sponsor 2"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/3.jpg" alt="Sponsor 3"></div><div class="sponsor-divider">&#9670;</div>
@@ -514,21 +454,6 @@ footer::before {
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/8.jpg" alt="Sponsor 8"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/9.jpg" alt="Sponsor 9"></div><div class="sponsor-divider">&#9670;</div>
         <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/10.jpg" alt="Sponsor 10"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/11.jpg" alt="Sponsor 11"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/12.jpg" alt="Sponsor 12"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/13.jpg" alt="Sponsor 13"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/14.jpg" alt="Sponsor 14"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/15.jpg" alt="Sponsor 15"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/16.jpg" alt="Sponsor 16"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/17.jpg" alt="Sponsor 17"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/18.jpg" alt="Sponsor 18"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/19.jpg" alt="Sponsor 19"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/20.jpg" alt="Sponsor 20"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/21.jpg" alt="Sponsor 21"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/22.jpg" alt="Sponsor 22"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/23.jpg" alt="Sponsor 23"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/24.jpg" alt="Sponsor 24"></div><div class="sponsor-divider">&#9670;</div>
-        <div class="sponsor-logo"><img src="https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/25.jpg" alt="Sponsor 25"></div>
       </div>
     </div>
   </footer>
@@ -570,22 +495,22 @@ function matchWinner(m){
   return 'draw';
 }
 
-function renderSemiCard(m, label){
+function renderSemiCard(m, label, index){
   const w = matchWinner(m);
   const homeWin = w==='home', awayWin = w==='away';
   const dt = (m.time ? m.time+' · ' : '') + (m.date ? formatDate(m.date) : '');
   return '<div class="match-card'+(m.played?' played':'')+(homeWin?' winner-home':'')+(awayWin?' winner-away':'')+'">'+
     '<div class="mc-team home">'+
-      '<div class="mc-name'+(homeWin?' winner':'')+'" style="font-size:2.7rem">'+(m.home||'&mdash;')+'</div>'+
+      '<div class="mc-name-semi'+(homeWin?' winner':'')+'" id="semi-home-'+index+'">'+(m.home||'&mdash;')+'</div>'+
       (label ? '<div class="mc-badge">'+label+'</div>' : '')+
     '</div>'+
     '<div class="mc-center">'+
-      (m.played ? '<div class="mc-score" style="font-size:4.4rem">'+m.homeGoals+' &ndash; '+m.awayGoals+'</div>'
+      (m.played ? '<div class="mc-score">'+m.homeGoals+' &ndash; '+m.awayGoals+'</div>'
                 : '<div class="mc-score pending">VS</div>')+
       (dt ? '<div class="mc-datetime">'+dt+'</div>' : '')+
     '</div>'+
     '<div class="mc-team away">'+
-      '<div class="mc-name'+(awayWin?' winner':'')+'" style="font-size:2.7rem">'+(m.away||'&mdash;')+'</div>'+
+      '<div class="mc-name-semi'+(awayWin?' winner':'')+'" id="semi-away-'+index+'">'+(m.away||'&mdash;')+'</div>'+
     '</div>'+
   '</div>';
 }
@@ -595,17 +520,18 @@ function renderFinaleMajorCard(m){
   const w = matchWinner(m);
   const homeWin = w==='home', awayWin = w==='away';
   const dt = (m.time ? m.time+' · ' : '') + (m.date ? formatDate(m.date) : '');
+  
   return '<div class="match-card-major'+(m.played?' played':'')+(homeWin?' winner-home':'')+(awayWin?' winner-away':'')+'">'+
     '<div class="mc-team-major home">'+
-      '<div class="mc-name-major'+(homeWin?' winner':'')+'">'+(m.home||'&mdash;')+'</div>'+
+      '<div class="mc-name-major'+(homeWin?' winner':'')+' dynamic-major-text" id="major-home-text">'+(m.home||'&mdash;')+'</div>'+
     '</div>'+
-    '<div style="text-align:center;flex-shrink:0">'+
+    '<div class="mc-center-major">'+
       (m.played ? '<div class="mc-score-major">'+m.homeGoals+' &ndash; '+m.awayGoals+'</div>'
                 : '<div class="mc-score-major pending">VS</div>')+
       (dt ? '<div class="mc-datetime-major">'+dt+'</div>' : '')+
     '</div>'+
     '<div class="mc-team-major away">'+
-      '<div class="mc-name-major'+(awayWin?' winner':'')+'">'+(m.away||'&mdash;')+'</div>'+
+      '<div class="mc-name-major'+(awayWin?' winner':'')+' dynamic-major-text" id="major-away-text">'+(m.away||'&mdash;')+'</div>'+
     '</div>'+
   '</div>';
 }
@@ -617,17 +543,65 @@ function renderFinaleMinorCard(m){
   const dt = (m.time ? m.time+' · ' : '') + (m.date ? formatDate(m.date) : '');
   return '<div class="match-card-minor'+(m.played?' played':'')+(homeWin?' winner-home':'')+(awayWin?' winner-away':'')+'">'+
     '<div class="mc-team-minor home">'+
-      '<div class="mc-name-minor'+(homeWin?' winner':'')+'">'+(m.home||'&mdash;')+'</div>'+
+      '<div class="mc-name-minor'+(homeWin?' winner':'')+'" id="minor-home-text">'+(m.home||'&mdash;')+'</div>'+
     '</div>'+
-    '<div style="text-align:center;flex-shrink:0">'+
+    '<div class="mc-center" style="width:200px">'+
       (m.played ? '<div class="mc-score-minor">'+m.homeGoals+' &ndash; '+m.awayGoals+'</div>'
                 : '<div class="mc-score-minor pending">VS</div>')+
       (dt ? '<div class="mc-datetime-minor">'+dt+'</div>' : '')+
     '</div>'+
     '<div class="mc-team-minor away">'+
-      '<div class="mc-name-minor'+(awayWin?' winner':'')+'">'+(m.away||'&mdash;')+'</div>'+
+      '<div class="mc-name-minor'+(awayWin?' winner':'')+'" id="minor-away-text">'+(m.away||'&mdash;')+'</div>'+
     '</div>'+
   '</div>';
+}
+
+function adjustAllFonts() {
+  // 1. NUOVA LOGICA DINAMICA UNIFORME PER LE SEMIFINALI
+  const semiElements = document.querySelectorAll('.mc-name-semi');
+  if (semiElements.length > 0) {
+    let maxLen = 0;
+    // Troviamo la lunghezza massima del testo tra tutti i nomi presenti nelle semifinali
+    semiElements.forEach(el => {
+      const len = el.textContent.trim().length;
+      if (len > maxLen) maxLen = len;
+    });
+
+    // Determiniamo la dimensione ideale comune basata sulla stringa più impegnativa
+    let commonFontSize = '3.5rem'; // Dimensione massima di partenza per nomi corti
+    if (maxLen > 24) commonFontSize = '1.6rem';
+    else if (maxLen > 20) commonFontSize = '2.0rem';
+    else if (maxLen > 15) commonFontSize = '2.4rem';
+    else if (maxLen > 11) commonFontSize = '2.9rem';
+
+    // Applichiamo la STESSA identica dimensione a tutte le squadre delle semifinali
+    semiElements.forEach(el => {
+      el.style.fontSize = commonFontSize;
+    });
+  }
+
+  // 2. Logica Dinamica per Finale 1°/2° Posto (Major)
+  const majorTexts = document.querySelectorAll('.dynamic-major-text');
+  majorTexts.forEach(el => {
+    if (!el) return;
+    const len = el.textContent.length;
+    if (len > 22) el.style.fontSize = '1.8rem';
+    else if (len > 16) el.style.fontSize = '2.3rem';
+    else if (len > 11) el.style.fontSize = '2.9rem';
+    else el.style.fontSize = '3.5rem';
+  });
+
+  // 3. Logica Dinamica per Finale 3°/4° Posto (Minor)
+  const minorHome = document.getElementById('minor-home-text');
+  const minorAway = document.getElementById('minor-away-text');
+  [minorHome, minorAway].forEach(el => {
+    if (!el) return;
+    const len = el.textContent.length;
+    if (len > 22) el.style.fontSize = '1.4rem';
+    else if (len > 16) el.style.fontSize = '1.7rem';
+    else if (len > 11) el.style.fontSize = '1.9rem';
+    else el.style.fontSize = '2.2rem';
+  });
 }
 
 function buildScorers(){
@@ -698,11 +672,13 @@ function renderScorers(){
 function render(){
   const ko = state.knockout||{};
 
+  // Render Semifinali
   const sEl = document.getElementById('semi-list');
   const sM  = ko.semifinali||[];
   if(!sM.length){ sEl.innerHTML='<div class="no-matches">Nessuna partita inserita</div>'; }
-  else { sEl.innerHTML = sM.map((m,i)=>renderSemiCard(m,'SF'+(i+1))).join(''); }
+  else { sEl.innerHTML = sM.map((m,i)=>renderSemiCard(m,'SF'+(i+1), i)).join(''); }
 
+  // Render Finali
   const finali = ko.finali||[];
   const major = finali[0]||null;
   const minor = finali[1]||null;
@@ -713,6 +689,7 @@ function render(){
   majorEl.innerHTML = renderFinaleMajorCard(major);
   minorEl.innerHTML = renderFinaleMinorCard(minor);
 
+  adjustAllFonts();
   renderScorers();
 }
 
@@ -733,6 +710,7 @@ function startScreenRotation(){
         pageSemi.classList.remove('active');
         pageFinali.classList.add('active');
         mainTitle.textContent = 'FINALI';
+        adjustAllFonts(); 
         setTimeout(()=>pageFinali.style.opacity='1', 50);
         setTimeout(switchView, DURATIONS.finali);
       } else {
@@ -740,6 +718,7 @@ function startScreenRotation(){
         pageFinali.classList.remove('active');
         pageSemi.classList.add('active');
         mainTitle.textContent = 'SEMIFINALI';
+        adjustAllFonts(); 
         setTimeout(()=>pageSemi.style.opacity='1', 50);
         setTimeout(switchView, DURATIONS.semi);
       }
