@@ -512,11 +512,11 @@
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
         "away": "ELETTROTECNICA CRISTINI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 1,
+        "awayGoals": 1,
         "date": "2026-06-12",
         "time": "20:30",
-        "played": false,
+        "played": true,
         "scorers": []
       },
       {
