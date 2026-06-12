@@ -543,18 +543,49 @@
       {
         "home": "QUELLI DELLA LAVANDERIA",
         "away": "BAR FOLLIA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 12,
+        "awayGoals": 11,
         "date": "2026-06-12",
         "time": "21:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "INFANTINO SIMONE",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          },
+          {
+            "name": "MOMBELLI GIORGIO",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          },
+          {
+            "name": "OPOKO GABRIEL",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          },
+          {
+            "name": "FOGLIATA LORENZO",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          },
+          {
+            "name": "FRATUS GIOVANNI",
+            "team": "BAR FOLLIA",
+            "goals": 2
+          },
+          {
+            "name": "MORASCHI FEDERICO X2",
+            "team": "BAR FOLLIA",
+            "goals": 2
+          }
+        ]
       }
     ],
     "finali": [
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
-        "away": "VINCENTE SF 2",
+        "away": "VINCENTE BAR FOLLIASF 2",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-14",
