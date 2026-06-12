@@ -512,12 +512,33 @@
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
         "away": "ELETTROTECNICA CRISTINI",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 8,
+        "awayGoals": 7,
         "date": "2026-06-12",
         "time": "20:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "VERMI FLAVIO",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 1
+          },
+          {
+            "name": "DUCOLI GIOVANNI",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 1
+          },
+          {
+            "name": "GIANOTTI ANDREA",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 1
+          },
+          {
+            "name": "TIGNONSINI MIRKO",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "QUELLI DELLA LAVANDERIA",
