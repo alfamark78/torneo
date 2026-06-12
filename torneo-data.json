@@ -543,8 +543,8 @@
       {
         "home": "QUELLI DELLA LAVANDERIA",
         "away": "BAR FOLLIA",
-        "homeGoals": 12,
-        "awayGoals": 11,
+        "homeGoals": 11,
+        "awayGoals": 12,
         "date": "2026-06-12",
         "time": "21:30",
         "played": true,
@@ -585,7 +585,7 @@
     "finali": [
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
-        "away": "VINCENTE BAR FOLLIASF 2",
+        "away": "BAR FOLLIA",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-14",
@@ -595,7 +595,7 @@
       },
       {
         "home": "ELETTROTECNICA CRISTINI",
-        "away": "PERDENTE SF 2",
+        "away": "QUELLI DELLA LAVANDERIA",
         "homeGoals": null,
         "awayGoals": null,
         "date": "2026-06-14",
