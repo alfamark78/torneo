@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>Memorial Massimo Salvi 2026 — La Serata Finale</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght=0,400;0,600;0,700;0,800;0,900;1,700&family=Orbitron:wght@700;900&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --w: 1920px; --h: 1080px;
+  --bg: #06090d;
+  --surface: rgba(20, 27, 38, 0.65);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --gold-neon: #ffea00;
+  --gold-glow: rgba(255, 234, 0, 0.25);
+  --bronze-neon: #ff7643;
+  --bronze-glow: rgba(255, 118, 67, 0.2);
+  --cyan-neon: #00f0ff;
+  --text: #ffffff;
+  --text-dim: #8fa0b5;
+  --font-main: 'Barlow Condensed', sans-serif;
+  --font-clock: 'Orbitron', sans-serif;
+}
+
+html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--bg); font-family: var(--font-main); color: var(--text); }
+
+/* SFONDO STILE STADIO HI-TECH */
+.bg-ambient {
+  position: fixed; inset: 0; z-index: 0;
+  background: 
+    radial-gradient(circle at 50% 30%, rgba(0, 240, 255, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(255, 234, 0, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 118, 67, 0.03) 0%, transparent 50%);
+}
+.bg-grid {
+  position: fixed; inset: 0; z-index: 1; opacity: 0.15;
+  background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.screen {
+  position: relative; z-index: 2; width: var(--w); height: var(--h);
+  display: grid; grid-template-rows: 110px 1fr 280px;
+}
+
+/* HEADER */
+header {
+  display: grid; grid-template-columns: 450px 1fr 450px; align-items: center;
+  padding: 0 50px; border-bottom: 2px solid var(--surface-border);
+  background: rgba(10, 15, 23, 0.8); backdrop-filter: blur(10px);
+}
+.h-left { display: flex; align-items: center; gap: 15px; }
+.t-logo { font-size: 2.8rem; filter: drop-shadow(0 0 10px var(--gold-neon)); }
+.t-title { font-size: 2.4rem; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; }
+.t-sub { font-size: 1.1rem; color: var(--cyan-neon); letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; }
+.h-center { text-align: center; }
+.p-label { font-size: 1.2rem; color: var(--text-dim); letter-spacing: 0.4em; text-transform: uppercase; }
+.p-title { font-size: 3.8rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+.h-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
+.clock { font-family: var(--font-clock); font-size: 2.8rem; color: var(--cyan-neon); line-height: 1; text-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+.date { font-size: 1rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
+
+/* LAYOUT CONTENUTI */
+.main-container {
+  display: grid; grid-template-columns: 1fr 460px; gap: 35px; padding: 30px 50px; overflow: hidden;
+}
+
+.board-column { display: flex; flex-direction: column; gap: 30px; }
+
+/* SEZIONI FINALI */
+.final-section { display: flex; flex-direction: column; gap: 15px; }
+
+.section-tag {
+  font-size: 1.3rem; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px; padding-left: 15px;
+}
+.section-tag.gold { color: var(--gold-neon); border-left: 4px solid var(--gold-neon); }
+.section-tag.bronze { color: var(--bronze-neon); border-left: 4px solid var(--bronze-neon); }
+
+/* MATCH CARD BIG DESIGN */
+.match-card {
+  background: var(--surface); border: 1px solid var(--surface-border); border-radius: 16px;
+  display: grid; grid-template-columns: 1fr 280px 1fr; align-items: center;
+  position: relative; overflow: hidden; backdrop-filter: blur(5px);
+}
+.match-card.gold-card {
+  border-color: rgba(255, 234, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5), inset 0 0 30px var(--gold-glow);
+  padding: 45px 30px;
+}
+.match-card.bronze-card {
+  border-color: rgba(255, 118, 67, 0.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 0 20px var(--bronze-glow);
+  padding: 35px 30px;
+}
+
+.m-team { display: flex; flex-direction: column; width: 100%; overflow: hidden; }
+.m-team.home { text-align: right; padding-right: 30px; }
+.m-team.away { text-align: left; padding-left: 30px; }
+
+.team-name { font-weight: 900; text-transform: uppercase; line-height: 1.1; color: #fff; }
+.gold-card .team-name { font-size: 3.2rem; letter-spacing: -0.01em; }
+.bronze-card .team-name { font-size: 2.4rem; color: #e2e8f0; }
+
+.m-info-box {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-left: 1px solid rgba(255,255,255,0.06); border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 10px 0;
+}
+.status-badge {
+  font-size: 0.9rem; font-weight: 800; padding: 4px 14px; border-radius: 20px;
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;
+}
+.gold-card .status-badge { background: rgba(255, 234, 0, 0.15); color: var(--gold-neon); border: 1px solid rgba(255, 234, 0, 0.3); }
+.bronze-card .status-badge { background: rgba(255, 118, 67, 0.15); color: var(--bronze-neon); border: 1px solid rgba(255, 118, 67, 0.3); }
+
+.score-display { font-size: 4.5rem; font-weight: 900; font-family: var(--font-clock); color: #fff; line-height: 1; }
+.score-pending { font-size: 2.2rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-dim); }
+
+.time-badge {
+  font-size: 1.3rem; font-weight: 700; color: var(--cyan-neon); margin-top: 8px;
+  background: rgba(0, 240, 255, 0.08); padding: 2px 12px; border-radius: 6px; letter-spacing: 0.05em;
+}
+
+/* PANNELLO MARCATORI CRISTALLINO */
+.scorers-column {
+  background: rgba(13, 20, 30, 0.8); border: 1px solid var(--surface-border);
+  border-radius: 20px; padding: 20px; display: flex; flex-direction: column;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.scorers-title {
+  font-size: 1.4rem; font-weight: 900; color: var(--cyan-neon); letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ZONA TOP MARCATORI FISSI */
+.scorers-top-fixed {
+  flex-shrink: 0; display: flex; flex-direction: column; gap: 8px;
+  border-bottom: 1px solid rgba(255, 234, 0, 0.2); padding-bottom: 12px; margin-bottom: 10px;
+}
+
+/* ZONA RESTO LISTA CHE SCORRE */
+.scorers-scroll-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 8px; flex-shrink: 0;
+}
+.scorers-list {
+  flex: 1; display: flex; flex-direction: column; gap: 8px;
+  overflow-y: auto; padding-right: 4px; min-height: 0;
+}
+/* Scrollbar custom per restare puliti ed eleganti */
+.scorers-list::-webkit-scrollbar { width: 4px; }
+.scorers-list::-webkit-scrollbar-track { background: transparent; }
+.scorers-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+/* Auto-scroll animation for the rest list */
+.scorers-list.auto-scroll {
+  animation: none;
+  overflow-y: hidden;
+}
+.scorers-list-inner {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.scorers-list-inner.scrolling {
+  animation: scrollScorers 35s linear infinite;
+}
+@keyframes scrollScorers {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.scorer-row {
+  display: grid; grid-template-columns: 40px 1fr 50px; align-items: center;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+  padding: 10px 12px; border-radius: 10px; transition: background 0.3s;
+  flex-shrink: 0;
+}
+.scorer-row.top-scorer {
+  background: linear-gradient(90deg, rgba(255, 234, 0, 0.10), rgba(255,234,0,0.03));
+  border-color: rgba(255, 234, 0, 0.3);
+  box-shadow: 0 0 18px rgba(255, 234, 0, 0.08);
+}
+.scorer-row.top-scorer .s-rank { color: var(--gold-neon); font-size: 1.6rem; }
+.scorer-row.top-scorer .s-name { font-size: 1.5rem; }
+.scorer-row.top-scorer .s-goals { color: var(--gold-neon); text-shadow: 0 0 12px rgba(255,234,0,0.4); font-size: 2.4rem; }
+.s-rank { font-size: 1.3rem; font-weight: 900; text-align: center; color: var(--text-dim); }
+.s-meta { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 5px; }
+.s-name { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; color: #fff; line-height: 1.1; }
+.s-team { font-size: 0.85rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.02em; margin-top: 1px; }
+.s-goals { font-size: 2.2rem; font-weight: 900; font-family: var(--font-clock); text-align: center; color: #fff; line-height: 1; }
+
+/* FOOTER SPONSOR LOOP INFINITO STILE BANNER LED */
+footer {
+  background: #030508; border-top: 2px solid rgba(0, 240, 255, 0.15);
+  display: grid; grid-template-rows: 50px 1fr; overflow: hidden;
+}
+.sponsor-title {
+  font-size: 1rem; font-weight: 800; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--cyan-neon); display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 240, 255, 0.03); border-bottom: 1px solid rgba(0, 240, 255, 0.08);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+.sponsor-slider { display: flex; align-items: center; padding: 0 50px; overflow: hidden; width: 100%; }
+.sponsor-track {
+  display: flex; align-items: center; gap: 50px; white-space: nowrap;
+  animation: scrollSponsors 45s linear infinite;
+}
+@keyframes scrollSponsors {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.sponsor-card {
+  display: flex; align-items: center; justify-content: center;
+  height: 155px; width: 290px; padding: 14px 24px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px; flex-shrink: 0;
+  transition: border-color 0.3s;
+}
+.sponsor-card img { max-height: 125px; max-width: 250px; object-fit: contain; filter: grayscale(10%) brightness(1.2); }
+.sponsor-sep { color: rgba(255,255,255,0.15); font-size: 2rem; }
+</style>
+</head>
+<body>
+
+<div class="bg-ambient"></div>
+<div class="bg-grid"></div>
+
+<div class="screen">
+  <!-- HEADER BI-LINGUE / DIGITALE -->
+  <header>
+    <div class="h-left">
+      <div class="t-logo">🏆</div>
+      <div>
+        <div class="t-title" id="t-name">TORNEO CALCIO</div>
+        <div class="t-sub">Grand Finale</div>
+      </div>
+    </div>
+    <div class="h-center">
+      <div class="p-label">Fase Conclusiva</div>
+      <div class="p-title">Serata Finale</div>
+    </div>
+    <div class="h-right">
+      <div class="clock" id="live-clock">00:00:00</div>
+      <div class="date" id="live-date">-</div>
+    </div>
+  </header>
+
+  <!-- AREA CONTENUTI -->
+  <div class="main-container">
+    
+    <!-- COLONNA MATCH (SOLO FINALI) -->
+    <div class="board-column">
+      
+      <!-- FINALE 1/2 POSTO -->
+      <div class="final-section">
+        <div class="section-tag gold">🥇 Finale 1° e 2° Posto</div>
+        <div id="box-major-finale">
+          <!-- Renderizzato via JS -->
+        </div>
+      </div>
+
+      <!-- FINALE 3/4 POSTO -->
+      <div class="final-section">
+        <div class="section-tag bronze">🥉 Finale 3° e 4° Posto</div>
+        <div id="box-minor-finale">
+          <!-- Renderizzato via JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLONNA MARCATORI INVIOLABILE -->
+    <div class="scorers-column">
+      <div class="scorers-title"><span>⚽</span> Capocannoniere</div>
+      <!-- TOP SCORER(S) FISSI -->
+      <div class="scorers-top-fixed" id="scorers-top-inject"></div>
+      <!-- RESTO DELLA LISTA SCORREVOLE -->
+      <div class="scorers-scroll-label">▸ Tutti i marcatori</div>
+      <div class="scorers-list auto-scroll" id="scorers-rest-inject">
+        <div class="scorers-list-inner" id="scorers-rest-inner"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BANNER LED SPONSOR -->
+  <footer>
+    <div class="sponsor-title">Official Tournament Sponsors &amp; Partners</div>
+    <div class="sponsor-slider">
+      <div class="sponsor-track" id="sponsor-track-inject">
+        <!-- Caricato dinamicamente e duplicato per loop infinito perfetto -->
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const DATA_CONFIG = {
+  url: 'https://raw.githubusercontent.com/alfamark78/torneo/main/torneo-data.json',
+  refresh: 20000
+};
+
+// Generazione automatica degli sponsor (1-20) come richiesto da footer permanente
+const SPONSORS_LIST = Array.from({length: 20}, (_, i) => `https://raw.githubusercontent.com/alfamark78/torneo/main/sponsor/${i+1}.jpg`);
+
+let localState = { knockout: { finali: [] } };
+
+async function fetchTournamentData() {
+  try {
+    const response = await fetch(`${DATA_CONFIG.url}?cachebust=${Date.now()}`);
+    localState = await response.json();
+    
+    if(localState.tournamentName) {
+      document.getElementById('t-name').textContent = localState.tournamentName;
+    }
+    renderDashboard();
+  } catch (err) {
+    console.error("Errore nell'aggiornamento dati JSON:", err);
+  }
+}
+
+function processAllScorers() {
+  const dataset = {};
+  function parseMatchList(list) {
+    (list || []).forEach(match => {
+      (match.scorers || []).forEach(sc => {
+        const pName = (sc.name || sc.player || '').trim().toUpperCase();
+        const pTeam = (sc.team || '').trim().toUpperCase();
+        const pGoals = parseInt(sc.goals || sc.count || sc.gol || 1, 10) || 1;
+        if (!pName) return;
+        const uid = `${pName}|${pTeam}`;
+        if (!dataset[uid]) dataset[uid] = { name: pName, team: pTeam, goals: 0 };
+        dataset[uid].goals += pGoals;
+      });
+    });
+  }
+
+  // Estrazione cumulativa da tutte le fasi registrate nel JSON
+  if (localState.matches) {
+    Object.values(localState.matches).forEach(group => parseMatchList(group));
+  }
+  if (localState.knockout) {
+    ['playoff', 'quarti', 'semifinali', 'finali'].forEach(phase => parseMatchList(localState.knockout[phase]));
+  }
+
+  return Object.values(dataset).sort((x, y) => y.goals - x.goals || x.name.localeCompare(y.name));
+}
+
+function renderDashboard() {
+  const finali = localState.knockout?.finali || [];
+  
+  // Il JSON prevede: finali[0] -> 1°/2° posto, finali[1] -> 3°/4° posto
+  const matchMajor = finali[0];
+  const matchMinor = finali[1];
+
+  // 1. Render Card Primo Posto
+  const majorContainer = document.getElementById('box-major-finale');
+  if (matchMajor) {
+    majorContainer.innerHTML = `
+      <div class="match-card gold-card">
+        <div class="m-team home">
+          <div class="team-name">${matchMajor.home || 'DA DEFINIRE'}</div>
+        </div>
+        <div class="m-info-box">
+          <div class="status-badge">Grand Final</div>
+          ${matchMajor.played ? `
+            <div class="score-display">${matchMajor.homeGoals} - ${matchMajor.awayGoals}</div>
+          ` : `
+            <div class="score-pending">VS</div>
+            <div class="time-badge">ORE ${matchMajor.time || '21:30'}</div>
+          `}
+        </div>
+        <div class="m-team away">
+          <div class="team-name">${matchMajor.away || 'DA DEFINIRE'}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 2. Render Card Terzo Posto
+  const minorContainer = document.getElementById('box-minor-finale');
+  if (matchMinor) {
+    minorContainer.innerHTML = `
+      <div class="match-card bronze-card">
+        <div class="m-team home">
+          <div class="team-name">${matchMinor.home || 'DA DEFINIRE'}</div>
+        </div>
+        <div class="m-info-box">
+          <div class="status-badge">Runners-Up Match</div>
+          ${matchMinor.played ? `
+            <div class="score-display">${matchMinor.homeGoals} - ${matchMinor.awayGoals}</div>
+          ` : `
+            <div class="score-pending">VS</div>
+            <div class="time-badge">ORE ${matchMinor.time || '20:30'}</div>
+          `}
+        </div>
+        <div class="m-team away">
+          <div class="team-name">${matchMinor.away || 'DA DEFINIRE'}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // 3. Render Box Marcatori — top scorer(s) fissi, resto scorrevole
+  const topContainer = document.getElementById('scorers-top-inject');
+  const restInner = document.getElementById('scorers-rest-inner');
+  const sortedScorers = processAllScorers();
+
+  if (sortedScorers.length === 0) {
+    topContainer.innerHTML = `<div style="color:var(--text-dim); text-align:center; padding:20px;">Nessun marcatore disponibile</div>`;
+    restInner.innerHTML = '';
+  } else {
+    // Trova il numero massimo di gol
+    const maxGoals = sortedScorers[0].goals;
+    const topScorers = sortedScorers.filter(s => s.goals === maxGoals);
+    const restScorers = sortedScorers.filter(s => s.goals < maxGoals);
+
+    // Render TOP fissi con corona
+    topContainer.innerHTML = topScorers.map(s => `
+      <div class="scorer-row top-scorer">
+        <div class="s-rank">👑</div>
+        <div class="s-meta">
+          <div class="s-name">${s.name}</div>
+          <div class="s-team">${s.team}</div>
+        </div>
+        <div class="s-goals">${s.goals}</div>
+      </div>
+    `).join('');
+
+    // Render resto scorrevole (righe duplicate per loop continuo)
+    if (restScorers.length > 0) {
+      const restHtml = restScorers.map((s, idx) => `
+        <div class="scorer-row">
+          <div class="s-rank">${idx + 1 + topScorers.length}</div>
+          <div class="s-meta">
+            <div class="s-name">${s.name}</div>
+            <div class="s-team">${s.team}</div>
+          </div>
+          <div class="s-goals">${s.goals}</div>
+        </div>
+      `).join('');
+
+      // Duplica per loop visivo continuo
+      restInner.innerHTML = restHtml + restHtml;
+
+      // Avvia lo scroll solo se ci sono abbastanza righe
+      if (restScorers.length > 4) {
+        restInner.classList.add('scrolling');
+      }
+    } else {
+      restInner.innerHTML = '';
+    }
+  }
+}
+
+function buildSponsorFooter() {
+  const track = document.getElementById('sponsor-track-inject');
+  // Creazione elementi singoli
+  const cardsHtml = SPONSORS_LIST.map((url, index) => `
+    <div class="sponsor-card"><img src="${url}" alt="Partner ${index+1}"></div>
+    <div class="sponsor-sep">◆</div>
+  `).join('');
+  
+  // Duplicazione traccia per effetto scorrimento continuo nativo CSS privo di scatti
+  track.innerHTML = cardsHtml + cardsHtml;
+}
+
+function runClock() {
+  const timeEl = document.getElementById('live-clock');
+  const dateEl = document.getElementById('live-date');
+  
+  setInterval(() => {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    timeEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    
+    const giorni = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+    const mesi = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+    dateEl.textContent = `${giorni[now.getDay()]} ${now.getDate()} ${mesi[now.getMonth()]} ${now.getFullYear()}`;
+  }, 1000);
+}
+
+// Inizializzazione applicazione all'avvio
+async function startApp() {
+  buildSponsorFooter();
+  runClock();
+  await fetchTournamentData();
+  
+  // Loop di refresh in background dello stato delle partite del JSON
+  setInterval(fetchTournamentData, DATA_CONFIG.refresh);
+}
+
+startApp();
+</script>
+</body>
+</html>
