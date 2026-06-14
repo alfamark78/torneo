@@ -586,12 +586,23 @@
       {
         "home": "ZANI COSTRUZIONI / GIOSTEMA",
         "away": "BAR FOLLIA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 5,
+        "awayGoals": 4,
         "date": "2026-06-14",
         "time": "21:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "VERMI FLAVIO",
+            "team": "ZANI COSTRUZIONI / GIOSTEMA",
+            "goals": 1
+          },
+          {
+            "name": "POZZONI LEONARDO",
+            "team": "BAR FOLLIA",
+            "goals": 1
+          }
+        ]
       },
       {
         "home": "ELETTROTECNICA CRISTINI",
