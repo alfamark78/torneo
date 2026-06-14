@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Classifica Marcatori</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Nuove dimensioni richieste */
+  --w: 1300px; --h: 800px;
+  --green: #00e676; --green-dim: #00a152;
+  --gold: #ffd600; --silver: #cfd8dc; --bronze: #ff8a65;
+  --bg: #040c06; --surface: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.12); --border-g: rgba(0,230,118,0.35);
+  --text: #ffffff; --text-dim: rgba(255,255,255,0.55);
+  --font: 'Barlow Condensed', sans-serif;
+}
+
+html, body { 
+  width: var(--w); height: var(--h); 
+  overflow: hidden; background: var(--bg); 
+  font-family: var(--font); color: var(--text); 
+}
+
+/* SFONDO STILE CAMPO DA GIOCO */
+.field-bg {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 110%, rgba(0,80,30,0.4) 0%, transparent 75%),
+    radial-gradient(circle 400px at 50% -10%, rgba(0,180,70,0.08) 0%, transparent 60%);
+  z-index: 0;
+}
+.scanlines { 
+  position:fixed; inset:0; z-index:999; pointer-events:none; 
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.05) 2px,rgba(0,0,0,0.05) 4px); 
+}
+
+/* CONTENITORE PRINCIPALE GRANDI DIMENSIONI */
+.scorer-panel {
+  position: relative; z-index: 1;
+  width: var(--w); height: var(--h);
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, rgba(0,230,118,0.02) 0%, rgba(0,0,0,0.5) 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 30px;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+}
+
+/* ETICHETTA TITOLO (Proporzionata a 1300px) */
+.panel-label {
+  font-size: 2.5rem; font-weight: 900; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 20px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;
+  padding: 12px 24px; border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255,214,0,0.12), transparent);
+  border-left: 5px solid var(--gold);
+  text-shadow: 0 0 20px rgba(255,214,0,0.5);
+}
+.panel-label::after { content:''; flex:1; height:2px; background:linear-gradient(90deg, rgba(255,214,0,0.3), transparent); }
+
+/* AREA BLOCCATA: Primo e Secondo Posto (con relativi pari merito) */
+#scorer-top-fixed {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* AREA SCORREVOLE DAL TERZO POSTO IN GIÙ */
+.scorer-scroll-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-top: 2px dashed rgba(255,255,255,0.15);
+  padding-top: 12px;
+}
+
+.scorer-marquee-track {
+  display: flex; flex-direction: column; gap: 12px;
+  position: absolute; width: 100%; top: 0;
+  animation: verticalScroll 25s linear infinite;
+}
+
+@keyframes verticalScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* STRUTTURA RIGHE RIDEFINITA ED AMPLIATA */
+.scorer-row {
+  display: grid; grid-template-columns: 90px 1fr 140px; align-items: center;
+  padding: 16px 28px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 14px;
+}
+.scorer-row.top1 { 
+  background: linear-gradient(90deg, rgba(255,214,0,0.16), rgba(255,214,0,0.03)); 
+  border-color: rgba(255,214,0,0.5); box-shadow: 0 0 20px rgba(255,214,0,0.15); 
+}
+.scorer-row.top2 { 
+  background: linear-gradient(90deg, rgba(207,216,220,0.12), rgba(207,216,220,0.02)); 
+  border-color: rgba(207,216,220,0.3); box-shadow: 0 0 15px rgba(207,216,220,0.08);
+}
+.scorer-row.top3 { 
+  background: linear-gradient(90deg, rgba(255,138,101,0.1), rgba(255,138,101,0.02)); 
+  border-color: rgba(255,138,101,0.25); 
+}
+
+/* POSIZIONE / RANK */
+.scorer-rank { font-size: 2.6rem; font-weight: 900; text-align: center; line-height: 1; }
+.scorer-rank.r1 { color: var(--gold); text-shadow: 0 0 15px rgba(255,214,0,0.6); font-size: 3rem; }
+.scorer-rank.r2 { color: var(--silver); text-shadow: 0 0 12px rgba(207,216,220,0.5); font-size: 2.8rem;}
+.scorer-rank.r3 { color: var(--bronze); }
+.scorer-rank.rn { color: var(--text-dim); }
+
+/* INFORMAZIONI GIOCATORE */
+.scorer-info { padding: 0 20px; overflow: hidden; }
+.scorer-name { font-size: 2.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.1; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+.scorer-team { font-size: 1.3rem; font-weight: 400; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+/* GOL */
+.scorer-goals { text-align: center; }
+.scorer-goals-num { font-size: 3.8rem; font-weight: 900; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+.scorer-row.top1 .scorer-goals-num { color: var(--gold); text-shadow: 0 0 15px rgba(255,214,0,0.5); }
+.scorer-row.top2 .scorer-goals-num { color: var(--silver); text-shadow: 0 0 10px rgba(207,216,220,0.4); }
+.scorer-goals-lbl { font-size: 0.9rem; font-weight: 700; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-top: -2px; }
+
+.no-matches { color: var(--text-dim); font-size: 2rem; letter-spacing: 0.08em; padding: 40px; font-weight: 300; text-align: center; width: 100%; }
+</style>
+</head>
+<body>
+
+<div class="field-bg"></div>
+<div class="scanlines"></div>
+
+<div class="scorer-panel">
+  <div class="panel-label">&#x1F45F; Classifica Marcatori</div>
+  
+  <div id="scorer-top-fixed"></div>
+  
+  <div class="scorer-scroll-container" id="scorer-scroll-container">
+    <div class="scorer-marquee-track" id="scorer-marquee-track"></div>
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  dataUrl: 'https://raw.githubusercontent.com/alfamark78/torneo/main/torneo-data.json',
+  dataRefreshInterval: 30000 // Aggiorna i dati dal JSON ogni 30 secondi
+};
+
+let state = { matches: {}, knockout: { playoff:[], quarti:[], semifinali:[], finali:[] } };
+
+async function loadData(){
+  try {
+    const res = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
+    state = await res.json();
+  } catch(e){ console.warn('Errore caricamento JSON:', e); }
+}
+
+function buildScorers(){
+  const map = {};
+  function addGoals(list){
+    (list||[]).forEach(m=>{
+      (m.scorers||[]).forEach(s=>{
+        const name  = (s.name||s.player||'').trim().toUpperCase();
+        const team  = (s.team||'').trim().toUpperCase();
+        const goals = parseInt(s.goals||s.count||s.gol||1,10)||1;
+        if(!name) return;
+        const key = name+'|'+team;
+        if(!map[key]) map[key]={name,team,goals:0};
+        map[key].goals += goals;
+      });
+    });
+  }
+  
+  Object.values(state.matches||{}).forEach(g=>addGoals(g));
+  const ko = state.knockout||{};
+  ['playoff','quarti','semifinali','finali'].forEach(p=>addGoals(ko[p]));
+  
+  return Object.values(map).filter(s=>s.goals>0).sort((a,b)=>b.goals-a.goals||a.name.localeCompare(b.name));
+}
+
+const RANK_CLS = ['r1','r2','r3'];
+const ROW_CLS  = ['top1','top2','top3'];
+
+function generateRowHtml(s, i) {
+  let rankIcon = i + 1;
+  if (i === 0) rankIcon = '👑';
+  else if (i === 1) rankIcon = '🥈'; // Icona argento opzionale stilizzata, o tiene il numero 2
+
+  return '<div class="scorer-row '+(ROW_CLS[i]||'')+'">'+
+    '<div class="scorer-rank '+(RANK_CLS[i]||'rn')+'">'+rankIcon+'</div>'+
+    '<div class="scorer-info">'+
+      '<div class="scorer-name">'+s.name+'</div>'+
+      '<div class="scorer-team">'+s.team+'</div>'+
+    '</div>'+
+    '<div class="scorer-goals">'+
+      '<div class="scorer-goals-num">'+s.goals+'</div>'+
+      '<div class="scorer-goals-lbl">GOL</div>'+
+    '</div>'+
+  '</div>';
+}
+
+function renderScorers(){
+  const topFixedEl = document.getElementById('scorer-top-fixed');
+  const trackEl = document.getElementById('scorer-marquee-track');
+  const scrollContainer = document.getElementById('scorer-scroll-container');
+  
+  const sc = buildScorers();
+  
+  if(!sc.length){ 
+    topFixedEl.innerHTML = '<div class="no-matches">Nessun marcatore registrato</div>'; 
+    trackEl.innerHTML = '';
+    scrollContainer.style.display = 'none';
+    return; 
+  }
+  
+  // LOGICA DI SELEZIONE DEI PINNED (Fissi in alto)
+  
+  // 1. Trova il valore dei gol del primo posto ed estrai i primi
+  const top1Goals = sc[0].goals;
+  const top1Scorers = sc.filter(s => s.goals === top1Goals);
+  
+  // Raccogliamo tutti i giocatori fissi in un unico array indicizzando l'indice reale complessivo
+  let fixedPlayersHtml = [];
+  
+  // Genera HTML per i primi posti
+  top1Scorers.forEach(s => {
+    fixedPlayersHtml.push(generateRowHtml(s, 0));
+  });
+  
+  // 2. Trova il secondo posto (il primo marcatore che ha meno gol del capocannoniere)
+  const restAfterTop1 = sc.slice(top1Scorers.length);
+  let top2Scorers = [];
+  
+  if (restAfterTop1.length > 0) {
+    const top2Goals = restAfterTop1[0].goals;
+    top2Scorers = restAfterTop1.filter(s => s.goals === top2Goals);
+    
+    // Genera HTML per i secondi posti (passando indice 1 fisso per lo stile CSS)
+    top2Scorers.forEach(s => {
+      fixedPlayersHtml.push(generateRowHtml(s, 1));
+    });
+  }
+  
+  // Stampiamo tutti i bloccati (1° e 2° posto con pari merito) nell'area fissa
+  topFixedEl.innerHTML = fixedPlayersHtml.join('');
+  
+  // 3. I restanti marcatori (dal 3° gradino di gol in giù) scorrono nel Marquee
+  const totalFixedCount = top1Scorers.length + top2Scorers.length;
+  const restScorers = sc.slice(totalFixedCount);
+  
+  if (restScorers.length === 0) {
+    scrollContainer.style.display = 'none';
+    trackEl.innerHTML = '';
+  } else {
+    scrollContainer.style.display = 'block';
+    // Generiamo le righe assegnando l'indice corretto per preservare posizioni/stili (es. il terzo prenderà l'indice 2 -> top3)
+    const itemsHtml = restScorers.map((s, i) => generateRowHtml(s, i + totalFixedCount)).join('');
+    
+    // Duplica per effetto infinito continuo
+    trackEl.innerHTML = itemsHtml + itemsHtml;
+    
+    // Regolazione dinamica della velocità in base a quanti elementi scorrono
+    const duration = Math.max(12, restScorers.length * 4.5); 
+    trackEl.style.animationDuration = duration + 's';
+  }
+}
+
+async function init(){
+  await loadData();
+  renderScorers();
+  setInterval(async()=>{ await loadData(); renderScorers(); }, CONFIG.dataRefreshInterval);
+}
+
+init();
+</script>
+</body>
+</html>
