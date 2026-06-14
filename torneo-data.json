@@ -596,12 +596,43 @@
       {
         "home": "ELETTROTECNICA CRISTINI",
         "away": "QUELLI DELLA LAVANDERIA",
-        "homeGoals": null,
-        "awayGoals": null,
+        "homeGoals": 5,
+        "awayGoals": 6,
         "date": "2026-06-14",
         "time": "20:30",
-        "played": false,
-        "scorers": []
+        "played": true,
+        "scorers": [
+          {
+            "name": "ARCHETTI MARTINO",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 2
+          },
+          {
+            "name": "COLOSIO ANDREA",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 2
+          },
+          {
+            "name": "BERTAGNA SIMONE",
+            "team": "ELETTROTECNICA CRISTINI",
+            "goals": 1
+          },
+          {
+            "name": "OPOKO GABRIEL",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 2
+          },
+          {
+            "name": "INFANTINO SIMONE",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 2
+          },
+          {
+            "name": "MAESTRELLI MARCO",
+            "team": "QUELLI DELLA LAVANDERIA",
+            "goals": 1
+          }
+        ]
       }
     ]
   }
